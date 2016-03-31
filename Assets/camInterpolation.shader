@@ -32,7 +32,11 @@ Properties {
 	float _nearPlane;
 	float _farPlane;
 
-	float4 realCameraColors;
+	float4 realCamera0Colors;
+	float4 realCamera1Colors;
+
+	float4 tmpCam0Value;
+	float4 tmpCam1Value;
 
 	float ze;
 	float xe;
@@ -61,47 +65,41 @@ Properties {
 
 	float4 frag(v2f i) : SV_Target {
 
-		//return float4(0,1,0,0);
-		//return float4 (i.pos.y/_ScreenParams.y,0,0,0);
-
-		//float4 lol = tex2D(_Cam0, float2((i.pos.x%(1.0/_Cam0_TexelSize.x)) * _Cam0_TexelSize.x, (i.pos.y * _Cam0_TexelSize.x)-(_ScreenParams.y / (1.0/_Cam0_TexelSize.x))+.0));
-		//return float4(lol.w, lol.w, lol.w, 0);
-
 		//find screen index x
 		int screenIndexX = i.pos.x / (1.0/_Cam0_TexelSize.x);
-
+		tmpCam0Value = float4(0.0,0.0,0.0,2.0);
 		//go through
-		for(int j = 0 ; j < 128; j++){
+		for(int j = 84 ; j > 0; j--){
 
-			//Loop through real camera colors 
-			realCameraColors = tex2D(_Cam0, float2(j/(1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
+			//Look-up in tex2D
+			realCamera0Colors = tex2D(_Cam0, float2(j/(1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
 
 			//get z position in eye space
-			ze = (realCameraColors.w) * (_farPlane - _nearPlane) + _nearPlane;
+			ze = (realCamera0Colors.w) * (_farPlane - _nearPlane) + _nearPlane;
 
-			//Convert from projection space to eye space 
-			xe = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * -ze)/-_ImagePlaneLength;
+			//Convert from projection space to eye space
+			xe = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * ze)/_ImagePlaneLength;
+			xe = xe - screenIndexX;
 
-			xe = xe - screenIndexX;//screenIndexX;
-
-			//Convert back from eye space to projection space 
+			//Convert back from eye space to projection space
 			xp = -(_ImagePlaneLength * xe) / -ze;
 			xp = xp + ((1.0/_Cam0_TexelSize.x)/2.0);
 
-			int lol = (i.pos.x - (1.0/_Cam0_TexelSize.x));
+			int lol = i.pos.x - (1.0/_Cam0_TexelSize.x) * screenIndexX;
 			int lol2 = xp;
 
-			if((lol - lol2) < 1) {
-				//return float4(1,0,0,1);
-			return realCameraColors;
+			if(abs(lol2 - lol) < 0.1 && xp < (1.0/_Cam0_TexelSize.x)) {
+
+				if(tmpCam0Value.w > realCamera0Colors.w){ 
+					tmpCam0Value = realCamera0Colors;
+				
+				}
 			}
-
-			//if(abs((xp) - (i.pos.x - (1/_Cam0_TexelSize.x))) < 2){ 			//return realCameraColors; 			//}
-
+			//test grayscale
+			//return float4(screenIndexX/8.0, screenIndexX/8.0, screenIndexX/8.0, 0);
 		}
 
-
-
+		return tmpCam0Value;
 
 		//if shit goes wrong - return yellow
 		return float4(1,1,0,1);
