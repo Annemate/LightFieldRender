@@ -60,7 +60,7 @@ Properties {
 
 
 	float4 frag(v2f i) : SV_Target {
-		
+
 		//return float4(0,1,0,0);
 		//return float4 (i.pos.y/_ScreenParams.y,0,0,0);
 
@@ -70,32 +70,36 @@ Properties {
 		//find screen index x
 		int screenIndexX = i.pos.x / (1.0/_Cam0_TexelSize.x);
 
-		//go through 
-		for(int j = 0 ; j < 84; j++){ 
+		//go through
+		for(int j = 0 ; j < 128; j++){
 
-			//Loop through real camera colors 			float4 realCameraColors = tex2D(_Cam0, float2(j/(1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
+			//Loop through real camera colors 
+			realCameraColors = tex2D(_Cam0, float2(j/(1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
 
 			//get z position in eye space
 			ze = (realCameraColors.w) * (_farPlane - _nearPlane) + _nearPlane;
 
-			//Convert from projection space to eye space 			xe = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * -ze)/-_ImagePlaneLength;
+			//Convert from projection space to eye space 
+			xe = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * -ze)/-_ImagePlaneLength;
 
-			xe = xe - 1.0;//screenIndexX;
+			xe = xe - screenIndexX;//screenIndexX;
 
-			//Convert back from eye space to projection space 			xp = -(_ImagePlaneLength * xe) / -ze;
+			//Convert back from eye space to projection space 
+			xp = -(_ImagePlaneLength * xe) / -ze;
 			xp = xp + ((1.0/_Cam0_TexelSize.x)/2.0);
 
 			int lol = (i.pos.x - (1.0/_Cam0_TexelSize.x));
 			int lol2 = xp;
 
-			if(lol == lol2) {
+			if((lol - lol2) < 1) {
+				//return float4(1,0,0,1);
 			return realCameraColors;
 			}
 
 			//if(abs((xp) - (i.pos.x - (1/_Cam0_TexelSize.x))) < 2){ 			//return realCameraColors; 			//}
 
 		}
-				
+
 
 
 
