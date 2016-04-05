@@ -52,7 +52,7 @@
              fixed4 frag(output o) : COLOR
              {
                  float depth = UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, o.uv));
-                 depth = pow(Linear01Depth(depth), _DepthLevel);
+                 depth = Linear01Depth(depth);
 
                  float4 myColor = tex2D(_MainTex, o.uv);
                  myColor = float4(myColor.x, myColor.y, myColor.z ,depth);
