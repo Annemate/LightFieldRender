@@ -96,10 +96,10 @@ Properties {
 
 			//Convert from projection space to eye space
 			xe = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * ze)/_ImagePlaneLength;
-			xe = xe - screenIndexX;
+			xe = xe + (screenIndexX);
 
 			xe1 = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * ze1)/_ImagePlaneLength;
-			xe1 = xe1 - screenIndexX + _Dif;
+			xe1 = xe1 -  (screenIndexX) + _Dif;
 
 
 			//Convert back from eye space to projection space
@@ -133,7 +133,7 @@ Properties {
 			//test grayscale
 			//return float4(screenIndexX/8.0, screenIndexX/8.0, screenIndexX/8.0, 0);
 		}
-
+		//	return tmpCam0Value;
 		if(tmpCam0Value.w < tmpCam1Value.w){
 			return tmpCam0Value;
 		}

@@ -61,7 +61,7 @@ public class camInterpolation : MonoBehaviour {
 			}
 
 			// The length to the image plane in pixels given a fov.
-			ImagePlaneLength = (Mathf.Sin(90 - (gameObject.GetComponent<Camera>().fieldOfView/2)) * (camOneRenderTexture.height / 2)) / Mathf.Sin(gameObject.GetComponent<Camera>().fieldOfView / 2);
+			ImagePlaneLength = (Mathf.Sin(Mathf.Deg2Rad * (90 - (gameObject.GetComponent<Camera>().fieldOfView/2.0f))) * (camOneRenderTexture.height / 2.0f)) / Mathf.Sin(Mathf.Deg2Rad * (gameObject.GetComponent<Camera>().fieldOfView / 2.0f));
 
 			// The ratio between the lenght to the image plane and the cameras near clipping plane. Not used!
 			//ImagePlaneRatio = ImagePlaneLength / gameObject.GetComponent<Camera>().nearClipPlane;
