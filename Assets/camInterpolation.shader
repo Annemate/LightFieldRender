@@ -81,8 +81,16 @@ Properties {
 		int screenIndexX = i.pos.x / (1.0/_Cam0_TexelSize.x);
 		tmpCam0Value = float4(0.0,0.0,0.0,2.0);
 		tmpCam1Value = float4(0.0,0.0,0.0,2.0);
+
+		if(i.pos.y > (1.0/_Cam0_TexelSize.x) && i.pos.x < (1.0/_Cam0_TexelSize.x)){
+			return tex2D(_Cam0, float2(i.pos.x % (1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
+		}
+
+		if(i.pos.y > (1.0/_Cam0_TexelSize.x) && i.pos.x > (_ScreenParams.x - (1.0/_Cam0_TexelSize.x))){
+			return float4(1,0,0,1);
+		}
 		//go through
-		for(int j = 150; j > 0; j--){
+		for(int j = 160; j > 0; j--){
 
 			//Look-up in tex2D
 			realCamera0Colors = tex2D(_Cam0, float2(j/(1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
@@ -96,7 +104,7 @@ Properties {
 
 			//Convert from projection space to eye space
 			xe = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * ze)/_ImagePlaneLength;
-			xe = xe + (screenIndexX);
+			xe = xe - (screenIndexX);
 
 			xe1 = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * ze1)/_ImagePlaneLength;
 			xe1 = xe1 -  (screenIndexX) + _Dif;
@@ -118,7 +126,7 @@ Properties {
 
 				if(tmpCam0Value.w > realCamera0Colors.w){
 					tmpCam0Value = realCamera0Colors;
-					tmpCam0Value += float4(0.8,0,0,0);
+					//tmpCam0Value += float4(0.8,0,0,0);
 
 				}
 			}
@@ -127,7 +135,7 @@ Properties {
 
 				if(tmpCam1Value.w > realCamera1Colors.w){
 					tmpCam1Value = realCamera1Colors;
-					tmpCam1Value += float4(0,0.8,0,0);
+					//tmpCam1Value += float4(0,0.8,0,0);
 				}
 			}
 			//test grayscale
