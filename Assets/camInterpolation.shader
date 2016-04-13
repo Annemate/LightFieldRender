@@ -82,13 +82,13 @@ Properties {
 		tmpCam0Value = float4(0.0,0.0,0.0,2.0);
 		tmpCam1Value = float4(0.0,0.0,0.0,2.0);
 
-		if(i.pos.y > (1.0/_Cam0_TexelSize.x) && i.pos.x < (1.0/_Cam0_TexelSize.x)){
-			return tex2D(_Cam0, float2(i.pos.x % (1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
-		}
+		//if(i.pos.y > (1.0/_Cam0_TexelSize.x) && i.pos.x < (1.0/_Cam0_TexelSize.x)){
+		//	return tex2D(_Cam0, float2(i.pos.x % (1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
+		//}
 
-		if(i.pos.y > (1.0/_Cam0_TexelSize.x) && i.pos.x > (_ScreenParams.x - (1.0/_Cam0_TexelSize.x))){
-			return float4(1,0,0,1);
-		}
+		//if(i.pos.y > (1.0/_Cam0_TexelSize.x) && i.pos.x > (_ScreenParams.x - (1.0/_Cam0_TexelSize.x))){
+		//	return float4(1,0,0,1);
+		//}
 		//go through
 		for(int j = 160; j > 0; j--){
 
@@ -118,37 +118,47 @@ Properties {
 			xp1 = xp1 + ((1.0/_Cam0_TexelSize.x)/2.0);
 
 
-			int lol = i.pos.x - (1.0/_Cam0_TexelSize.x) * screenIndexX;
-			int lol2 = xp;
-			int lol3 = xp1;
+			float lol = i.pos.x - (1.0/_Cam0_TexelSize.x) * screenIndexX;
+			float lol2 = xp;
+			float lol3 = xp1;
 
-			if(abs(lol2 - lol) <= 1 && xp < (1.0/_Cam0_TexelSize.x)) {
 
-				if(tmpCam0Value.w > realCamera0Colors.w){
-					tmpCam0Value = realCamera0Colors;
-					//tmpCam0Value += float4(0.8,0,0,0);
 
-				}
-			}
+			//if(abs(lol2 - lol) <= 1) {
 
-			if(abs(lol3 - lol) <= 1 && xp1 < (1.0/_Cam0_TexelSize.x)) {
 
-				if(tmpCam1Value.w > realCamera1Colors.w){
-					tmpCam1Value = realCamera1Colors;
-					//tmpCam1Value += float4(0,0.8,0,0);
-				}
-			}
+			tmpCam0Value = lerp(tmpCam0Value, lerp(realCamera0Colors, tmpCam0Value, step(tmpCam0Value.w, realCamera0Colors.w)), step(abs(lol2 - lol), 1.01) );
+				tmpCam0Value += float4(0.8,0,0,0);
+
+			tmpCam1Value = lerp(tmpCam1Value, lerp(realCamera1Colors, tmpCam1Value, step(tmpCam1Value.w, realCamera1Colors.w)), step(abs(lol3 - lol), 1.01) );
+				tmpCam1Value += float4(0,0.8,0,0);
+
+				//if(tmpCam0Value.w > realCamera0Colors.w){
+				//	tmpCam0Value = realCamera0Colors;
+				//	tmpCam0Value += float4(0.8,0,0,0);
+
+				//}
+			//}
+
+		//if(abs(lol3 - lol) <= 1) {
+
+		//	if(tmpCam1Value.w > realCamera1Colors.w){
+		//		tmpCam1Value = realCamera1Colors;
+		//		tmpCam1Value += float4(0,0.8,0,0);
+		//	}
+		//}
 			//test grayscale
 			//return float4(screenIndexX/8.0, screenIndexX/8.0, screenIndexX/8.0, 0);
 		}
 		//	return tmpCam0Value;
-		if(tmpCam0Value.w < tmpCam1Value.w){
-			return tmpCam0Value;
-		}
-		return tmpCam1Value;
+		return lerp(tmpCam0Value, tmpCam1Value, step(tmpCam1Value.w, tmpCam0Value.w));
+		//if(tmpCam0Value.w < tmpCam1Value.w){
+		//	return tmpCam0Value;
+		//}
+		//return tmpCam1Value;
 
-		//if shit goes wrong - return yellow
-		return float4(1,1,0,1);
+		////if shit goes wrong - return yellow
+		//return float4(1,1,0,1);
 	}
 
 

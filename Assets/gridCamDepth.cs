@@ -45,7 +45,7 @@ public class gridCamDepth : MonoBehaviour {
 			}
 
 			// turn on depth rendering for the camera so that the shader can access it via _CameraDepthTexture
-			gameObject.GetComponent<Camera>().depthTextureMode = DepthTextureMode.None;
+			gameObject.GetComponent<Camera>().depthTextureMode = DepthTextureMode.Depth;
 		}
 
 		private void OnDisable()
@@ -60,10 +60,12 @@ public class gridCamDepth : MonoBehaviour {
 			{
 				material.SetFloat("_DepthLevel", depthLevel);
 				Graphics.Blit(src, dest, material);
+
 			}
 			else
 			{
 				Graphics.Blit(src, dest);
+				print("shader of camera is null");
 			}
 		}
 	}

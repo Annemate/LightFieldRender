@@ -56,6 +56,7 @@
 
                  float4 myColor = tex2D(_MainTex, o.uv);
                  myColor = float4(myColor.x, myColor.y, myColor.z ,depth);
+                // myColor = float4(depth, depth, depth, 1);
                  return myColor;
                  //return depth;
              }
