@@ -54,6 +54,7 @@ public class gridCamDepth : MonoBehaviour {
 				DestroyImmediate(_material);
 		}
 
+
 		private void OnRenderImage(RenderTexture src, RenderTexture dest)
 		{
 			if (shader != null)

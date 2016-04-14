@@ -82,19 +82,16 @@ Properties {
 		tmpCam0Value = float4(0.0,0.0,0.0,2.0);
 		tmpCam1Value = float4(0.0,0.0,0.0,2.0);
 
-		//if(i.pos.y > (1.0/_Cam0_TexelSize.x) && i.pos.x < (1.0/_Cam0_TexelSize.x)){
-		//	return tex2D(_Cam0, float2(i.pos.x % (1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
-		//}
+		//return tex2D(_Cam0, float2(((i.pos.x % (1.0/_Cam0_TexelSize.x) + 0 )) / (1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x))) + 1.0)) + float4(0,0,0.5,1);
 
-		//if(i.pos.y > (1.0/_Cam0_TexelSize.x) && i.pos.x > (_ScreenParams.x - (1.0/_Cam0_TexelSize.x))){
-		//	return float4(1,0,0,1);
-		//}
 		//go through
-		for(int j = 160; j > 0; j--){
+		for(int j = 7; j > 0; j--){
 
 			//Look-up in tex2D
-			realCamera0Colors = tex2D(_Cam0, float2(j/(1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
-			realCamera1Colors = tex2D(_Cam1, float2(j/(1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x)))+1.0));
+			realCamera0Colors = tex2D(_Cam0, float2(((i.pos.x % (1.0/_Cam0_TexelSize.x) + j  )) / (1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x))) + 1.0));
+
+
+			realCamera1Colors = tex2D(_Cam1, float2(((i.pos.x % (1.0/_Cam0_TexelSize.x) + j  )) / (1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x))) + 1.0));
 
 
 			//get z position in eye space
@@ -103,10 +100,10 @@ Properties {
 
 
 			//Convert from projection space to eye space
-			xe = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * ze)/_ImagePlaneLength;
+			xe = ( (((i.pos.x % (1.0/_Cam0_TexelSize.x) + j - 7 )) -((1.0/_Cam0_TexelSize.x) / 2.0)) * ze)/_ImagePlaneLength;
 			xe = xe - (screenIndexX);
 
-			xe1 = ( (j-((1.0/_Cam0_TexelSize.x) / 2.0)) * ze1)/_ImagePlaneLength;
+			xe1 = ( (((i.pos.x % (1.0/_Cam0_TexelSize.x) + j - 7 )) -((1.0/_Cam0_TexelSize.x) / 2.0)) * ze1)/_ImagePlaneLength;
 			xe1 = xe1 -  (screenIndexX) + _Dif;
 
 
@@ -117,48 +114,40 @@ Properties {
 			xp1 = -(_ImagePlaneLength * xe1) / -ze1;
 			xp1 = xp1 + ((1.0/_Cam0_TexelSize.x)/2.0);
 
-
 			float lol = i.pos.x - (1.0/_Cam0_TexelSize.x) * screenIndexX;
 			float lol2 = xp;
 			float lol3 = xp1;
 
-
-
-			//if(abs(lol2 - lol) <= 1) {
-
-
 			tmpCam0Value = lerp(tmpCam0Value, lerp(realCamera0Colors, tmpCam0Value, step(tmpCam0Value.w, realCamera0Colors.w)), step(abs(lol2 - lol), 1.01) );
-				tmpCam0Value += float4(0.8,0,0,0);
+				//tmpCam0Value += float4(0.8,0,0,0);
 
 			tmpCam1Value = lerp(tmpCam1Value, lerp(realCamera1Colors, tmpCam1Value, step(tmpCam1Value.w, realCamera1Colors.w)), step(abs(lol3 - lol), 1.01) );
-				tmpCam1Value += float4(0,0.8,0,0);
+				//tmpCam1Value += float4(0,0.8,0,0);
 
-				//if(tmpCam0Value.w > realCamera0Colors.w){
-				//	tmpCam0Value = realCamera0Colors;
-				//	tmpCam0Value += float4(0.8,0,0,0);
+			//if(abs(lol2 - lol) <= 1) {
+			//	if(tmpCam0Value.w > realCamera0Colors.w){
+			//		tmpCam0Value = realCamera0Colors;
+			//		tmpCam0Value += float4(0.8,0,0,0);
 
-				//}
+			//	}
 			//}
 
-		//if(abs(lol3 - lol) <= 1) {
+			//if(abs(lol3 - lol) <= 1) {
+			//	if(tmpCam1Value.w > realCamera1Colors.w){
+			//		tmpCam1Value = realCamera1Colors;
+			//		tmpCam1Value += float4(0,0.8,0,0);
+			//	}
+			//}
 
-		//	if(tmpCam1Value.w > realCamera1Colors.w){
-		//		tmpCam1Value = realCamera1Colors;
-		//		tmpCam1Value += float4(0,0.8,0,0);
-		//	}
-		//}
-			//test grayscale
-			//return float4(screenIndexX/8.0, screenIndexX/8.0, screenIndexX/8.0, 0);
 		}
 		//	return tmpCam0Value;
 		return lerp(tmpCam0Value, tmpCam1Value, step(tmpCam1Value.w, tmpCam0Value.w));
+
 		//if(tmpCam0Value.w < tmpCam1Value.w){
 		//	return tmpCam0Value;
 		//}
 		//return tmpCam1Value;
 
-		////if shit goes wrong - return yellow
-		//return float4(1,1,0,1);
 	}
 
 
