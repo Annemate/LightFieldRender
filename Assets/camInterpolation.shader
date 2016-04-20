@@ -206,20 +206,21 @@ Properties {
 			tmpCam3Value = lerp(tmpCam3Value, lerp(realCamera3Colors, tmpCam3Value, step(tmpCam3Value.w, realCamera3Colors.w)), step(abs(xp3 - lol), 1.01) );
 				//tmpCam3Value += float4(0,0.8,0.8,0);
 
-			//if(abs(lol2 - lol) <= 1) {
-			//	if(tmpCam0Value.w > realCamera0Colors.w){
-			//		tmpCam0Value = realCamera0Colors;
-			//		tmpCam0Value += float4(0.8,0,0,0);
 
-			//	}
-			//}
+			if(abs(lol2 - lol) <= 1) {
+				if(tmpCam0Value.w > realCamera0Colors.w){
+					tmpCam0Value = realCamera0Colors;
+					//tmpCam0Value += float4(0.8,0,0,0);
 
-			//if(abs(lol3 - lol) <= 1) {
-			//	if(tmpCam1Value.w > realCamera1Colors.w){
-			//		tmpCam1Value = realCamera1Colors;
-			//		tmpCam1Value += float4(0,0.8,0,0);
-			//	}
-			//}
+				}
+			}
+
+			if(abs(lol3 - lol) <= 1) {
+				if(tmpCam1Value.w > realCamera1Colors.w){
+					tmpCam1Value = realCamera1Colors;
+					//tmpCam1Value += float4(0,0.8,0,0);
+				}
+			}
 
 		}
 		//	return tmpCam0Value;
@@ -228,6 +229,7 @@ Properties {
 		tmp2 = lerp(tmpCam2Value, tmpCam3Value, step(tmpCam3Value.w, tmpCam2Value.w));
 
 		//return lerp(tmp1, tmp2, step(tmp2, tmp1));
+
 
 
 		//if(tmpCam0Value.w < tmpCam1Value.w){
