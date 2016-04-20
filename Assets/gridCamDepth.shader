@@ -16,7 +16,7 @@
              #include "UnityCG.cginc"
 
              uniform sampler2D _MainTex;
-             uniform sampler2D _CameraDepthTexture;
+             uniform sampler2D_float _CameraDepthTexture;
              uniform fixed _DepthLevel;
              uniform half4 _MainTex_TexelSize;
 
@@ -54,9 +54,12 @@
                  float depth = UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, o.uv));
                  depth = Linear01Depth(depth);
 
+
+
+
                  float4 myColor = tex2D(_MainTex, o.uv);
                  myColor = float4(myColor.x, myColor.y, myColor.z ,depth);
-                // myColor = float4(depth, depth, depth, 1);
+                 //myColor = float4(depth, depth, depth, 1);
                  return myColor;
                  //return depth;
              }
