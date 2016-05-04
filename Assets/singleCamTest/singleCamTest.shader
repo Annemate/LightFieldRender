@@ -73,6 +73,8 @@ Shader "Custom/singleCamTest"
 			float subImageOffset;
 			int loopDuration;
 
+			float2 currentSubImgPos;
+
 			float orgPos;
 			float orgPosPlus;
 			float orgPosMinus ;
@@ -110,6 +112,8 @@ Shader "Custom/singleCamTest"
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
 				subImageOffset = 1.0;
+
+				//return float4(screenIndexY/4.0,screenIndexY/4.0,screenIndexY/4.0,1.0);
 
 //				if(i.pos.y > subImageWidth && i.pos.x < subImageWidth){
 //					return tex2D(_RealCam0, float2(((i.pos.x))
@@ -152,10 +156,10 @@ Shader "Custom/singleCamTest"
 				{
 
 					realCamera0Colors = tex2D(_Cam0, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, (-((i.pos.y % (1.0/_Cam0_TexelSize.x)) * (_Cam0_TexelSize.x))) + 1.0));
+					/ subImageWidth, (-(((i.pos.y % subImageWidth)) * (_Cam0_TexelSize.x))) + 1.0));
 
 					realCamera1Colors = tex2D(_Cam1, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, (-((i.pos.y % (1.0/_Cam0_TexelSize.x)) * (_Cam0_TexelSize.x))) + 1.0));
+					/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
 
 					//get z position in eye/view space
 					eCam0.z = (realCamera0Colors.w) * (_farPlane - _nearPlane) + _nearPlane;
@@ -168,10 +172,10 @@ Shader "Custom/singleCamTest"
 					eCam1.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					eCam1.x = eCam1.x - (screenIndexX * subImageOffset) + 9.0;
 
-					eCam0.y = ( (((i.pos.y % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam0.z)/_ImagePlaneLength;
+					eCam0.y = ( (((i.pos.y % subImageWidth )) - (subImageWidth / 2.0)) * eCam0.z)/_ImagePlaneLength;
 					eCam0.y = eCam0.y - (screenIndexY * subImageOffset);
 
-					eCam1.y = ( (((i.pos.y % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
+					eCam1.y = ( (((i.pos.y % subImageWidth )) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					eCam1.y = eCam1.y - (screenIndexY * subImageOffset) + 0.0;
 
 					//Convert back from eye/view space to the projection plane
@@ -187,10 +191,10 @@ Shader "Custom/singleCamTest"
 					pCam1.y = -(_ImagePlaneLength * eCam1.y) / -eCam1.z;
 					pCam1.y = pCam1.y + (subImageWidth/2.0);
 
-					float currentSubImgPos = i.pos.x - (subImageWidth * screenIndexX * subImageOffset); //position on our subimage on the screen
-					//float pCam0.x = pCam0.x;
+					currentSubImgPos.x = i.pos.x - (subImageWidth * screenIndexX * subImageOffset); //position on our subimage on the screen
+					currentSubImgPos.y = i.pos.y - (subImageWidth * screenIndexY * subImageOffset);
 
-					if(abs(pCam0.x - currentSubImgPos) < 0.5) {
+					if(abs(pCam0.x - currentSubImgPos.x) < 0.5 && abs(pCam0.y - currentSubImgPos.y) < 0.5) {
 						if(outputCam0Value.w > realCamera0Colors.w){
 
 							//orgPos      =  abs(tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))) / subImageWidth, (-(i.pos.y * (_Cam0_TexelSize.x))) + 1.0)).w);
@@ -199,7 +203,7 @@ Shader "Custom/singleCamTest"
 
 							//if( min(orgPos - orgPosPlus, orgPos - orgPosMinus) == 0.0||min(abs(orgPos - orgPosPlus), abs(orgPos - orgPosMinus))/max(abs(orgPos - orgPosPlus), abs(orgPos - orgPosMinus)) >= 0.0 ){
 								//finalColor = float4(1.0,1.0,0.0,1.0);
-								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos - pCam0.x))) / subImageWidth, (-((i.pos.y % (1.0/_Cam0_TexelSize.x)) * (_Cam0_TexelSize.x))) + 1.0));
+								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam0.x))) / subImageWidth, (-((i.pos.y % (1.0/_Cam0_TexelSize.x)) * (_Cam0_TexelSize.x))) + 1.0));
 
 								outputCam0Value.w = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (-((i.pos.y % (1.0/_Cam0_TexelSize.x)) * (_Cam0_TexelSize.x))) + 1.0)).w;
 								//outputCam0Value += float4(0.5,0.0,0.0,0.0);
@@ -211,7 +215,7 @@ Shader "Custom/singleCamTest"
 						}
 					}
 
-					if(abs(pCam1.x - currentSubImgPos) < 0.5) {
+					if(abs(pCam1.x - currentSubImgPos.x) < 0.5 && abs(pCam1.y - currentSubImgPos.y) < 0.5) {
 						if(outputCam1Value.w > realCamera1Colors.w){
 
 							//orgPos     = (tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (-(i.pos.y * (_Cam0_TexelSize.x))) + 1.0)).w);
@@ -220,7 +224,7 @@ Shader "Custom/singleCamTest"
 
 							//if( min(orgPos - orgPosPlus, orgPos - orgPosMinus) == 0.0 || min(abs(orgPos - orgPosPlus), abs(orgPos - orgPosMinus))/max(abs(orgPos - orgPosPlus), abs(orgPos - orgPosMinus)) >= 0.0 ){
 								//finalColor = float4(1.0,1.0,0.0,1.0);
-								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - abs(currentSubImgPos - pCam1.x))) / subImageWidth, (-((i.pos.y % (1.0/_Cam0_TexelSize.x)) * (_Cam0_TexelSize.x))) + 1.0));
+								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - abs(currentSubImgPos.x - pCam1.x))) / subImageWidth, (-((i.pos.y % (1.0/_Cam0_TexelSize.x)) * (_Cam0_TexelSize.x))) + 1.0));
 
 								outputCam1Value.w = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (-((i.pos.y % (1.0/_Cam0_TexelSize.x)) * (_Cam0_TexelSize.x))) + 1.0)).w;
 								//outputCam1Value += float4(0.0,0.5,0.0,0.0);
