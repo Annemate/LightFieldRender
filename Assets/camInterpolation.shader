@@ -8,6 +8,17 @@ Properties {
 		_DifX ("_DifX", float) = 0
 		_DifY ("_DifX", float) = 0
 
+		_RealCam0 ("RealCam0", 2D) = "white" {}
+		_RealCam1 ("RealCam1", 2D) = "white" {}
+		_RealCam2 ("RealCam2", 2D) = "white" {}
+		_RealCam3 ("RealCam3", 2D) = "white" {}
+		_RealCam4 ("RealCam4", 2D) = "white" {}
+		_RealCam5 ("RealCam5", 2D) = "white" {}
+		_RealCam6 ("RealCam6", 2D) = "white" {}
+		_RealCam7 ("RealCam7", 2D) = "white" {}
+		_RealCam8 ("RealCam8", 2D) = "white" {}
+		_RealCam9 ("RealCam9", 2D) = "white" {}
+
 		_nearPlane ("_nearPlane", float) = 0
 		_farPlane ("_farPlane", float) = 0
 		_ImagePlaneLength ("_ImagePlaneLength", float) = 0
@@ -22,10 +33,21 @@ Properties {
 	#pragma fragment frag
 	#include "UnityCG.cginc"
 
-	sampler2D _Cam0;
-	sampler2D _Cam1;
-	sampler2D _Cam2;
-	sampler2D _Cam3;
+	sampler2D_float _Cam0;
+	sampler2D_float _Cam1;
+	sampler2D_float _Cam2;
+	sampler2D_float _Cam3;
+
+	sampler2D _RealCam0;
+	sampler2D _RealCam1;
+	sampler2D _RealCam2;
+	sampler2D _RealCam3;
+	sampler2D _RealCam4;
+	sampler2D _RealCam5;
+	sampler2D _RealCam6;
+	sampler2D _RealCam7;
+	sampler2D _RealCam8;
+	sampler2D _RealCam9;
 
 	float _DifX;
 	float _DifY;
@@ -114,6 +136,41 @@ Properties {
 		tmpCam3Value = float4(0.0,0.0,0.0,2.0);
 
 		//return tex2D(_Cam0, float2(((i.pos.x % (1.0/_Cam0_TexelSize.x) + 0 )) / (1.0/_Cam0_TexelSize.x), (-(i.pos.y * (_Cam0_TexelSize.x))) + 1.0)) + float4(0,0,0.5,1);
+		float subImageWidth = 160;
+		if(i.pos.y > subImageWidth && i.pos.x < subImageWidth){
+			return float4(1,0,0,1);
+			return tex2D(_RealCam0, float2(((i.pos.x))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth * 1){
+			return float4(1,1,0,1);
+			return tex2D(_RealCam1, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth * 2){
+			return tex2D(_RealCam2, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth * 3){
+			return tex2D(_RealCam3, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth* 4){
+			return tex2D(_RealCam4, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth * 5){
+			return tex2D(_RealCam5, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth * 6){
+			return tex2D(_RealCam6, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth * 7){
+			return tex2D(_RealCam7, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth * 8){
+			return tex2D(_RealCam8, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}else if(i.pos.y > subImageWidth && i.pos.x > subImageWidth * 9){
+			return tex2D(_RealCam9, float2(((i.pos.x%subImageWidth))
+			/ subImageWidth, (-((i.pos.y % subImageWidth) * (_Cam0_TexelSize.x))) + 1.0));
+		}
+
 
 		//go through
 
@@ -194,31 +251,31 @@ Properties {
 
 			float lol = i.pos.x - (1.0/_Cam0_TexelSize.x) * screenIndexX;
 
-			tmpCam0Value = lerp(tmpCam0Value, lerp(realCamera0Colors, tmpCam0Value, step(tmpCam0Value.w, realCamera0Colors.w)), step(abs(xp - lol), 1.01) * step() );
-				tmpCam0Value += float4(0.8,0,0,0);
+		//	tmpCam0Value = lerp(tmpCam0Value, lerp(realCamera0Colors, tmpCam0Value, step(tmpCam0Value.w, realCamera0Colors.w)), step(abs(xp - lol), 1.01) );
+		//		tmpCam0Value = float4(0.8,0,0,tmpCam0Value.w);
 
-			tmpCam1Value = lerp(tmpCam1Value, lerp(realCamera1Colors, tmpCam1Value, step(tmpCam1Value.w, realCamera1Colors.w)), step(abs(xp1 - lol), 1.01) );
-				tmpCam1Value += float4(0,0.8,0,0);
+		//	tmpCam1Value = lerp(tmpCam1Value, lerp(realCamera1Colors, tmpCam1Value, step(tmpCam1Value.w, realCamera1Colors.w)), step(abs(xp1 - lol), 1.01) );
+		//		tmpCam1Value = float4(0,0.8,0,tmpCam1Value.w);
 
-			tmpCam2Value = lerp(tmpCam2Value, lerp(realCamera2Colors, tmpCam2Value, step(tmpCam2Value.w, realCamera2Colors.w)), step(abs(xp2 - lol), 1.01) );
-				//tmpCam2Value += float4(0.8,0,0.8,0);
+		//	tmpCam2Value = lerp(tmpCam2Value, lerp(realCamera2Colors, tmpCam2Value, step(tmpCam2Value.w, realCamera2Colors.w)), step(abs(xp2 - lol), 1.01) );
+		//		//tmpCam2Value += float4(0.8,0,0.8,0);
 
-			tmpCam3Value = lerp(tmpCam3Value, lerp(realCamera3Colors, tmpCam3Value, step(tmpCam3Value.w, realCamera3Colors.w)), step(abs(xp3 - lol), 1.01) );
-				//tmpCam3Value += float4(0,0.8,0.8,0);
+		//	tmpCam3Value = lerp(tmpCam3Value, lerp(realCamera3Colors, tmpCam3Value, step(tmpCam3Value.w, realCamera3Colors.w)), step(abs(xp3 - lol), 1.01) );
+		//		//tmpCam3Value += float4(0,0.8,0.8,0);
 
 
-			if(abs(lol2 - lol) <= 1) {
+			if(abs(xp - lol) <= 0.1 ){
 				if(tmpCam0Value.w > realCamera0Colors.w){
 					tmpCam0Value = realCamera0Colors;
-					//tmpCam0Value += float4(0.8,0,0,0);
+					tmpCam0Value = float4(0.8,0,0,tmpCam0Value.w);
 
 				}
 			}
 
-			if(abs(lol3 - lol) <= 1) {
+			if(abs(xp1 - lol) <= 0.1 ){
 				if(tmpCam1Value.w > realCamera1Colors.w){
 					tmpCam1Value = realCamera1Colors;
-					//tmpCam1Value += float4(0,0.8,0,0);
+					tmpCam1Value = float4(0,0.8,0,tmpCam1Value.w);
 				}
 			}
 

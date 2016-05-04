@@ -18,6 +18,17 @@ public class camInterpolation : MonoBehaviour {
 		public RenderTexture camTwoRenderTexture;
 		public RenderTexture camThreeRenderTexture;
 
+		public RenderTexture realCam0RenderTexture;
+		public RenderTexture realCam1RenderTexture;
+		public RenderTexture realCam2RenderTexture;
+		public RenderTexture realCam3RenderTexture;
+		public RenderTexture realCam4RenderTexture;
+		public RenderTexture realCam5RenderTexture;
+		public RenderTexture realCam6RenderTexture;
+		public RenderTexture realCam7RenderTexture;
+		public RenderTexture realCam8RenderTexture;
+		public RenderTexture realCam9RenderTexture;
+
 
 		public float ImagePlaneLength;
 		private float ImagePlaneRatio;
@@ -93,6 +104,20 @@ public class camInterpolation : MonoBehaviour {
 			material.SetTexture ("_Cam1", camOneRenderTexture);
 			material.SetTexture ("_Cam2", camTwoRenderTexture);
 			material.SetTexture ("_Cam3", camThreeRenderTexture);
+
+			material.SetTexture ("_RealCam0", realCam0RenderTexture);
+			material.SetTexture ("_RealCam1", realCam1RenderTexture);
+			material.SetTexture ("_RealCam2", realCam2RenderTexture);
+			material.SetTexture ("_RealCam3", realCam3RenderTexture);
+			material.SetTexture ("_RealCam4", realCam4RenderTexture);
+			material.SetTexture ("_RealCam5", realCam5RenderTexture);
+			material.SetTexture ("_RealCam6", realCam6RenderTexture);
+			material.SetTexture ("_RealCam7", realCam7RenderTexture);
+			material.SetTexture ("_RealCam8", realCam8RenderTexture);
+			material.SetTexture ("_RealCam9", realCam9RenderTexture);
+
+
+			//_RealCam0 ("RealCam0", 2D) = "white" {}
 
 
 			material.SetFloat("_DifX", difX);
