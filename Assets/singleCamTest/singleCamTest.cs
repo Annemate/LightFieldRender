@@ -7,6 +7,8 @@ public class singleCamTest : MonoBehaviour {
 	float ImagePlaneLength;
 	public RenderTexture camZeroRenderTexture;
 	public RenderTexture camOneRenderTexture;
+	public RenderTexture camTwoRenderTexture;
+	public RenderTexture camThreeRenderTexture;
 //	public RenderTexture cleanCamZeroRenderTexture;
 //	public RenderTexture cleanCamOneRenderTexture;
 
@@ -20,6 +22,13 @@ public class singleCamTest : MonoBehaviour {
 	public RenderTexture realCam7RenderTexture;
 	public RenderTexture realCam8RenderTexture;
 	public RenderTexture realCam9RenderTexture;
+
+	public RenderTexture realCam10RenderTexture;
+	public RenderTexture realCam11RenderTexture;
+	public RenderTexture realCam12RenderTexture;
+	public RenderTexture realCam13RenderTexture;
+	public RenderTexture realCam14RenderTexture;
+	public RenderTexture realCam15RenderTexture;
 
 	// Use this for initialization
 	void Start () {
@@ -43,19 +52,28 @@ public class singleCamTest : MonoBehaviour {
 
 		material.SetTexture ("_Cam0", camZeroRenderTexture);
 		material.SetTexture ("_Cam1", camOneRenderTexture);
+		material.SetTexture ("_Cam2", camTwoRenderTexture);
+		material.SetTexture ("_Cam3", camThreeRenderTexture);
 	//	material.SetTexture ("_RealCam0", cleanCamZeroRenderTexture);
 	//	material.SetTexture ("_RealCam1", cleanCamOneRenderTexture);
 
-			material.SetTexture ("_RealCam0", realCam0RenderTexture);
-			material.SetTexture ("_RealCam1", realCam1RenderTexture);
-			material.SetTexture ("_RealCam2", realCam2RenderTexture);
-			material.SetTexture ("_RealCam3", realCam3RenderTexture);
-			material.SetTexture ("_RealCam4", realCam4RenderTexture);
-			material.SetTexture ("_RealCam5", realCam5RenderTexture);
-			material.SetTexture ("_RealCam6", realCam6RenderTexture);
-			material.SetTexture ("_RealCam7", realCam7RenderTexture);
-			material.SetTexture ("_RealCam8", realCam8RenderTexture);
-			material.SetTexture ("_RealCam9", realCam9RenderTexture);
+		material.SetTexture ("_RealCam0", realCam0RenderTexture);
+		material.SetTexture ("_RealCam1", realCam1RenderTexture);
+		material.SetTexture ("_RealCam2", realCam2RenderTexture);
+		material.SetTexture ("_RealCam3", realCam3RenderTexture);
+		material.SetTexture ("_RealCam4", realCam4RenderTexture);
+		material.SetTexture ("_RealCam5", realCam5RenderTexture);
+		material.SetTexture ("_RealCam6", realCam6RenderTexture);
+		material.SetTexture ("_RealCam7", realCam7RenderTexture);
+		material.SetTexture ("_RealCam8", realCam8RenderTexture);
+		material.SetTexture ("_RealCam9", realCam9RenderTexture);
+		material.SetTexture ("_RealCam10", realCam10RenderTexture);
+		material.SetTexture ("_RealCam11", realCam11RenderTexture);
+		material.SetTexture ("_RealCam12", realCam12RenderTexture);
+		material.SetTexture ("_RealCam13", realCam13RenderTexture);
+		material.SetTexture ("_RealCam14", realCam14RenderTexture);
+		material.SetTexture ("_RealCam15", realCam15RenderTexture);
+
 		Graphics.Blit (source, destination, material);
 	}
 

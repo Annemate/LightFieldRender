@@ -59,8 +59,8 @@
                  float4 myColor = tex2D(_MainTex, o.uv);
                  float grayColor = (myColor.x + myColor.y + myColor.z) / 3.0;
 
-                 myColor = float4(grayColor, grayColor, grayColor ,depth);
-                 //myColor = float4(myColor.x, myColor.y, myColor.z ,depth);
+                 //myColor = float4(grayColor, grayColor, grayColor ,depth);
+                 myColor = float4(myColor.x, myColor.y, myColor.z ,depth);
                  //myColor = float4(depth, depth, depth, 1);
                  return myColor;
                  //return depth;
