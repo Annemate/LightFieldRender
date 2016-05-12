@@ -1,4 +1,4 @@
-Shader "Custom/singleCamTest"
+Shader "Custom/singleCamTest 1"
 {
 	Properties
 	{
@@ -6,6 +6,7 @@ Shader "Custom/singleCamTest"
 		_Cam1 ("Cam1", 2D) = "white" {}
 		_Cam2 ("Cam2", 2D) = "white" {}
 		_Cam3 ("Cam3", 2D) = "white" {}
+		_Space ("Space", float) = 0
 
 		_RealCam0 ("RealCam0", 2D) = "white" {}
 		_RealCam1 ("RealCam1", 2D) = "white" {}
@@ -41,10 +42,13 @@ Shader "Custom/singleCamTest"
 
 			#include "UnityCG.cginc"
 
+			int myColor;
+
 			sampler2D _Cam0;
 			sampler2D _Cam1;
 			sampler2D _Cam2;
 			sampler2D _Cam3;
+			float _Space;
 
 			sampler2D _RealCam0; //remove
 			sampler2D _RealCam1;
@@ -149,6 +153,37 @@ Shader "Custom/singleCamTest"
 				subImageWidth = 1.0/_Cam0_TexelSize.x;
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
+
+				// if(screenIndexX == 7 && screenIndexY == 4){
+				// 	return float4(1.0,1.0,1.0,1.0);
+				// }
+				// return float4(0.0,0.0,0.0,1.0);
+
+				if(_Space > 1){
+					return tex2D(_Cam0, float2(((i.pos.x % subImageWidth )) / subImageWidth, ((((i.pos.y % subImageWidth )) / subImageWidth))));
+				}
+
+				if(screenIndexX % 2 == 0){
+					myColor = 1;
+				}else{
+					myColor = 0;
+				}
+
+				if(screenIndexY % 2 == 0){
+					if(myColor == 1){
+						myColor = 0;
+					}else{
+						myColor = 1;
+					}
+					//myColor = !myColor;
+				}
+
+				if(myColor == 1){
+					return float4(0.0,0.0,0.0,1.0);
+				}
+
+				return float4(1.0,1.0,1.0,1.0);
+
 
 
 				//return float4(screenIndexY/4.0,screenIndexY/4.0,screenIndexY/4.0,1.0);

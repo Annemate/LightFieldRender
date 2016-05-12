@@ -9,6 +9,7 @@ public class singleCamTest : MonoBehaviour {
 	public RenderTexture camOneRenderTexture;
 	public RenderTexture camTwoRenderTexture;
 	public RenderTexture camThreeRenderTexture;
+	float space;
 //	public RenderTexture cleanCamZeroRenderTexture;
 //	public RenderTexture cleanCamOneRenderTexture;
 
@@ -32,7 +33,7 @@ public class singleCamTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		material = new Material( Shader.Find("Custom/singleCamTest") );
+		material = new Material( Shader.Find("Custom/singleCamTest 1") );
 
 		ImagePlaneLength = (Mathf.Sin(Mathf.Deg2Rad * (90 - (gameObject.GetComponent<Camera>().fieldOfView/2.0f)))
 			* (camZeroRenderTexture.height / 2.0f)) / Mathf.Sin(Mathf.Deg2Rad * (gameObject.GetComponent<Camera>().fieldOfView / 2.0f));
@@ -40,15 +41,26 @@ public class singleCamTest : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update() {
+        if (Input.GetKeyUp("space")){
+        	if(space < 1){
+        		space = 2;
+        	}else{
+        		space = 0;
+        	}
+            print("space key was released");
+        }
 
-	}
+    }
+
+
 
 	void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
 		material.SetFloat("_ImagePlaneLength", ImagePlaneLength);
 		material.SetFloat("_nearPlane", gameObject.GetComponent<Camera>().nearClipPlane);
 		material.SetFloat("_farPlane", gameObject.GetComponent<Camera>().farClipPlane);
+		material.SetFloat("_Space", space);
 
 		material.SetTexture ("_Cam0", camZeroRenderTexture);
 		material.SetTexture ("_Cam1", camOneRenderTexture);
