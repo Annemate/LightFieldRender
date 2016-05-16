@@ -154,10 +154,19 @@ Shader "Custom/singleCamTest 1"
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
 
-				// if(screenIndexX == 7 && screenIndexY == 4){
-				// 	return float4(1.0,1.0,1.0,1.0);
-				// }
-				// return float4(0.0,0.0,0.0,1.0);
+				if(screenIndexX == 7 && screenIndexY == 4){
+					return float4(0.0,1.0,0.0,1.0);
+				}
+
+				if(screenIndexY == 4){
+					return float4(1.0,0.0,0.0,1.0);
+				}
+
+				return float4(0.0,0.0,0.0,1.0);
+				if(screenIndexY > 4){
+					return float4(0.0,0.0,1.0,1.0);
+				}
+				return float4(0.0,1.0,0.0,1.0);
 
 				if(_Space > 1){
 					return tex2D(_Cam0, float2(((i.pos.x % subImageWidth )) / subImageWidth, ((((i.pos.y % subImageWidth )) / subImageWidth))));

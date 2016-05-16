@@ -221,6 +221,7 @@ Shader "Custom/singleCamTest"
 				{
 
 
+
 					//calculates the sub-image position from the current position of the fragment in screen space
 					//look-up in the real camera +-half of the for-loop duration
 					realCamera0Colors = tex2D(_Cam0, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
@@ -304,7 +305,7 @@ Shader "Custom/singleCamTest"
 
 					//CAMERA 0
 					//check if this distance between calculated value and the fragment position is less than half a pixel
-					if(abs(pCam0.x - currentSubImgPos.x) < 0.5 ) {
+					if(abs(pCam0.x - currentSubImgPos.x) < 0.5 && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam0Value.w > realCamera0Colors.w){
 
@@ -320,7 +321,7 @@ Shader "Custom/singleCamTest"
 
 					//CAMERA 1
 					//check previous comments
-					if(abs(pCam1.x - currentSubImgPos.x) < 0.5 ) {
+					if(abs(pCam1.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam1Value.w > realCamera1Colors.w){
 
 								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam1.x))) / subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
@@ -331,7 +332,7 @@ Shader "Custom/singleCamTest"
 
 					//CAMERA 2
 					//check previous comments
-					if(abs(pCam2.x - currentSubImgPos.x) < 0.5 ) {
+					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam2Value.w > realCamera2Colors.w){
 
 								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
@@ -342,7 +343,7 @@ Shader "Custom/singleCamTest"
 
 					//CAMERA 3
 					//check previous comments
-					if(abs(pCam3.x - currentSubImgPos.x) < 0.5 ) {
+					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam3Value.w > realCamera3Colors.w){
 
 								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth))));
@@ -369,20 +370,44 @@ Shader "Custom/singleCamTest"
 				// else if(outputCam3Value.w <= outputCam1Value.w && outputCam3Value.w <= outputCam2Value.w && outputCam3Value.w <= outputCam0Value.w){
 				// 	return(outputCam3Value);
 				// }
-				return(outputCam2Value );
-				// if(outputCam0Value.w <= outputCam1Value.w && outputCam0Value.w <= outputCam2Value.w && outputCam0Value.w <= outputCam3Value.w){
-				// 	return(outputCam0Value);
-				// }
-				//  if(outputCam1Value.w <= outputCam0Value.w && outputCam1Value.w <= outputCam2Value.w && outputCam1Value.w <= outputCam3Value.w){
-				// 	//return(outputCam1Value + float4(0,0.3,0,1));
-				// }
-				//  if(outputCam2Value.w <= outputCam1Value.w && outputCam2Value.w <= outputCam0Value.w && outputCam2Value.w <= outputCam3Value.w){
-				// 	//return(outputCam2Value + float4(0,0,1,1));
-				// }
-				//  if(outputCam3Value.w <= outputCam1Value.w && outputCam3Value.w <= outputCam2Value.w && outputCam3Value.w <= outputCam0Value.w){
-				// 	//return(outputCam3Value );
-				// }
-				//return float4(0.0,0.0,0.0,1.0);
+				//return(outputCam0Value);
+				//return(outputCam1Value);
+				//return(outputCam2Value);
+				//return(outputCam3Value);
+
+				if(i.pos.y < subImageWidth ){
+
+					if(outputCam0Value.w <= outputCam1Value.w ){
+					return(outputCam0Value);
+					}
+					if(outputCam1Value.w <= outputCam0Value.w){
+					return(outputCam1Value);
+					}
+
+				}
+
+				if(i.pos.y < subImageWidth * 8.0 && i.pos.y > subImageWidth * 7.0){
+					if(outputCam2Value.w <= outputCam3Value.w ){
+						return(outputCam2Value);
+					}
+					 if(outputCam3Value.w <= outputCam2Value.w ){
+						return(outputCam3Value);
+					}
+				}
+
+				if(outputCam0Value.w <= outputCam1Value.w && outputCam0Value.w <= outputCam2Value.w && outputCam0Value.w <= outputCam3Value.w){
+					//return(outputCam0Value);
+				}
+				 if(outputCam1Value.w <= outputCam0Value.w && outputCam1Value.w <= outputCam2Value.w && outputCam1Value.w <= outputCam3Value.w){
+					//return(outputCam1Value);
+				}
+				 if(outputCam2Value.w <= outputCam1Value.w && outputCam2Value.w <= outputCam0Value.w && outputCam2Value.w <= outputCam3Value.w){
+					//return(outputCam2Value);
+				}
+				 if(outputCam3Value.w <= outputCam1Value.w && outputCam3Value.w <= outputCam2Value.w && outputCam3Value.w <= outputCam0Value.w){
+					//return(outputCam3Value);
+				}
+				return float4(0.0,0.0,0.0,1.0);
 			}
 			ENDCG
 		}
