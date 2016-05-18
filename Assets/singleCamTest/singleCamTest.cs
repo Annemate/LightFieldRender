@@ -33,7 +33,7 @@ public class singleCamTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		material = new Material( Shader.Find("Custom/singleCamTest 1") );
+		material = new Material( Shader.Find("Custom/singleCamTest") );
 
 		ImagePlaneLength = (Mathf.Sin(Mathf.Deg2Rad * (90 - (gameObject.GetComponent<Camera>().fieldOfView/2.0f)))
 			* (camZeroRenderTexture.height / 2.0f)) / Mathf.Sin(Mathf.Deg2Rad * (gameObject.GetComponent<Camera>().fieldOfView / 2.0f));
