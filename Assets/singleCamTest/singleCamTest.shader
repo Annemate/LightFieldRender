@@ -247,65 +247,52 @@ Shader "Custom/singleCamTest"
 					eCam0.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam0.z)/_ImagePlaneLength;
 					eCam0.x = eCam0.x - screenIndexX;
 
-					eCam0.y = ( (((i.pos.y % subImageWidth )) - (subImageWidth / 2.0)) * eCam0.z)/_ImagePlaneLength;
-					eCam0.y = eCam0.y - screenIndexY;
+
 
 					eCam1.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
 					eCam1.x = eCam1.x - screenIndexX + 14.0;
 
-					eCam1.y =( (((i.pos.y % subImageWidth )) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
-					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam1.y = eCam1.y - screenIndexY + 0.0;
+
 
 					eCam2.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam2.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
 					eCam2.x = eCam2.x - screenIndexX + 14.0;
 
-					eCam2.y = ( (((i.pos.y % subImageWidth)) - (subImageWidth / 2.0)) * eCam2.z)/_ImagePlaneLength;
-					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam2.y = eCam2.y - screenIndexY + 7.0;
+
 
 					eCam3.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam3.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
 					eCam3.x = eCam3.x - screenIndexX + 0.0;
 
-					eCam3.y = ( (((i.pos.y % subImageWidth )) - (subImageWidth / 2.0)) * eCam3.z)/_ImagePlaneLength;
-					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam3.y = eCam3.y - screenIndexY + 7.0;
 
 					//Convert back from eye/view space to the projection plane
 					pCam0.x = -(_ImagePlaneLength * eCam0.x) / -eCam0.z;
 					pCam0.x = pCam0.x + (subImageWidth/2.0);
 
-					pCam0.y = -(_ImagePlaneLength * eCam0.y) / -eCam0.z;
-					pCam0.y = pCam0.y + (subImageWidth/2.0);
+
 
 					pCam1.x = -(_ImagePlaneLength * eCam1.x) / -eCam1.z;
 					pCam1.x = pCam1.x + (subImageWidth/2.0);
 
-					pCam1.y = -(_ImagePlaneLength * eCam1.y) / -eCam1.z;
-					pCam1.y = pCam1.y + (subImageWidth/2.0);
+
 
 					pCam2.x = -(_ImagePlaneLength * eCam2.x) / -eCam2.z;
 					pCam2.x = pCam2.x + (subImageWidth/2.0);
 
-					pCam2.y = -(_ImagePlaneLength * eCam2.y) / -eCam2.z;
-					pCam2.y = pCam2.y + (subImageWidth/2.0);
 
 					pCam3.x = -(_ImagePlaneLength * eCam3.x) / -eCam3.z;
 					pCam3.x = pCam3.x + (subImageWidth/2.0);
 
-					pCam3.y = -(_ImagePlaneLength * eCam3.y) / -eCam3.z;
-					pCam3.y = pCam3.y + (subImageWidth/2.0);
+
 
 					//position of our subimage on the screen
 					currentSubImgPos.x = i.pos.x - (subImageWidth * screenIndexX);
-					currentSubImgPos.y = i.pos.y - (subImageWidth * screenIndexY);
+
 
 					//CAMERA 0
 					//check if this distance between calculated value and the fragment position is less than half a pixel
-					if(abs(pCam0.x - currentSubImgPos.x) < 0.5 && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
+					if(abs(pCam0.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam0Value.w > realCamera0Colors.w){
 
@@ -387,6 +374,7 @@ Shader "Custom/singleCamTest"
 				}
 
 				if(i.pos.y < subImageWidth * 8.0 && i.pos.y > subImageWidth * 7.0){
+
 					if(outputCam2Value.w <= outputCam3Value.w ){
 						return(outputCam2Value);
 					}
@@ -407,7 +395,7 @@ Shader "Custom/singleCamTest"
 				 if(outputCam3Value.w <= outputCam1Value.w && outputCam3Value.w <= outputCam2Value.w && outputCam3Value.w <= outputCam0Value.w){
 					//return(outputCam3Value);
 				}
-				return float4(0.0,0.0,0.0,1.0);
+				return float4(0.0,1.0,0.0,1.0);
 			}
 			ENDCG
 		}
