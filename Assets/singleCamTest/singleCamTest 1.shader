@@ -158,15 +158,31 @@ Shader "Custom/singleCamTest 1"
 					return float4(0.0,1.0,0.0,1.0);
 				}
 
-				if(screenIndexY == 4){
+				if(screenIndexX == 1 && screenIndexY == 6){
+					return float4(0.0,1.0,0.0,1.0);
+				}
+
+				if(screenIndexX == 1 && screenIndexY == 1){
+					return float4(0.0,1.0,0.0,1.0);
+				}
+
+				if(screenIndexX == 13 && screenIndexY == 6){
+					return float4(0.0,1.0,0.0,1.0);
+				}
+
+				if(screenIndexX == 13 && screenIndexY == 1){
+					return float4(0.0,1.0,0.0,1.0);
+				}
+
+				if(screenIndexX == 7){
 					return float4(1.0,0.0,0.0,1.0);
 				}
 
-				return float4(0.0,0.0,0.0,1.0);
+				return float4(1.0,0.0,0.0,1.0);
 				if(screenIndexY > 4){
 					return float4(0.0,0.0,1.0,1.0);
 				}
-				return float4(0.0,1.0,0.0,1.0);
+				return float4(1.0,.0,0.0,1.0);
 
 				if(_Space > 1){
 					return tex2D(_Cam0, float2(((i.pos.x % subImageWidth )) / subImageWidth, ((((i.pos.y % subImageWidth )) / subImageWidth))));

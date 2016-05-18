@@ -1,0 +1,277 @@
+﻿using UnityEngine;
+using System.Collections;
+
+[ExecuteInEditMode]
+public class OneTwentyCameraToShaderScript : MonoBehaviour {
+
+		//[Range(0f, 30f)]
+		public float difX;
+		public float difY;
+
+		public bool clean = false;
+		private Material material;
+
+		private float renderTextureWidth;
+
+		public RenderTexture cam0;
+		public RenderTexture cam1;
+		public RenderTexture cam2;
+		public RenderTexture cam3;
+		public RenderTexture cam4;
+		public RenderTexture cam5;
+		public RenderTexture cam6;
+		public RenderTexture cam7;
+		public RenderTexture cam8;
+		public RenderTexture cam9;
+		public RenderTexture cam10;
+		public RenderTexture cam11;
+		public RenderTexture cam12;
+		public RenderTexture cam13;
+		public RenderTexture cam14;
+		public RenderTexture cam15;
+		public RenderTexture cam16;
+		public RenderTexture cam17;
+		public RenderTexture cam18;
+		public RenderTexture cam19;
+		public RenderTexture cam20;
+		public RenderTexture cam21;
+		public RenderTexture cam22;
+		public RenderTexture cam23;
+		public RenderTexture cam24;
+		public RenderTexture cam25;
+		public RenderTexture cam26;
+		public RenderTexture cam27;
+		public RenderTexture cam28;
+		public RenderTexture cam29;
+		public RenderTexture cam30;
+		public RenderTexture cam31;
+		public RenderTexture cam32;
+		public RenderTexture cam33;
+		public RenderTexture cam34;
+		public RenderTexture cam35;
+		public RenderTexture cam36;
+		public RenderTexture cam37;
+		public RenderTexture cam38;
+		public RenderTexture cam39;
+		public RenderTexture cam40;
+		public RenderTexture cam41;
+		public RenderTexture cam42;
+		public RenderTexture cam43;
+		public RenderTexture cam44;
+		public RenderTexture cam45;
+		public RenderTexture cam46;
+		public RenderTexture cam47;
+		public RenderTexture cam48;
+		public RenderTexture cam49;
+		public RenderTexture cam50;
+		public RenderTexture cam51;
+		public RenderTexture cam52;
+		public RenderTexture cam53;
+		public RenderTexture cam54;
+		public RenderTexture cam55;
+		public RenderTexture cam56;
+		public RenderTexture cam57;
+		public RenderTexture cam58;
+		public RenderTexture cam59;
+		public RenderTexture cam60;
+		public RenderTexture cam61;
+		public RenderTexture cam62;
+		public RenderTexture cam63;
+		public RenderTexture cam64;
+		public RenderTexture cam65;
+		public RenderTexture cam66;
+		public RenderTexture cam67;
+		public RenderTexture cam68;
+		public RenderTexture cam69;
+		public RenderTexture cam70;
+		public RenderTexture cam71;
+		public RenderTexture cam72;
+		public RenderTexture cam73;
+		public RenderTexture cam74;
+		public RenderTexture cam75;
+		public RenderTexture cam76;
+		public RenderTexture cam77;
+		public RenderTexture cam78;
+		public RenderTexture cam79;
+		public RenderTexture cam80;
+		public RenderTexture cam81;
+		public RenderTexture cam82;
+		public RenderTexture cam83;
+		public RenderTexture cam84;
+		public RenderTexture cam85;
+		public RenderTexture cam86;
+		public RenderTexture cam87;
+		public RenderTexture cam88;
+		public RenderTexture cam89;
+		public RenderTexture cam90;
+		public RenderTexture cam91;
+		public RenderTexture cam92;
+		public RenderTexture cam93;
+		public RenderTexture cam94;
+		public RenderTexture cam95;
+		public RenderTexture cam96;
+		public RenderTexture cam97;
+		public RenderTexture cam98;
+		public RenderTexture cam99;
+		public RenderTexture cam100;
+		public RenderTexture cam101;
+		public RenderTexture cam102;
+		public RenderTexture cam103;
+		public RenderTexture cam104;
+		public RenderTexture cam105;
+		public RenderTexture cam106;
+		public RenderTexture cam107;
+		public RenderTexture cam108;
+		public RenderTexture cam109;
+		public RenderTexture cam110;
+		public RenderTexture cam111;
+		public RenderTexture cam112;
+		public RenderTexture cam113;
+		public RenderTexture cam114;
+		public RenderTexture cam115;
+		public RenderTexture cam116;
+		public RenderTexture cam117;
+		public RenderTexture cam118;
+		public RenderTexture cam119;
+
+		// Creates a private material used to the effect
+		void Start ()
+		{
+			material = new Material( Shader.Find("Custom/camOneTwenty") );
+
+		}
+
+
+		// Postprocess the image
+		void OnRenderImage (RenderTexture source, RenderTexture destination)
+		{
+			if (clean)
+			{
+				Graphics.Blit (source, destination);
+				return;
+			}
+
+			material.SetTexture ("_RealCam0", cam0);
+			material.SetTexture ("_RealCam1", cam1);
+			material.SetTexture ("_RealCam2", cam2);
+			material.SetTexture ("_RealCam3", cam3);
+			material.SetTexture ("_RealCam4", cam4);
+			material.SetTexture ("_RealCam5", cam5);
+			material.SetTexture ("_RealCam6", cam6);
+			material.SetTexture ("_RealCam7", cam7);
+			material.SetTexture ("_RealCam8", cam8);
+			material.SetTexture ("_RealCam9", cam9);
+			material.SetTexture ("_RealCam10", cam10);
+			material.SetTexture ("_RealCam11", cam11);
+			material.SetTexture ("_RealCam12", cam12);
+			material.SetTexture ("_RealCam13", cam13);
+			material.SetTexture ("_RealCam14", cam14);
+			material.SetTexture ("_RealCam15", cam15);
+			material.SetTexture ("_RealCam16", cam16);
+			material.SetTexture ("_RealCam17", cam17);
+			material.SetTexture ("_RealCam18", cam18);
+			material.SetTexture ("_RealCam19", cam19);
+			material.SetTexture ("_RealCam20", cam20);
+			material.SetTexture ("_RealCam21", cam21);
+			material.SetTexture ("_RealCam22", cam22);
+			material.SetTexture ("_RealCam23", cam23);
+			material.SetTexture ("_RealCam24", cam24);
+			material.SetTexture ("_RealCam25", cam25);
+			material.SetTexture ("_RealCam26", cam26);
+			material.SetTexture ("_RealCam27", cam27);
+			material.SetTexture ("_RealCam28", cam28);
+			material.SetTexture ("_RealCam29", cam29);
+			material.SetTexture ("_RealCam30", cam30);
+			material.SetTexture ("_RealCam31", cam31);
+			material.SetTexture ("_RealCam32", cam32);
+			material.SetTexture ("_RealCam33", cam33);
+			material.SetTexture ("_RealCam34", cam34);
+			material.SetTexture ("_RealCam35", cam35);
+			material.SetTexture ("_RealCam36", cam36);
+			material.SetTexture ("_RealCam37", cam37);
+			material.SetTexture ("_RealCam38", cam38);
+			material.SetTexture ("_RealCam39", cam39);
+			material.SetTexture ("_RealCam40", cam40);
+			material.SetTexture ("_RealCam41", cam41);
+			material.SetTexture ("_RealCam42", cam42);
+			material.SetTexture ("_RealCam43", cam43);
+			material.SetTexture ("_RealCam44", cam44);
+			material.SetTexture ("_RealCam45", cam45);
+			material.SetTexture ("_RealCam46", cam46);
+			material.SetTexture ("_RealCam47", cam47);
+			material.SetTexture ("_RealCam48", cam48);
+			material.SetTexture ("_RealCam49", cam49);
+			material.SetTexture ("_RealCam50", cam50);
+			material.SetTexture ("_RealCam51", cam51);
+			material.SetTexture ("_RealCam52", cam52);
+			material.SetTexture ("_RealCam53", cam53);
+			material.SetTexture ("_RealCam54", cam54);
+			material.SetTexture ("_RealCam55", cam55);
+			material.SetTexture ("_RealCam56", cam56);
+			material.SetTexture ("_RealCam57", cam57);
+			material.SetTexture ("_RealCam58", cam58);
+			material.SetTexture ("_RealCam59", cam59);
+			material.SetTexture ("_RealCam60", cam60);
+			material.SetTexture ("_RealCam61", cam61);
+			material.SetTexture ("_RealCam62", cam62);
+			material.SetTexture ("_RealCam63", cam63);
+			material.SetTexture ("_RealCam64", cam64);
+			material.SetTexture ("_RealCam65", cam65);
+			material.SetTexture ("_RealCam66", cam66);
+			material.SetTexture ("_RealCam67", cam67);
+			material.SetTexture ("_RealCam68", cam68);
+			material.SetTexture ("_RealCam69", cam69);
+			material.SetTexture ("_RealCam70", cam70);
+			material.SetTexture ("_RealCam71", cam71);
+			material.SetTexture ("_RealCam72", cam72);
+			material.SetTexture ("_RealCam73", cam73);
+			material.SetTexture ("_RealCam74", cam74);
+			material.SetTexture ("_RealCam75", cam75);
+			material.SetTexture ("_RealCam76", cam76);
+			material.SetTexture ("_RealCam77", cam77);
+			material.SetTexture ("_RealCam78", cam78);
+			material.SetTexture ("_RealCam79", cam79);
+			material.SetTexture ("_RealCam80", cam80);
+			material.SetTexture ("_RealCam81", cam81);
+			material.SetTexture ("_RealCam82", cam82);
+			material.SetTexture ("_RealCam83", cam83);
+			material.SetTexture ("_RealCam84", cam84);
+			material.SetTexture ("_RealCam85", cam85);
+			material.SetTexture ("_RealCam86", cam86);
+			material.SetTexture ("_RealCam87", cam87);
+			material.SetTexture ("_RealCam88", cam88);
+			material.SetTexture ("_RealCam89", cam89);
+			material.SetTexture ("_RealCam90", cam90);
+			material.SetTexture ("_RealCam91", cam91);
+			material.SetTexture ("_RealCam92", cam92);
+			material.SetTexture ("_RealCam93", cam93);
+			material.SetTexture ("_RealCam94", cam94);
+			material.SetTexture ("_RealCam95", cam95);
+			material.SetTexture ("_RealCam96", cam96);
+			material.SetTexture ("_RealCam97", cam97);
+			material.SetTexture ("_RealCam98", cam98);
+			material.SetTexture ("_RealCam99", cam99);
+			material.SetTexture ("_RealCam100", cam100);
+			material.SetTexture ("_RealCam101", cam101);
+			material.SetTexture ("_RealCam102", cam102);
+			material.SetTexture ("_RealCam103", cam103);
+			material.SetTexture ("_RealCam104", cam104);
+			material.SetTexture ("_RealCam105", cam105);
+			material.SetTexture ("_RealCam106", cam106);
+			material.SetTexture ("_RealCam107", cam107);
+			material.SetTexture ("_RealCam108", cam108);
+			material.SetTexture ("_RealCam109", cam109);
+			material.SetTexture ("_RealCam110", cam110);
+			material.SetTexture ("_RealCam111", cam111);
+			material.SetTexture ("_RealCam112", cam112);
+			material.SetTexture ("_RealCam113", cam113);
+			material.SetTexture ("_RealCam114", cam114);
+			material.SetTexture ("_RealCam115", cam115);
+			material.SetTexture ("_RealCam116", cam116);
+			material.SetTexture ("_RealCam117", cam117);
+			material.SetTexture ("_RealCam118", cam118);
+			material.SetTexture ("_RealCam119", cam119);
+
+			Graphics.Blit (source, destination, material);
+		}
+	}
