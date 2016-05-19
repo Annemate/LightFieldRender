@@ -21,6 +21,8 @@ public class camMosaic : MonoBehaviour {
 	public RenderTexture realCam13RenderTexture;
 	public RenderTexture realCam14RenderTexture;
 
+	public int yIndex;
+
 	// Use this for initialization
 	void Start () {
 		material = new Material( Shader.Find("Custom/camMosaic") );
@@ -48,6 +50,7 @@ public class camMosaic : MonoBehaviour {
 		material.SetTexture ("_RealCam12", realCam12RenderTexture);
 		material.SetTexture ("_RealCam13", realCam13RenderTexture);
 		material.SetTexture ("_RealCam14", realCam14RenderTexture);
+		material.SetFloat("_offset", (float)yIndex);
 
 
 
