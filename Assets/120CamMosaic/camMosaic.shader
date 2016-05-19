@@ -20,6 +20,7 @@
 		_RealCam12 ("RealCam12", 2D) = "white" {}
 		_RealCam13 ("RealCam13", 2D) = "white" {}
 		_RealCam14 ("RealCam14", 2D) = "white" {}
+		_offset("_offset", float) = 0
 
 	}
 	SubShader
@@ -36,6 +37,8 @@
 			#include "UnityCG.cginc"
 
 			float _Space;
+
+			float _offset;
 
 
 			sampler2D _RealCam0;
@@ -98,28 +101,38 @@
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
 
-				if( i.pos.x < (subImageWidth * (1.0)) && i.pos.y < (subImageWidth * 1.0)){
+				if( i.pos.x < (subImageWidth * (1.0))  && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
 					return tex2D(_RealCam0, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (2.0)) && i.pos.x > (subImageWidth *(3.0))&& i.pos.y < (subImageWidth * (1.0)) ){
+				}else if(i.pos.x > (subImageWidth * (1.0)) && i.pos.x < (subImageWidth *(2.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
 					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (3.0)) && i.pos.x > (subImageWidth *(4.0))&& i.pos.y < (subImageWidth * (1.0)) ){
-					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (4.0)) && i.pos.x > (subImageWidth *(5.0))&& i.pos.y < (subImageWidth * (1.0)) ){
-					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (5.0)) && i.pos.x > (subImageWidth *(6.0))&& i.pos.y < (subImageWidth * (1.0)) ){
-					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (6.0)) && i.pos.x > (subImageWidth *(7.0))&& i.pos.y < (subImageWidth * (1.0)) ){
-					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (7.0)) && i.pos.x > (subImageWidth *(8.0))&& i.pos.y < (subImageWidth * (1.0)) ){
-					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (8.0)) && i.pos.x > (subImageWidth *(9.0))&& i.pos.y < (subImageWidth * (1.0)) ){
-					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (9.0)) && i.pos.x > (subImageWidth *(10.0))&& i.pos.y < (subImageWidth * (1.0)) ){
-					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-				}else if(i.pos.x < (subImageWidth * (10.0)) && i.pos.x > (subImageWidth *(11.0))&& i.pos.y < (subImageWidth * (1.0)) ){
-					return tex2D(_RealCam1, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (2.0)) && i.pos.x < (subImageWidth *(3.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam2, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (3.0)) && i.pos.x < (subImageWidth *(4.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam3, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (4.0)) && i.pos.x < (subImageWidth *(5.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam4, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (5.0)) && i.pos.x < (subImageWidth *(6.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam5, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (6.0)) && i.pos.x < (subImageWidth *(7.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam6, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (7.0)) && i.pos.x < (subImageWidth *(8.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam7, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (8.0)) && i.pos.x < (subImageWidth *(9.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam8, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (9.0)) && i.pos.x < (subImageWidth *(10.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam9, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (10.0)) && i.pos.x < (subImageWidth *(11.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam10, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (11.0)) && i.pos.x < (subImageWidth *(12.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam11, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (12.0)) && i.pos.x < (subImageWidth *(13.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam12, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (13.0)) && i.pos.x < (subImageWidth *(14.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam13, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
+				}else if(i.pos.x > (subImageWidth * (14.0)) && i.pos.x < (subImageWidth *(15.0)) && i.pos.y < (subImageWidth * (_offset)) && i.pos.y > (subImageWidth * (_offset - 1.0)) ){
+					return tex2D(_RealCam14, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
 				}
-				 return float4(1.0,0.0,0.0,1.0);
+				 return float4(0.0,0.0,0.0,1.0);
 
 
 			}

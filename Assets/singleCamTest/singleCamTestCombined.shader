@@ -90,6 +90,7 @@ Shader "Custom/singleCamTestCombined"
 
 			fixed4 frag (v2f i) : SV_Target
 			{
+
 				//Initializing values
 				subImageWidth = 100;
 				screenIndexX = i.pos.x / subImageWidth;
@@ -112,8 +113,8 @@ Shader "Custom/singleCamTestCombined"
 
 
 				//Initializing values with extreme depth (these variables will be overwritten by the first calculations in the for-loop)
-				outputCam0Value = float4(0.0,0.0,0.0,2.0);
-				outputCam1Value = float4(0.0,0.0,0.0,2.0);
+				outputCam0Value = float4(1.0,0.0,0.0,2.0);
+				outputCam1Value = float4(1.0,0.0,0.0,2.0);
 
 				loopDuration = 30;
 				for (int j = 0; j <= loopDuration; j++)
