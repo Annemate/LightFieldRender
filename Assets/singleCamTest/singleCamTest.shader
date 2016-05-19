@@ -238,10 +238,10 @@ Shader "Custom/singleCamTest"
 
 
 					//get z position in eye/view space
-					eCam0.z = (realCamera0Colors.w) * (_farPlane - _nearPlane) + _nearPlane;
-					eCam1.z = (realCamera1Colors.w) * (_farPlane - _nearPlane) + _nearPlane;
-					eCam2.z = (realCamera2Colors.w) * (_farPlane - _nearPlane) + _nearPlane;
-					eCam3.z = (realCamera3Colors.w) * (_farPlane - _nearPlane) + _nearPlane;
+					eCam0.z = (realCamera0Colors.w) * (_farPlane);
+					eCam1.z = (realCamera1Colors.w) * (_farPlane);
+					eCam2.z = (realCamera2Colors.w) * (_farPlane);
+					eCam3.z = (realCamera3Colors.w) * (_farPlane);
 
 					//Convert from the projection plane to eye/view space
 					eCam0.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam0.z)/_ImagePlaneLength;
@@ -251,19 +251,19 @@ Shader "Custom/singleCamTest"
 
 					eCam1.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam1.x = eCam1.x - screenIndexX + 14.0;
+					eCam1.x = eCam1.x - screenIndexX + 15.0;
 
 
 
 					eCam2.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam2.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam2.x = eCam2.x - screenIndexX + 14.0;
+					eCam2.x = eCam2.x - screenIndexX + 15.0;
 
 
 
 					eCam3.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam3.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam3.x = eCam3.x - screenIndexX + 0.0;
+					eCam3.x = eCam3.x - screenIndexX;
 
 
 					//Convert back from eye/view space to the projection plane
@@ -322,9 +322,9 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam2Value.w > realCamera2Colors.w){
 
-								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
+								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y - 700) / subImageWidth))));
 
-								outputCam2Value.w = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth ))))).w;
+								outputCam2Value.w = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth)))).w;
 						}
 					}
 
@@ -333,37 +333,36 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam3Value.w > realCamera3Colors.w){
 
-								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth))));
+								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y - 700 ) / subImageWidth))));
 
 								outputCam3Value.w = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth)))).w;
 						}
 					}
 				}
 
-				// //return color from camera with lowest depth
-				// return lerp(outputCam0Value, outputCam1Value, step(outputCam1Value.w, outputCam0Value.w));
-				// //return depth map only
-				// return lerp(float4(outputCam1Value.w, outputCam1Value.w, outputCam1Value.w, 1), float4(outputCam0Value.w , outputCam0Value.w , outputCam0Value.w, 1), step(outputCam0Value.w, outputCam1Value.w));
-				//return(outputCam0Value);
-				// if(outputCam0Value.w <= outputCam1Value.w && outputCam0Value.w <= outputCam2Value.w && outputCam0Value.w <= outputCam3Value.w){
-				// 	return(outputCam0Value);
+				// float grayOutputCam2Value = (outputCam2Value.x + outputCam2Value.y + outputCam2Value.z) / 3.0;
+				// float grayOutputCam3Value = (outputCam3Value.x + outputCam3Value.y + outputCam3Value.z) / 3.0;
+				// if(outputCam2Value.w < outputCam3Value.w){
+				// 	return outputCam2Value;
+				// 	//return (grayOutputCam2Value + float4(0.3,0,0,0));
 				// }
-				// else if(outputCam1Value.w <= outputCam0Value.w && outputCam1Value.w <= outputCam2Value.w && outputCam1Value.w <= outputCam3Value.w){
-				// 	return(outputCam1Value);
-				// }
-				// else if(outputCam2Value.w <= outputCam1Value.w && outputCam2Value.w <= outputCam0Value.w && outputCam2Value.w <= outputCam3Value.w){
-				// 	return(outputCam2Value);
-				// }
-				// else if(outputCam3Value.w <= outputCam1Value.w && outputCam3Value.w <= outputCam2Value.w && outputCam3Value.w <= outputCam0Value.w){
-				// 	return(outputCam3Value);
-				// }
-				//return(outputCam0Value);
-				//return(outputCam1Value);
-				//return(outputCam2Value);
-				//return(outputCam3Value);
+				// //return (grayOutputCam3Value + float4(0.0,0.3,0,0));
+				// return outputCam3Value;
+
+				if(i.pos.y < subImageWidth * 7 && i.pos.y > (subImageWidth * 7) - 15){
+					//return float4(1,0,0,1);
+				}
+
+				//If none of the cameras can see the posnt (the point is occluded by the elements in the scene)
+				if(outputCam0Value.w > 1.0 && outputCam1Value.w > 1.0 && outputCam2Value.w > 1.0 && outputCam3Value.w > 1.0){
+
+					//return float4(0,0,1,1);
+				}
+
+
 
 				if(i.pos.y < subImageWidth ){
-
+					//return(outputCam0Value);
 					if(outputCam0Value.w <= outputCam1Value.w ){
 					return(outputCam0Value);
 					}
@@ -373,8 +372,9 @@ Shader "Custom/singleCamTest"
 
 				}
 
-				if(i.pos.y < subImageWidth * 8.0 && i.pos.y > subImageWidth * 7.0){
+				if(i.pos.y < (subImageWidth * 8.0)  && i.pos.y > (subImageWidth * 7.0) - 15){
 
+					//return(outputCam2Value);
 					if(outputCam2Value.w <= outputCam3Value.w ){
 						return(outputCam2Value);
 					}
@@ -383,19 +383,8 @@ Shader "Custom/singleCamTest"
 					}
 				}
 
-				if(outputCam0Value.w <= outputCam1Value.w && outputCam0Value.w <= outputCam2Value.w && outputCam0Value.w <= outputCam3Value.w){
-					//return(outputCam0Value);
-				}
-				 if(outputCam1Value.w <= outputCam0Value.w && outputCam1Value.w <= outputCam2Value.w && outputCam1Value.w <= outputCam3Value.w){
-					//return(outputCam1Value);
-				}
-				 if(outputCam2Value.w <= outputCam1Value.w && outputCam2Value.w <= outputCam0Value.w && outputCam2Value.w <= outputCam3Value.w){
-					//return(outputCam2Value);
-				}
-				 if(outputCam3Value.w <= outputCam1Value.w && outputCam3Value.w <= outputCam2Value.w && outputCam3Value.w <= outputCam0Value.w){
-					//return(outputCam3Value);
-				}
-				return float4(0.0,1.0,0.0,1.0);
+
+				return float4(1,1,0,2);
 			}
 			ENDCG
 		}

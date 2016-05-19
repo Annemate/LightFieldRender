@@ -57,6 +57,7 @@ public class singleCamTest : MonoBehaviour {
 
 	void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
+
 		material.SetFloat("_ImagePlaneLength", ImagePlaneLength);
 		material.SetFloat("_nearPlane", gameObject.GetComponent<Camera>().nearClipPlane);
 		material.SetFloat("_farPlane", gameObject.GetComponent<Camera>().farClipPlane);

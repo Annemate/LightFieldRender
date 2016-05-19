@@ -95,7 +95,7 @@ Shader "Custom/singleCamTestCombined"
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
 
-				float4 test = float4(tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+				//float4 test = float4(tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 				//return float4(test.w, test.w, test.w, 1.0);
 				if(_Space > 1){
@@ -112,9 +112,9 @@ Shader "Custom/singleCamTestCombined"
 
 
 				//Initializing values with extreme depth (these variables will be overwritten by the first calculations in the for-loop)
-				outputCam0Value = float4(1.0,0.0,0.0,2.0);
-				outputCam1Value = float4(1.0,0.0,0.0,2.0);
-				_ImagePlaneLength = 86.60255;
+				outputCam0Value = float4(0.0,0.0,0.0,2.0);
+				outputCam1Value = float4(0.0,0.0,0.0,2.0);
+
 				loopDuration = 30;
 				for (int j = 0; j <= loopDuration; j++)
 				{
@@ -125,15 +125,15 @@ Shader "Custom/singleCamTestCombined"
 					realCamera0Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 
-					realCamera1Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+					realCamera1Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 					//realCamera0Colors = tex2D(_xAxisTexture, float2(i.pos.x, (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) / subImageWidth));
 
 
 					//realCamera1Colors = tex2D(_xAxisTexture, float2(i.pos.x, (i.pos.y % subImageWidth + 700.0 + (j - (loopDuration / 2.0))) / subImageWidth));
 
 					//get z position in eye/view space
-					eCam0.z = (realCamera0Colors.w) * (_farPlane - _nearPlane) + _nearPlane;
-					eCam1.z = (realCamera1Colors.w) * (_farPlane - _nearPlane) + _nearPlane;
+					eCam0.z = (realCamera0Colors.w) * (_farPlane );
+					eCam1.z = (realCamera1Colors.w) * (_farPlane );
 
 
 					//Convert from the projection plane to eye/view space
@@ -172,7 +172,9 @@ Shader "Custom/singleCamTestCombined"
 
 					//CAMERA 0
 					//check if this distance between calculated value and the fragment position is less than half a pixel
-					if(abs(pCam0.y - currentSubImgPos.y) < 0.5  && (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
+
+
+					if(abs(pCam0.y - currentSubImgPos.y) < 0.5 && (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam0Value.w > realCamera0Colors.w){
@@ -180,7 +182,7 @@ Shader "Custom/singleCamTestCombined"
 								//read value from real camera texture
 								//calculate difference between current subimage position and real camera position
 								//this value is used in a subpixel look-up (linear interpolation)
-								outputCam0Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth - (currentSubImgPos.y - pCam0.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+								outputCam0Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + (currentSubImgPos.y - pCam0.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 
 								//texture look-up in the depth without linear interpolation
@@ -191,14 +193,18 @@ Shader "Custom/singleCamTestCombined"
 						}
 					}
 
+
+
 					//CAMERA 1
 					//check previous comments
 					if(abs(pCam1.y - currentSubImgPos.y) < 0.5 && (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
+
 						if(outputCam1Value.w > realCamera1Colors.w){
 
-								outputCam1Value = (tex2D(_xAxisTexture, float2((i.pos.x )/ (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700 - (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
-								outputCam1Value.w = tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))).w;
+								outputCam1Value = (tex2D(_xAxisTexture, float2((i.pos.x )/ (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 + (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+
+								outputCam1Value.w = tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))).w;
 
 						}
 					}
@@ -209,11 +215,16 @@ Shader "Custom/singleCamTestCombined"
 
 				//return float4(outputCam1Value.w, outputCam1Value.w, outputCam1Value.w, 1.0);
 				//return float4(outputCam0Value.w, outputCam0Value.w, outputCam0Value.w, 1.0);
-				if(outputCam0Value.w < outputCam1Value.w){
-					return (outputCam0Value);
-				}
 
-				return (outputCam1Value);
+				float grayOutputCam0Value = (outputCam0Value.x + outputCam0Value.y + outputCam0Value.z) / 3.0;
+				float grayOutputCam1Value = (outputCam1Value.x + outputCam1Value.y + outputCam1Value.z) / 3.0;
+				if(outputCam0Value.w < outputCam1Value.w){
+					return outputCam0Value;
+					//return (outputCam0Value); return (grayOutputCam1Value +
+					//float4(0.3,0,0,0));
+				}
+				return outputCam1Value;
+				//return (grayOutputCam0Value + float4(0,0.3,0,0));
 
 
 
