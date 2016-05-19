@@ -13,11 +13,16 @@ public class control : MonoBehaviour {
 
 	public int firstChoice;
 	private int counter = 1;
+	private int counter5 = 0;
 
 	public int testNo;
 
 	String fileName = "logging.txt";
 	String testCounter = "testCounter.txt";
+
+	void OnApplicationQuit(){
+		File.AppendAllText (fileName, "\nUnity closed\n");
+	}
 
 	void Start()
 	{
@@ -32,76 +37,76 @@ public class control : MonoBehaviour {
 
 
 	void UpdateImage() {
-
-		testScaleShaderScript.count = 1;
-
-		if (counter == 0) {
-			testScaleShaderScript.count = 0;
-			counter = 1;
-		}
-		else if (counter == 1) {
-			
-			firstChoice = (int) Math.Round(UnityEngine.Random.Range (1.0f, 2.0f));
-			testScaleShaderScript.count = firstChoice;
-			print (firstChoice);
-			counter = 2; 
-			firstImageDuration = Time.time;
-		}else if(counter == 2){
-			testScaleShaderScript.count = 0;
-			counter = 3;
-			firstImageDuration = Time.time - firstImageDuration;
-		} else if(counter == 3) {
-			if (firstChoice == 1) {
-				testScaleShaderScript.count = 2;
-			} else {
+ 
+		if (counter == 1) {
+				firstChoice = (int)Math.Round (UnityEngine.Random.Range (1.0f, 2.0f));
+				testScaleShaderScript.count = firstChoice + (2 * (counter5 +1));;
+				print ("first choice is " + firstChoice);
+				counter = 2; 
+				firstImageDuration = Time.time;
+			} else if (counter == 2) {
+				testScaleShaderScript.count = 0;
+				counter = 3;
+				firstImageDuration = Time.time - firstImageDuration;
+			} else if (counter == 3) {
+				if (firstChoice == 1) {
+				testScaleShaderScript.count = 2 + (2 * (counter5 +1));
+				} else {
+				testScaleShaderScript.count = 1 + (2 * (counter5 +1));
+				}
+				counter = 4;
+				secondImageDuration = Time.time;
+			} else if (counter == 4) {
+				secondImageDuration = Time.time - secondImageDuration;
 				testScaleShaderScript.count = 1;
+				counter = 0;
 			}
-			counter = 4;
-			secondImageDuration = Time.time;
-		}else if(counter == 4) {
-			secondImageDuration = Time.time - secondImageDuration;
-			testScaleShaderScript.count = 3;
-		}
 	}
 
 	void Reset(bool first){
-		if (counter == 4) {
-			
 			
 			testScaleShaderScript.count = 0;
 			if (firstChoice == 1) {
 				
-				File.AppendAllText (fileName, ++testNo + ",interpolatedImage," + firstImageDuration + ",virtualCamera," + secondImageDuration + ",");
-			} else {
-				File.AppendAllText(fileName, ++testNo + ",virtualCamera," + firstImageDuration + ",interpolatedImage," + secondImageDuration + ","  );
-			}
-
-			if (first) {
-				if (firstChoice == 1) {
-					File.AppendAllText (fileName, "interpolatedImage\n");
+			File.AppendAllText (fileName, (testNo + 1.0) + "," + (counter5 + 1.0) + ",interpolatedImage," + firstImageDuration + ",virtualCamera," + secondImageDuration + ",");
 				} else {
-					File.AppendAllText (fileName, "virtualCamera\n");
+			File.AppendAllText (fileName, (testNo + 1.0) + "," + (counter5 + 1.0) + ",virtualCamera," + firstImageDuration + ",interpolatedImage," + secondImageDuration + ",");
 				}
-			} else {
-				if (firstChoice == 2) {
-					File.AppendAllText (fileName, "interpolatedImage\n");
+
+				if (first) {
+					if (firstChoice == 1) {
+						File.AppendAllText (fileName, "interpolatedImage\n");
+					} else {
+						File.AppendAllText (fileName, "virtualCamera\n");
+					}
 				} else {
-					File.AppendAllText (fileName, "virtualCamera\n");
+					if (firstChoice == 2) {
+						File.AppendAllText (fileName, "interpolatedImage\n");
+					} else {
+						File.AppendAllText (fileName, "virtualCamera\n");
+					}
 				}
-			}
 
-			var sr = File.CreateText(testCounter);
-			sr.WriteLine (testNo);
-			sr.Close();
+				var sr = File.CreateText (testCounter);
+				sr.WriteLine (testNo);
+				sr.Close ();
 
-			counter = 0;
-		}
+				if (counter5 == 4) {
+					testScaleShaderScript.count = 2;
+					testNo += 1;
+					counter5 = 0;
+				} else {
+					counter5 ++ ;
+				}
+
+				counter = 1;
 	}
 
 	void Update() {
-		print ((int)Math.Round (UnityEngine.Random.Range (1.0f, 2.0f)));
+		//print (Input.GetButton ("A"));
+		//print ((int)Math.Round (UnityEngine.Random.Range (1.0f, 2.0f)));
 
-		if ((Time.time - 1.0f) > lastButtonTime && !canAcceptButton) {
+		if ((Time.time - 0.5f) > lastButtonTime && !canAcceptButton) {
 			canAcceptButton = true;
 		}
 
@@ -133,35 +138,37 @@ public class control : MonoBehaviour {
 			UpdateImage ();
 		}
 
-		if (Input.GetAxis ("LeftTrigger") > 0.5f && canAcceptButton) {
-			lastButtonTime = Time.time;
-			canAcceptButton = false;
-			print ("LeftTrigger");
-			Reset (true); 
+		if (counter == 0) {
+
+			if (Input.GetAxis ("LeftTrigger") > 0.5f && canAcceptButton) {
+				lastButtonTime = Time.time;
+				canAcceptButton = false;
+				print ("LeftTrigger");
+				Reset (true); 
+			}
+
+			if (Input.GetAxis ("RightTrigger") > 0.5f && canAcceptButton) {
+				lastButtonTime = Time.time;
+				canAcceptButton = false;
+				print ("RightTrigger");
+				Reset (false); 
+			}
+
+			if (Input.GetButton ("LeftBumper") && canAcceptButton) {
+				lastButtonTime = Time.time;
+				canAcceptButton = false;
+				print ("LeftButton");
+				Reset (true); 
+			}
+
+			if (Input.GetButton ("RightBumper") && canAcceptButton) {
+				lastButtonTime = Time.time;
+				canAcceptButton = false;
+				print ("RightButton");
+				Reset (false); 
+			}
+
 		}
-
-		if (Input.GetAxis ("RightTrigger") > 0.5f && canAcceptButton) {
-			lastButtonTime = Time.time;
-			canAcceptButton = false;
-			print ("RightTrigger");
-			Reset (false); 
-		}
-
-		if (Input.GetButton ("LeftBumper") && canAcceptButton) {
-			lastButtonTime = Time.time;
-			canAcceptButton = false;
-			print ("LeftButton");
-			Reset (true); 
-		}
-
-		if (Input.GetButton ("RightBumper") && canAcceptButton) {
-			lastButtonTime = Time.time;
-			canAcceptButton = false;
-			print ("RightButton");
-			Reset (false); 
-		}
-
-
 
 	}
 }
