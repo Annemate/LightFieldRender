@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 public class control : MonoBehaviour {
 
@@ -16,9 +17,25 @@ public class control : MonoBehaviour {
 	private int counter5 = 0;
 
 	public int testNo;
+	int currentImageNumber;
 
 	String fileName = "logging.txt";
 	String testCounter = "testCounter.txt";
+
+	public List<int> test = new List<int>();
+
+	int RandomNumber;
+
+
+
+
+
+
+
+
+
+
+
 
 	void OnApplicationQuit(){
 		File.AppendAllText (fileName, "\nUnity closed\n");
@@ -33,6 +50,13 @@ public class control : MonoBehaviour {
 		{
 			Debug.Log(fileName + " does not exists.");
 		}
+
+			test.Add(0);
+			test.Add(1);
+			test.Add(2);
+			test.Add(3);
+			test.Add(4);
+
 	}
 
 
@@ -40,7 +64,7 @@ public class control : MonoBehaviour {
  
 		if (counter == 1) {
 				firstChoice = (int)Math.Round (UnityEngine.Random.Range (1.0f, 2.0f));
-				testScaleShaderScript.count = firstChoice + (2 * (counter5 +1));;
+				testScaleShaderScript.count = firstChoice + (2 * (currentImageNumber +1));;
 				print ("first choice is " + firstChoice);
 				counter = 2; 
 				firstImageDuration = Time.time;
@@ -50,9 +74,9 @@ public class control : MonoBehaviour {
 				firstImageDuration = Time.time - firstImageDuration;
 			} else if (counter == 3) {
 				if (firstChoice == 1) {
-				testScaleShaderScript.count = 2 + (2 * (counter5 +1));
+				testScaleShaderScript.count = 2 + (2 * (currentImageNumber +1));
 				} else {
-				testScaleShaderScript.count = 1 + (2 * (counter5 +1));
+				testScaleShaderScript.count = 1 + (2 * (currentImageNumber +1));
 				}
 				counter = 4;
 				secondImageDuration = Time.time;
@@ -65,12 +89,20 @@ public class control : MonoBehaviour {
 
 	void Reset(bool first){
 			
+	
+			for(int i = 0; i < test.Count; i++){
+				print(test[i]);
+			}
+
+			
+
+
 			testScaleShaderScript.count = 0;
 			if (firstChoice == 1) {
 				
-			File.AppendAllText (fileName, (testNo + 1.0) + "," + (counter5 + 1.0) + ",interpolatedImage," + firstImageDuration + ",virtualCamera," + secondImageDuration + ",");
+			File.AppendAllText (fileName, (testNo + 1.0) + "," + (counter5 + 1.0) + "," + currentImageNumber + ",interpolatedImage," + firstImageDuration + ",virtualCamera," + secondImageDuration + ",");
 				} else {
-			File.AppendAllText (fileName, (testNo + 1.0) + "," + (counter5 + 1.0) + ",virtualCamera," + firstImageDuration + ",interpolatedImage," + secondImageDuration + ",");
+			File.AppendAllText (fileName, (testNo + 1.0) + "," + (counter5 + 1.0) + "," + currentImageNumber + ",virtualCamera," + firstImageDuration + ",interpolatedImage," + secondImageDuration + ",");
 				}
 
 				if (first) {
@@ -95,8 +127,28 @@ public class control : MonoBehaviour {
 					testScaleShaderScript.count = 2;
 					testNo += 1;
 					counter5 = 0;
+
+						print("list is empty. Refilling the list");
+
+						if (test.Count == 0){
+						test.Add(0);
+						test.Add(1);
+						test.Add(2);
+						test.Add(3);
+						test.Add(4);	
+						}
+
+					
 				} else {
 					counter5 ++ ;
+
+						RandomNumber = (int)UnityEngine.Random.Range(0.0f, (float)(test.Count - 1));
+
+						print("the random index is " + RandomNumber + " The number chosen is " + test[RandomNumber] + " ,The remaning numbers are as follows:");
+
+						currentImageNumber = test[RandomNumber];
+
+						test.RemoveAt(RandomNumber);
 				}
 
 				counter = 1;
@@ -167,6 +219,15 @@ public class control : MonoBehaviour {
 				print ("RightButton");
 				Reset (false); 
 			}
+
+
+
+
+		
+
+		
+
+
 
 		}
 
