@@ -299,10 +299,10 @@ Shader "Custom/singleCamTest"
 								//read value from real camera texture
 								//calculate difference between current subimage position and real camera position
 								//this value is used in a subpixel look-up (linear interpolation)
-								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth))));
+								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y  ) / subImageWidth))));
 
 								//texture look-up in the depth without linear interpolation
-								outputCam0Value.w = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth)))).w;
+								outputCam0Value.w = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
 						}
 					}
 
@@ -311,9 +311,9 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam1.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam1Value.w > realCamera1Colors.w){
 
-								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam1.x))) / subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
+								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam1.x))) / subImageWidth, (((i.pos.y ) / subImageWidth))));
 
-								outputCam1Value.w = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth)))).w;
+								outputCam1Value.w = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
 						}
 					}
 
@@ -361,7 +361,7 @@ Shader "Custom/singleCamTest"
 
 
 
-				if(i.pos.y < subImageWidth ){
+				if(i.pos.y < subImageWidth + 15){
 					//return(outputCam0Value);
 					if(outputCam0Value.w <= outputCam1Value.w ){
 					return(outputCam0Value);
