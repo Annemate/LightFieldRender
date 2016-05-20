@@ -124,11 +124,10 @@ public class control : MonoBehaviour {
 				sr.Close ();
 
 				if (counter5 == 4) {
+					
 					testScaleShaderScript.count = 2;
-					testNo += 1;
-					counter5 = 0;
 
-						print("list is empty. Refilling the list");
+					print("list is empty. Refilling the list");
 
 						if (test.Count == 0){
 						test.Add(0);
@@ -137,6 +136,12 @@ public class control : MonoBehaviour {
 						test.Add(3);
 						test.Add(4);	
 						}
+
+
+					testNo += 1;
+					counter5 = 0;
+
+						
 
 					
 				} else {
