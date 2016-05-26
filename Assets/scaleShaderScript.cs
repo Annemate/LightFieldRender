@@ -4,9 +4,13 @@ using System.Collections;
 public class scaleShaderScript : MonoBehaviour {
 
 	private Material material;
+
 	public RenderTexture subImageTexture;
 	public int ScreenOffsetX;
 	public int ScreenOffsetY;
+
+	public float ScaleX;
+	//public float ScaleY;
 
 
 	// Use this for initialization
@@ -23,7 +27,8 @@ public class scaleShaderScript : MonoBehaviour {
 		void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
 
-
+		material.SetFloat("_testX", ScaleX);
+		//material.SetFloat("_testY", ScaleY);
 		material.SetTexture ("_SubImages", subImageTexture);
 		material.SetFloat ("_SubImagesOffsetX", (float) ScreenOffsetX);
 		material.SetFloat ("_SubImagesOffsetY", (float) ScreenOffsetY);

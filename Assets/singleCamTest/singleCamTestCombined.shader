@@ -96,7 +96,11 @@ Shader "Custom/singleCamTestCombined"
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
 
-				//float4 test = float4(tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+				// if(screenIndexX == 7 && screenIndexY == 4){
+				// 	return float4(0,1,0,1);
+				// }
+				// return float4(1,0,0,1);
+				// float4 test = float4(tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 				//return float4(test.w, test.w, test.w, 1.0);
 				if(_Space > 1){
@@ -116,7 +120,7 @@ Shader "Custom/singleCamTestCombined"
 				outputCam0Value = float4(0.0,0.0,0.0,2.0);
 				outputCam1Value = float4(0.0,0.0,0.0,2.0);
 
-				loopDuration = 30;
+				loopDuration = 100;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 
@@ -149,7 +153,7 @@ Shader "Custom/singleCamTestCombined"
 
 					eCam1.y = ( ((((i.pos.y % subImageWidth) + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam1.y = eCam1.y - screenIndexY + 7.0;
+					eCam1.y = eCam1.y - screenIndexY + 8.0;
 
 
 					//Convert back from eye/view space to the projection plane

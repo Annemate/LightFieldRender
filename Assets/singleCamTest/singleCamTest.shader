@@ -137,6 +137,8 @@ Shader "Custom/singleCamTest"
 			fixed4 frag (v2f i) : SV_Target
 			{
 
+				//return tex2D(_Cam0, float2((i.pos.x % 100) / 100, (i.pos.y % 100) / 100));
+
 				if(_Space > 1){
 					return float4(1,1,1,1);
 				}
@@ -216,7 +218,7 @@ Shader "Custom/singleCamTest"
 				outputCam2Value = float4(0.0,0.0,0.0,2.0);
 				outputCam3Value = float4(0.0,0.0,0.0,2.0);
 
-				loopDuration = 30;
+				loopDuration = 100;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 
@@ -287,7 +289,7 @@ Shader "Custom/singleCamTest"
 
 
 					//position of our subimage on the screen
-					currentSubImgPos.x = i.pos.x - (subImageWidth * screenIndexX);
+					currentSubImgPos.x = i.pos.x - (subImageWidth * (float)screenIndexX);
 
 
 					//CAMERA 0
@@ -299,10 +301,15 @@ Shader "Custom/singleCamTest"
 								//read value from real camera texture
 								//calculate difference between current subimage position and real camera position
 								//this value is used in a subpixel look-up (linear interpolation)
-								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y  ) / subImageWidth))));
+								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + ((float)j - ((float)loopDuration / 2.0))) + (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y  ) / subImageWidth))));
 
 								//texture look-up in the depth without linear interpolation
 								outputCam0Value.w = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
+								// if((currentSubImgPos.x - pCam0.x) < 0.0){
+								// 	outputCam0Value = float4(abs(currentSubImgPos.x - pCam0.x),0,0,1);
+								// }else{
+								// 	outputCam0Value = float4(0,abs(currentSubImgPos.x - pCam0.x),0,1);
+								// }
 						}
 					}
 
@@ -349,6 +356,8 @@ Shader "Custom/singleCamTest"
 				// //return (grayOutputCam3Value + float4(0.0,0.3,0,0));
 				// return outputCam3Value;
 
+				//return outputCam0Value;
+
 				if(i.pos.y < subImageWidth * 7 && i.pos.y > (subImageWidth * 7) - 15){
 					//return float4(1,0,0,1);
 				}
@@ -360,6 +369,7 @@ Shader "Custom/singleCamTest"
 				}
 
 
+				return(outputCam0Value);
 
 				if(i.pos.y < subImageWidth + 15){
 					//return(outputCam0Value);
@@ -367,7 +377,7 @@ Shader "Custom/singleCamTest"
 					return(outputCam0Value);
 					}
 					if(outputCam1Value.w <= outputCam0Value.w){
-					return(outputCam1Value);
+					//return(outputCam1Value);
 					}
 
 				}
@@ -376,10 +386,10 @@ Shader "Custom/singleCamTest"
 
 					//return(outputCam2Value);
 					if(outputCam2Value.w <= outputCam3Value.w ){
-						return(outputCam2Value);
+					//	return(outputCam2Value);
 					}
 					 if(outputCam3Value.w <= outputCam2Value.w ){
-						return(outputCam3Value);
+					//	return(outputCam3Value);
 					}
 				}
 
