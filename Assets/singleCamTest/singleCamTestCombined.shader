@@ -103,9 +103,7 @@ Shader "Custom/singleCamTestCombined"
 				// float4 test = float4(tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 				//return float4(test.w, test.w, test.w, 1.0);
-				if(_Space > 1){
-					return float4(1,1,1,1);
-				}
+
 
 
 
@@ -130,7 +128,7 @@ Shader "Custom/singleCamTestCombined"
 					realCamera0Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 
-					realCamera1Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+					realCamera1Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 					//realCamera0Colors = tex2D(_xAxisTexture, float2(i.pos.x, (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) / subImageWidth));
 
 
@@ -142,29 +140,24 @@ Shader "Custom/singleCamTestCombined"
 
 
 					//Convert from the projection plane to eye/view space
-					eCam0.x = ( (((i.pos.x % subImageWidth)) - (subImageWidth / 2.0)) * eCam0.z)/_ImagePlaneLength;
 
 					eCam0.y = ( (((i.pos.y % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam0.z)/_ImagePlaneLength;
 					eCam0.y = eCam0.y - screenIndexY;
 
-					eCam1.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
 
 
 					eCam1.y = ( ((((i.pos.y % subImageWidth) + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam1.y = eCam1.y - screenIndexY + 8.0;
+					eCam1.y = eCam1.y - screenIndexY + 7.0;
 
 
 					//Convert back from eye/view space to the projection plane
-					pCam0.x = -(_ImagePlaneLength * eCam0.x) / -eCam0.z;
-					pCam0.x = pCam0.x + (subImageWidth/2.0);
+
 
 					pCam0.y = -(_ImagePlaneLength * eCam0.y) / -eCam0.z;
 					pCam0.y = pCam0.y + (subImageWidth/2.0);
 
-					pCam1.x = -(_ImagePlaneLength * eCam1.x) / -eCam1.z;
-					pCam1.x = pCam1.x + (subImageWidth/2.0);
 
 					pCam1.y = -(_ImagePlaneLength * eCam1.y) / -eCam1.z;
 					pCam1.y = pCam1.y + (subImageWidth/2.0);
@@ -189,6 +182,12 @@ Shader "Custom/singleCamTestCombined"
 								//this value is used in a subpixel look-up (linear interpolation)
 								outputCam0Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + (currentSubImgPos.y - pCam0.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
+								// if((currentSubImgPos.y - pCam0.y) < 0){
+								// 	outputCam0Value = float4(abs(currentSubImgPos.y - pCam0.y),0,0,1);
+								// }else{
+								// 	outputCam0Value = float4(0,abs(currentSubImgPos.y - pCam0.y),0,1);
+								// }
+
 
 								//texture look-up in the depth without linear interpolation
 
@@ -207,7 +206,14 @@ Shader "Custom/singleCamTestCombined"
 						if(outputCam1Value.w > realCamera1Colors.w){
 
 
-								outputCam1Value = (tex2D(_xAxisTexture, float2((i.pos.x )/ (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 + (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+								outputCam1Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 700.0 + (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+
+
+								// if((currentSubImgPos.y - pCam1.y) < 0){
+								// 	outputCam1Value = float4(abs(currentSubImgPos.y - pCam1.y),0,0,1);
+								// }else{
+								// 	outputCam1Value = float4(0,abs(currentSubImgPos.y - pCam1.y),0,1);
+								// }
 
 								outputCam1Value.w = tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))).w;
 
@@ -216,18 +222,22 @@ Shader "Custom/singleCamTestCombined"
 
 
 
-				}
 
+
+				}
+				//return outputCam1Value;
 				//return float4(outputCam1Value.w, outputCam1Value.w, outputCam1Value.w, 1.0);
 				//return float4(outputCam0Value.w, outputCam0Value.w, outputCam0Value.w, 1.0);
-
+				//return outputCam1Value;
 				float grayOutputCam0Value = (outputCam0Value.x + outputCam0Value.y + outputCam0Value.z) / 3.0;
 				float grayOutputCam1Value = (outputCam1Value.x + outputCam1Value.y + outputCam1Value.z) / 3.0;
-				if(outputCam0Value.w < outputCam1Value.w){
+				if(outputCam0Value.w < outputCam1Value.w ){
+					//return float4(outputCam0Value.w,outputCam0Value.w,outputCam0Value.w,1);
 					return outputCam0Value;
 					//return (outputCam0Value); return (grayOutputCam1Value +
 					//float4(0.3,0,0,0));
 				}
+				//return float4(outputCam1Value.w,outputCam1Value.w,outputCam1Value.w,1);
 				return outputCam1Value;
 				//return (grayOutputCam0Value + float4(0,0.3,0,0));
 

@@ -17,7 +17,7 @@ public class SaveTextureToFile : MonoBehaviour {
 		myCameraScript = gameObject.GetComponent<camMosaic>();
 		//captureIsRunning = true;
 
-		myCamera = gameObject.GetComponent<Camera>();
+		//myCamera = gameObject.GetComponent<Camera>();
 		if(myCamera == null){
 			print("script not attached to a camera");
 		}else{
@@ -46,7 +46,7 @@ public class SaveTextureToFile : MonoBehaviour {
 			captureIsRunning = true;
 			canStartCapture = false;
 
-			if(myCamera == null){
+
 				myTexture = GetRTPixels(textureToExport);
 				//myTexture.ReadPixels(textureToExport, 0,0);
 				myTexture.Apply();
@@ -55,11 +55,11 @@ public class SaveTextureToFile : MonoBehaviour {
 				print("saved image");
 				captureIsRunning = false;
 				canStartCapture = true;
-			}
+
 		}
 
 
-		if (captureIsRunning && imageCounter < 8 && myCamera != null){
+		/*if (captureIsRunning && imageCounter < 8 && myCamera != null){
 			gameObject.transform.position = new Vector3(gameObject.transform.position.x, (float)imageCounter ,gameObject.transform.position.z);
 			myCameraScript.yIndex = imageCounter + 2;
 			myTexture = GetRTPixels(textureToExport);
@@ -77,7 +77,7 @@ public class SaveTextureToFile : MonoBehaviour {
 			imageCounter = 0;
 			print("capture completet");
 			canStartCapture = true;
-		}
+		}*/
 
 	}
 }
