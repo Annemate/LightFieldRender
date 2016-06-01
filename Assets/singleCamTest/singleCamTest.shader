@@ -137,6 +137,8 @@ Shader "Custom/singleCamTest"
 			fixed4 frag (v2f i) : SV_Target
 			{
 
+				//return tex2D(_Cam0, float2((i.pos.x % 100) / 100, (i.pos.y % 100) / 100));
+
 				if(_Space > 1){
 					return float4(1,1,1,1);
 				}
@@ -153,6 +155,8 @@ Shader "Custom/singleCamTest"
 				subImageWidth = 1.0/_Cam0_TexelSize.x;
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
+
+				//return tex2D(_Cam3, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
 
 
 				//return float4(screenIndexY/4.0,screenIndexY/4.0,screenIndexY/4.0,1.0);
@@ -216,7 +220,7 @@ Shader "Custom/singleCamTest"
 				outputCam2Value = float4(0.0,0.0,0.0,2.0);
 				outputCam3Value = float4(0.0,0.0,0.0,2.0);
 
-				loopDuration = 30;
+				loopDuration = 100;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 
@@ -251,13 +255,13 @@ Shader "Custom/singleCamTest"
 
 					eCam1.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam1.x = eCam1.x - screenIndexX + 15.0;
+					eCam1.x = eCam1.x - screenIndexX + 14.0;
 
 
 
 					eCam2.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam2.z)/_ImagePlaneLength;
 					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
-					eCam2.x = eCam2.x - screenIndexX + 15.0;
+					eCam2.x = eCam2.x - screenIndexX + 14.0;
 
 
 
@@ -299,10 +303,15 @@ Shader "Custom/singleCamTest"
 								//read value from real camera texture
 								//calculate difference between current subimage position and real camera position
 								//this value is used in a subpixel look-up (linear interpolation)
-								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y  ) / subImageWidth))));
+								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y  ) / subImageWidth))));
 
 								//texture look-up in the depth without linear interpolation
 								outputCam0Value.w = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
+								// if((currentSubImgPos.x - pCam0.x) < 0.0){
+								// 	outputCam0Value = float4(abs(currentSubImgPos.x - pCam0.x),0,0,1);
+								// }else{
+								// 	outputCam0Value = float4(0,abs(currentSubImgPos.x - pCam0.x),0,1);
+								// }
 						}
 					}
 
@@ -311,7 +320,7 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam1.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam1Value.w > realCamera1Colors.w){
 
-								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam1.x))) / subImageWidth, (((i.pos.y ) / subImageWidth))));
+								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam1.x))) / subImageWidth, (((i.pos.y ) / subImageWidth))));
 
 								outputCam1Value.w = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
 						}
@@ -322,7 +331,7 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam2Value.w > realCamera2Colors.w){
 
-								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y - 700) / subImageWidth))));
+								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y - 700) / subImageWidth))));
 
 								outputCam2Value.w = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth)))).w;
 						}
@@ -333,7 +342,7 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam3Value.w > realCamera3Colors.w){
 
-								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) - (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y - 700 ) / subImageWidth))));
+								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y - 700 ) / subImageWidth))));
 
 								outputCam3Value.w = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth)))).w;
 						}
@@ -349,6 +358,8 @@ Shader "Custom/singleCamTest"
 				// //return (grayOutputCam3Value + float4(0.0,0.3,0,0));
 				// return outputCam3Value;
 
+				//return outputCam0Value;
+
 				if(i.pos.y < subImageWidth * 7 && i.pos.y > (subImageWidth * 7) - 15){
 					//return float4(1,0,0,1);
 				}
@@ -358,6 +369,7 @@ Shader "Custom/singleCamTest"
 
 					//return float4(0,0,1,1);
 				}
+
 
 
 

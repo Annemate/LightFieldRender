@@ -6,6 +6,8 @@ Shader "Custom/ScaleShader"
 		_SubImages ("_SubImages", 2D) = "white" {}
 		_SubImagesOffsetX ("_SubImagesOffsetX", 2D) = "white" {}
 		_SubImagesOffsetY ("_SubImagesOffsetY", 2D) = "white" {}
+		_testY ("_testY", float) = 0
+		_testX ("_testY", float) = 0
 	}
 	SubShader
 	{
@@ -28,6 +30,9 @@ Shader "Custom/ScaleShader"
 			float2 ScreenResolutionInMm;
 			int _SubImagesOffsetX;
 			int _SubImagesOffsetY;
+
+			float _testY;
+			float _testX;
 
 			struct appdata
 			{
@@ -54,12 +59,14 @@ Shader "Custom/ScaleShader"
 				SubImageSizeInMm = float2(15.0, 8.0);
  				ScreenResolutionInPixels = float2(1280,720);
 				ScreenResolutionInMm = float2(15.36, 8.64);
+				ScreenResolutionInMm.x = _testX;
+				ScreenResolutionInMm.y = _testX * 0.5625;
 				//_SubImagesOffsetX = 40;
 				//_SubImagesOffsetY = 60;
 
 
 				float test = ((1.0 / _MainTex_TexelSize) - i.pos.y);
-				fixed4 col = tex2D(_SubImages, float2((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x),  ((( i.pos.y - _SubImagesOffsetY) * (ScreenResolutionInMm.y / ScreenResolutionInPixels.y)) / SubImageSizeInMm.y)));
+				fixed4 col = tex2D(_SubImages, float2((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x), 1.0 - ((( i.pos.y - _SubImagesOffsetY) * (ScreenResolutionInMm.y / ScreenResolutionInPixels.y)) / SubImageSizeInMm.y)));
 				col = lerp(col, float4(0.0,0.0,0.0,1.0),step(1,(((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x)));
 
 				col = lerp(col, float4(0.0,0.0,0.0,1.0),step((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x),0.0));
