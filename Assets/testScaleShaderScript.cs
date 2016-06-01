@@ -8,6 +8,7 @@ public class testScaleShaderScript : MonoBehaviour {
 	public int ScreenOffsetX;
 	public int ScreenOffsetY;
 	public static int count = 0; //0 = black, 1 = interpolated image (II), 2 = virtual cameras (VC)
+	public float ScaleX;
 
 	public Texture2D black;
 	public Texture2D interpolatedImageOne;
@@ -41,9 +42,9 @@ public class testScaleShaderScript : MonoBehaviour {
 	{
 
 		if (count == 0) {
-			material.SetTexture ("_SubImages", black);  
-		} else if (count == 1) { 
-			material.SetTexture ("_SubImages", choose); 
+			material.SetTexture ("_SubImages", black);
+		} else if (count == 1) {
+			material.SetTexture ("_SubImages", choose);
 		} else if (count == 2) {
 			material.SetTexture ("_SubImages", thankYou);
 		}else if(count == 3){
@@ -68,6 +69,7 @@ public class testScaleShaderScript : MonoBehaviour {
 			material.SetTexture ("_SubImages", virtualCameraFive);
 		}
 
+		material.SetFloat("_testX", ScaleX);
 		material.SetFloat ("_SubImagesOffsetX", (float) ScreenOffsetX);
 		material.SetFloat ("_SubImagesOffsetY", (float) ScreenOffsetY);
 		Graphics.Blit (source, destination, material);

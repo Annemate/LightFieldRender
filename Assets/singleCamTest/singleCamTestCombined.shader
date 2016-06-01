@@ -228,20 +228,34 @@ Shader "Custom/singleCamTestCombined"
 				//return outputCam1Value;
 				//return float4(outputCam1Value.w, outputCam1Value.w, outputCam1Value.w, 1.0);
 				//return float4(outputCam0Value.w, outputCam0Value.w, outputCam0Value.w, 1.0);
-				//return outputCam1Value;
+				//return outputCam0Value;
 				float grayOutputCam0Value = (outputCam0Value.x + outputCam0Value.y + outputCam0Value.z) / 3.0;
 				float grayOutputCam1Value = (outputCam1Value.x + outputCam1Value.y + outputCam1Value.z) / 3.0;
-				if(outputCam0Value.w < outputCam1Value.w ){
+
+
+				if(outputCam1Value.w < outputCam0Value.w && screenIndexY < 4){
 					//return float4(outputCam0Value.w,outputCam0Value.w,outputCam0Value.w,1);
-					return outputCam0Value;
+					return outputCam1Value;
 					//return (outputCam0Value); return (grayOutputCam1Value +
 					//float4(0.3,0,0,0));
+				}else if(screenIndexY < 4){
+					//return float4(outputCam1Value.w,outputCam1Value.w,outputCam1Value.w,1);
+					return outputCam0Value;
+					//return (grayOutputCam0Value + float4(0,0.3,0,0));
 				}
-				//return float4(outputCam1Value.w,outputCam1Value.w,outputCam1Value.w,1);
-				return outputCam1Value;
-				//return (grayOutputCam0Value + float4(0,0.3,0,0));
 
+				if(outputCam1Value.w < outputCam0Value.w && screenIndexY > 3){
+					//return float4(outputCam0Value.w,outputCam0Value.w,outputCam0Value.w,1);
+					return outputCam1Value;
+					//return (outputCam0Value); return (grayOutputCam1Value +
+					//float4(0.3,0,0,0));
+				}else if(screenIndexY > 3){
+					//return float4(outputCam1Value.w,outputCam1Value.w,outputCam1Value.w,1);
+					return outputCam0Value;
+					//return (grayOutputCam0Value + float4(0,0.3,0,0));
+				}
 
+				return float4(0,0,0,1);
 
 			}
 			ENDCG

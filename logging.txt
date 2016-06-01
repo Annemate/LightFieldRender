@@ -10,3 +10,31 @@
 Unity closed
 
 Unity closed
+
+Unity closed
+2,1,3,virtualCamera,1.709698,interpolatedImage,0.5183945,virtualCamera
+2,2,1,virtualCamera,0.6603012,interpolatedImage,0.5809212,virtualCamera
+
+Unity closed
+
+Unity closed
+2,1,0,virtualCamera,1.064633,interpolatedImage,0.6769509,virtualCamera
+2,2,1,interpolatedImage,1.173641,virtualCamera,0.5168228,interpolatedImage
+2,3,2,interpolatedImage,3.763885,virtualCamera,2.063923,interpolatedImage
+2,4,3,interpolatedImage,1.334438,virtualCamera,0.5210037,interpolatedImage
+2,5,4,virtualCamera,3.308693,interpolatedImage,0.622261,virtualCamera
+3,1,2,interpolatedImage,0.574501,virtualCamera,0.5950928,interpolatedImage
+3,2,1,interpolatedImage,0.6605835,virtualCamera,0.7910614,interpolatedImage
+3,3,0,virtualCamera,0.7045059,interpolatedImage,0.7419968,virtualCamera
+3,4,3,interpolatedImage,0.6486282,virtualCamera,0.6211395,interpolatedImage
+3,5,4,interpolatedImage,0.5065765,virtualCamera,0.5523148,interpolatedImage
+4,1,1,interpolatedImage,0.6343002,virtualCamera,0.6757278,interpolatedImage
+4,2,3,interpolatedImage,0.6271515,virtualCamera,0.6204376,interpolatedImage
+4,3,2,virtualCamera,0.8914566,interpolatedImage,0.737175,virtualCamera
+4,4,0,interpolatedImage,1.129738,virtualCamera,0.6140823,interpolatedImage
+4,5,4,virtualCamera,1.00322,interpolatedImage,0.5073242,virtualCamera
+5,1,3,interpolatedImage,3.011841,virtualCamera,0.5154877,interpolatedImage
+5,2,1,virtualCamera,0.5865936,interpolatedImage,0.5556946,virtualCamera
+5,3,0,virtualCamera,1.263382,interpolatedImage,0.6445465,virtualCamera
+
+Unity closed
