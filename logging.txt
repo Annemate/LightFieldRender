@@ -1,47 +1,29 @@
-1,1,3,interpolatedImage,0.5127941,virtualCamera,0.5136621,virtualCamera
-1,2,1,interpolatedImage,0.6157746,virtualCamera,0.584259,virtualCamera
-1,3,2,interpolatedImage,0.5332131,virtualCamera,0.7003212,virtualCamera
-1,4,0,interpolatedImage,0.7534065,virtualCamera,0.6670456,virtualCamera
-1,5,4,interpolatedImage,0.7155685,virtualCamera,1.598869,virtualCamera
-2,1,0,interpolatedImage,1.116203,virtualCamera,0.5018539,virtualCamera
-2,2,3,interpolatedImage,0.5154495,virtualCamera,0.5159302,virtualCamera
-2,3,2,interpolatedImage,0.5162277,virtualCamera,0.5880585,virtualCamera
+1,1,0,virtualCamera,3.524239,interpolatedImage,2.25012,virtualCamera
+1,2,2,virtualCamera,0.9217529,interpolatedImage,0.6792431,virtualCamera
+1,3,3,interpolatedImage,0.5087471,virtualCamera,0.5138893,interpolatedImage
+1,4,1,virtualCamera,0.6223488,interpolatedImage,0.5155487,virtualCamera
+1,5,4,virtualCamera,0.51548,interpolatedImage,0.5311508,virtualCamera
+2,1,1,virtualCamera,1.791073,interpolatedImage,0.8444557,virtualCamera
+2,2,0,interpolatedImage,0.7317047,virtualCamera,0.5010986,interpolatedImage
+2,3,3,virtualCamera,0.7151756,interpolatedImage,2.144386,virtualCamera
+2,4,2,interpolatedImage,1.00428,virtualCamera,0.9531059,interpolatedImage
+2,5,4,interpolatedImage,0.5138741,virtualCamera,4.141693,interpolatedImage
+3,1,2,interpolatedImage,0.8289108,virtualCamera,0.8980408,interpolatedImage
+3,2,1,interpolatedImage,0.7105789,virtualCamera,0.6083679,interpolatedImage
+3,3,0,virtualCamera,0.5123138,interpolatedImage,0.5004807,virtualCamera
+3,4,3,interpolatedImage,0.6253967,virtualCamera,0.5248413,interpolatedImage
+3,5,4,virtualCamera,0.5147476,interpolatedImage,0.8375092,virtualCamera
+4,1,1,interpolatedImage,1.091934,virtualCamera,1.315033,interpolatedImage
+4,2,3,interpolatedImage,0.5769196,virtualCamera,1.691299,interpolatedImage
+4,3,2,interpolatedImage,1.727509,virtualCamera,2.389465,interpolatedImage
+4,4,0,interpolatedImage,1.337143,virtualCamera,1.159454,interpolatedImage
+4,5,4,interpolatedImage,1.436478,virtualCamera,0.9533997,interpolatedImage
 
 Unity closed
-
-Unity closed
-
-Unity closed
-2,1,3,virtualCamera,1.709698,interpolatedImage,0.5183945,virtualCamera
-2,2,1,virtualCamera,0.6603012,interpolatedImage,0.5809212,virtualCamera
-
-Unity closed
-
-Unity closed
-2,1,0,virtualCamera,1.064633,interpolatedImage,0.6769509,virtualCamera
-2,2,1,interpolatedImage,1.173641,virtualCamera,0.5168228,interpolatedImage
-2,3,2,interpolatedImage,3.763885,virtualCamera,2.063923,interpolatedImage
-2,4,3,interpolatedImage,1.334438,virtualCamera,0.5210037,interpolatedImage
-2,5,4,virtualCamera,3.308693,interpolatedImage,0.622261,virtualCamera
-3,1,2,interpolatedImage,0.574501,virtualCamera,0.5950928,interpolatedImage
-3,2,1,interpolatedImage,0.6605835,virtualCamera,0.7910614,interpolatedImage
-3,3,0,virtualCamera,0.7045059,interpolatedImage,0.7419968,virtualCamera
-3,4,3,interpolatedImage,0.6486282,virtualCamera,0.6211395,interpolatedImage
-3,5,4,interpolatedImage,0.5065765,virtualCamera,0.5523148,interpolatedImage
-4,1,1,interpolatedImage,0.6343002,virtualCamera,0.6757278,interpolatedImage
-4,2,3,interpolatedImage,0.6271515,virtualCamera,0.6204376,interpolatedImage
-4,3,2,virtualCamera,0.8914566,interpolatedImage,0.737175,virtualCamera
-4,4,0,interpolatedImage,1.129738,virtualCamera,0.6140823,interpolatedImage
-4,5,4,virtualCamera,1.00322,interpolatedImage,0.5073242,virtualCamera
-5,1,3,interpolatedImage,3.011841,virtualCamera,0.5154877,interpolatedImage
-5,2,1,virtualCamera,0.5865936,interpolatedImage,0.5556946,virtualCamera
-5,3,0,virtualCamera,1.263382,interpolatedImage,0.6445465,virtualCamera
-
-Unity closed
-5,1,0,interpolatedImage,1.763819,virtualCamera,0.8857346,interpolatedImage
-5,2,1,virtualCamera,5.365475,interpolatedImage,0.5010214,virtualCamera
-5,3,3,interpolatedImage,0.9462757,virtualCamera,0.8070641,interpolatedImage
-5,4,2,virtualCamera,0.9410744,interpolatedImage,0.6796303,virtualCamera
-5,5,4,interpolatedImage,0.8662376,virtualCamera,0.5375462,interpolatedImage
+5,1,2,interpolatedImage,0.5989293,virtualCamera,0.6149173,interpolatedImage
+5,2,1,virtualCamera,0.5000319,interpolatedImage,0.5120983,virtualCamera
+5,3,3,virtualCamera,0.5137386,interpolatedImage,0.8603921,virtualCamera
+5,4,0,virtualCamera,0.5165215,interpolatedImage,0.5143967,virtualCamera
+5,5,4,interpolatedImage,0.5006065,virtualCamera,0.5154104,interpolatedImage
 
 Unity closed

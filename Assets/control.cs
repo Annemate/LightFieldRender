@@ -8,13 +8,14 @@ public class control : MonoBehaviour {
 
 	private bool canAcceptButton = true;
 	private float lastButtonTime;
+	bool shutButtonsOff = false;
 	float firstImageDuration;
 	float secondImageDuration;
 
 
 	public int firstChoice;
-	private int counter = 1;
-	private int counter5 = 0;
+	public int counter = 1;
+	public int counter5 = 0;
 
 	public int testNo;
 	int currentImageNumber;
@@ -40,6 +41,15 @@ public class control : MonoBehaviour {
 	void OnApplicationQuit(){
 		File.AppendAllText (fileName, "\nUnity closed\n");
 	}
+
+	IEnumerator GoFromThankYoutToBlack() {
+
+		shutButtonsOff = true;
+        canAcceptButton = false;
+        yield return new WaitForSeconds(12);
+        testScaleShaderScript.count = 0;
+        shutButtonsOff = false;
+    }
 
 	void Start()
 	{
@@ -130,6 +140,7 @@ public class control : MonoBehaviour {
 
 				if (counter5 == 4) {
 					testScaleShaderScript.count = 2;
+					StartCoroutine(GoFromThankYoutToBlack());
 					testNo += 1;
 					counter5 = 0;
 
@@ -170,7 +181,7 @@ public class control : MonoBehaviour {
 						test.RemoveAt(RandomNumber);
 				}
 
-				counter = 5;
+				counter = 1;
 	}
 
 	void Update() {
@@ -178,7 +189,7 @@ public class control : MonoBehaviour {
 		////print (Input.GetButton ("A"));
 		////print ((int)Math.Round (UnityEngine.Random.Range (1.0f, 2.0f)));
 
-		if ((Time.time - 0.5f) > lastButtonTime && !canAcceptButton) {
+		if ((Time.time - 0.5f) > lastButtonTime && !canAcceptButton && !shutButtonsOff) {
 			canAcceptButton = true;
 		}
 
