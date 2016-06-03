@@ -27,3 +27,16 @@ Unity closed
 5,5,4,interpolatedImage,0.5006065,virtualCamera,0.5154104,interpolatedImage
 
 Unity closed
+
+Unity closed
+
+Unity closed
+
+Unity closed
+
+Unity closed
+6,1,2,interpolatedImage,15.41719,virtualCamera,3.996607,virtualCamera
+
+Unity closed
+
+Unity closed
