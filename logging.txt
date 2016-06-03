@@ -38,3 +38,10 @@ Unity closed
 5,3,0,virtualCamera,1.263382,interpolatedImage,0.6445465,virtualCamera
 
 Unity closed
+5,1,0,interpolatedImage,1.763819,virtualCamera,0.8857346,interpolatedImage
+5,2,1,virtualCamera,5.365475,interpolatedImage,0.5010214,virtualCamera
+5,3,3,interpolatedImage,0.9462757,virtualCamera,0.8070641,interpolatedImage
+5,4,2,virtualCamera,0.9410744,interpolatedImage,0.6796303,virtualCamera
+5,5,4,interpolatedImage,0.8662376,virtualCamera,0.5375462,interpolatedImage
+
+Unity closed

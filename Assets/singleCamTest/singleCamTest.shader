@@ -214,11 +214,32 @@ Shader "Custom/singleCamTest"
 				 // }
 
 
+
+
 				//Initializing values with extreme depth (these variables will be overwritten by the first calculations in the for-loop)
 				outputCam0Value = float4(0.0,0.0,0.0,2.0);
 				outputCam1Value = float4(0.0,0.0,0.0,2.0);
 				outputCam2Value = float4(0.0,0.0,0.0,2.0);
 				outputCam3Value = float4(0.0,0.0,0.0,2.0);
+
+				// //this section is used for finding the fov of the lens setup
+				// if(screenIndexX == 7 && screenIndexY == 3){
+				//  	return float4(0,1,0,1);
+				//  }
+				//  return float4(1,0,0,1);
+
+				// // this section is used for aligning the lens to the screen½
+				// if(screenIndexX % 2 == 0){
+				// 	if(screenIndexY % 2 == 0){
+				// 		return float4(0,0,0,1);
+				// 	}
+				// 	return float4(1,1,1,1);
+				// }
+
+				// if(screenIndexY % 2 != 0){
+				// 	return float4(0,0,0,1);
+				// }
+				// return float4(1,1,1,1);
 
 				loopDuration = 100;
 				for (int j = 0; j <= loopDuration; j++)
