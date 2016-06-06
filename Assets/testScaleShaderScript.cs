@@ -50,6 +50,43 @@ public class testScaleShaderScript : MonoBehaviour {
 
 	}
 
+	void OnGUI(){
+		switch(count){
+			case 13:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageOne);
+			 break;
+			case 14:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraOne);
+			 break;
+			case 15:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageTwo);
+			 break;
+			case 16:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraTwo);
+			 break;
+			case 17:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageThree);
+			 break;
+			case 18:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraThree);
+			 break;
+			case 19:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageFour);
+			 break;
+			case 20:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraFour);
+			 break;
+			case 21:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageFive);
+			 break;
+			case 22:
+			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraFive);
+			 break;
+
+		}
+
+	}
+
 		void OnRenderImage (RenderTexture source, RenderTexture destination)
 	{
 
@@ -79,26 +116,8 @@ public class testScaleShaderScript : MonoBehaviour {
 			material.SetTexture ("_SubImages", interpolatedImageFive);
 		}else if(count == 12){
 			material.SetTexture ("_SubImages", virtualCameraFive);
-		}else if(count == 13){
-			material.SetTexture ("_SubImages", screenInterpolatedImageOne);
-		}else if(count == 14){
-			material.SetTexture ("_SubImages", screenVirtualCameraOne);
-		}else if(count == 15){
-			material.SetTexture ("_SubImages", screenInterpolatedImageTwo);
-		}else if(count == 16){
-			material.SetTexture ("_SubImages", screenVirtualCameraTwo);
-		}else if(count == 17){
-			material.SetTexture ("_SubImages", screenInterpolatedImageThree);
-		}else if(count == 18){
-			material.SetTexture ("_SubImages", screenVirtualCameraThree);
-		}else if(count == 19){
-			material.SetTexture ("_SubImages", screenInterpolatedImageFour);
-		}else if(count == 20){
-			material.SetTexture ("_SubImages", screenVirtualCameraFour);
-		}else if(count == 21){
-			material.SetTexture ("_SubImages", screenInterpolatedImageFive);
-		}else if(count == 22){
-			material.SetTexture ("_SubImages", screenVirtualCameraFive);
+		}else{
+			material.SetTexture ("_SubImages", black);
 		}
 
 		material.SetFloat("_testX", ScaleX);
