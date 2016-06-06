@@ -53,34 +53,34 @@ public class testScaleShaderScript : MonoBehaviour {
 	void OnGUI(){
 		switch(count){
 			case 13:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageOne);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenInterpolatedImageOne);
 			 break;
 			case 14:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraOne);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenVirtualCameraOne);
 			 break;
 			case 15:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageTwo);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenInterpolatedImageTwo);
 			 break;
 			case 16:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraTwo);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenVirtualCameraTwo);
 			 break;
 			case 17:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageThree);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenInterpolatedImageThree);
 			 break;
 			case 18:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraThree);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenVirtualCameraThree);
 			 break;
 			case 19:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageFour);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenInterpolatedImageFour);
 			 break;
 			case 20:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraFour);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenVirtualCameraFour);
 			 break;
 			case 21:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenInterpolatedImageFive);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenInterpolatedImageFive);
 			 break;
 			case 22:
-			 GUI.DrawTexture(new Rect(540, 260, 200,200), screenVirtualCameraFive);
+			 GUI.DrawTexture(new Rect(440, 160, 400,400), screenVirtualCameraFive);
 			 break;
 
 		}

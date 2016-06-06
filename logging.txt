@@ -214,3 +214,10 @@ ComputerScreen,13,4,5,interpolatedImage,virtualCamera,virtualCamera
 ComputerScreen,13,5,3,virtualCamera,interpolatedImage,interpolatedImage
 
 Unity closed
+LightFieldHmd,14,1,2,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,14,2,3,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,14,3,5,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,14,4,1,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,14,5,4,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
