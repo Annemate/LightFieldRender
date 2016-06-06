@@ -76,6 +76,10 @@ public class controlTwo : MonoBehaviour {
 	}
 
 	void UpdateImage(){
+		if(myStates == States.Done){
+			testScaleShaderScript.count = 2;
+		}
+
 		//black screen
 		if(myStates == States.begin || myStates == States.black)
 			testScaleShaderScript.count = 0;
@@ -387,7 +391,8 @@ public class controlTwo : MonoBehaviour {
 				sr.Close ();
 
 			//done
-			myStates = States.begin;
+			myStates = States.Done;
+			StartCoroutine(StartDelay(5));
 		}else if(lightField){
 
 			myStates = States.RefImageLf;
@@ -397,6 +402,14 @@ public class controlTwo : MonoBehaviour {
 			myStates = States.RefImageSc;
 		}
 	}
+
+	IEnumerator StartDelay(float delay){
+		yield return new WaitForSeconds(delay);
+			myStates = States.begin;
+
+	}
+
+
 
 	void XBoxBumperInput(char button){
 		StartCoroutine(BlackDelay(delayToImages));

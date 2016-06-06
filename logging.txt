@@ -114,3 +114,27 @@ LightFieldHmd,7,1,3,interpolatedImage,virtualCamera,virtualCamera
 LightFieldHmd,7,2,2,interpolatedImage,virtualCamera,virtualCamera
 
 Unity closed
+LightFieldHmd,7,1,5,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,7,2,3,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,7,3,2,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,7,4,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,7,5,4,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,7,1,3,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,7,2,1,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,7,3,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,7,4,4,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,7,5,2,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
+LightFieldHmd,8,1,2,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,8,2,4,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,8,3,3,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,8,4,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,8,5,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,8,1,3,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,8,2,1,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,8,3,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,8,4,2,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,8,5,4,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
