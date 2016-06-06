@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class control : MonoBehaviour {
 
+	public Texture2D textureTest;
+
 	private bool canAcceptButton = true;
 	private float lastButtonTime;
 	bool shutButtonsOff = false;
@@ -49,6 +51,10 @@ public class control : MonoBehaviour {
         yield return new WaitForSeconds(12);
         testScaleShaderScript.count = 0;
         shutButtonsOff = false;
+    }
+
+    void OnGUI(){
+    	//GUI.DrawTexture(new Rect(10, 10, Screen.width, Screen.height), textureTest);
     }
 
 	void Start()
