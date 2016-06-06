@@ -202,3 +202,15 @@ ComputerScreen,12,4,5,interpolatedImage,virtualCamera,virtualCamera
 ComputerScreen,12,5,2,interpolatedImage,virtualCamera,virtualCamera
 
 Unity closed
+LightFieldHmd,13,1,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,13,2,3,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,13,3,5,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,13,4,4,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,13,5,2,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,13,1,2,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,13,2,1,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,13,3,4,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,13,4,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,13,5,3,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
