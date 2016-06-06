@@ -1,34 +1,116 @@
-1,1,0,virtualCamera,3.524239,interpolatedImage,2.25012,virtualCamera
-1,2,2,virtualCamera,0.9217529,interpolatedImage,0.6792431,virtualCamera
-1,3,3,interpolatedImage,0.5087471,virtualCamera,0.5138893,interpolatedImage
-1,4,1,virtualCamera,0.6223488,interpolatedImage,0.5155487,virtualCamera
-1,5,4,virtualCamera,0.51548,interpolatedImage,0.5311508,virtualCamera
-2,1,1,virtualCamera,1.791073,interpolatedImage,0.8444557,virtualCamera
-2,2,0,interpolatedImage,0.7317047,virtualCamera,0.5010986,interpolatedImage
-2,3,3,virtualCamera,0.7151756,interpolatedImage,2.144386,virtualCamera
-2,4,2,interpolatedImage,1.00428,virtualCamera,0.9531059,interpolatedImage
-2,5,4,interpolatedImage,0.5138741,virtualCamera,4.141693,interpolatedImage
-3,1,2,interpolatedImage,0.8289108,virtualCamera,0.8980408,interpolatedImage
-3,2,1,interpolatedImage,0.7105789,virtualCamera,0.6083679,interpolatedImage
-3,3,0,virtualCamera,0.5123138,interpolatedImage,0.5004807,virtualCamera
-3,4,3,interpolatedImage,0.6253967,virtualCamera,0.5248413,interpolatedImage
-3,5,4,virtualCamera,0.5147476,interpolatedImage,0.8375092,virtualCamera
-4,1,1,interpolatedImage,1.091934,virtualCamera,1.315033,interpolatedImage
-4,2,3,interpolatedImage,0.5769196,virtualCamera,1.691299,interpolatedImage
-4,3,2,interpolatedImage,1.727509,virtualCamera,2.389465,interpolatedImage
-4,4,0,interpolatedImage,1.337143,virtualCamera,1.159454,interpolatedImage
-4,5,4,interpolatedImage,1.436478,virtualCamera,0.9533997,interpolatedImage
+9,2,1,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,3,2,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,4,0,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,5,4,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,6,3,interpolatedImage,0,virtualCamera,0,interpolatedImage
 
 Unity closed
-5,1,2,interpolatedImage,0.5989293,virtualCamera,0.6149173,interpolatedImage
-5,2,1,virtualCamera,0.5000319,interpolatedImage,0.5120983,virtualCamera
-5,3,3,virtualCamera,0.5137386,interpolatedImage,0.8603921,virtualCamera
-5,4,0,virtualCamera,0.5165215,interpolatedImage,0.5143967,virtualCamera
-5,5,4,interpolatedImage,0.5006065,virtualCamera,0.5154104,interpolatedImage
+9,1,4,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,2,1,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,3,0,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,4,3,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,5,2,interpolatedImage,0,virtualCamera,0,interpolatedImage
 
 Unity closed
-6,1,3,virtualCamera,1.126534,interpolatedImage,0.5632267,virtualCamera
-6,2,1,virtualCamera,0.5136604,interpolatedImage,21.5698,virtualCamera
-6,3,2,virtualCamera,7.869167,interpolatedImage,7.024265,virtualCamera
+9,1,1,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,2,2,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,3,4,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,4,3,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,5,0,virtualCamera,0,interpolatedImage,0,virtualCamera
+
+Unity closed
+9,1,4,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,2,3,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,3,2,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,4,1,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,5,0,interpolatedImage,0,virtualCamera,0,interpolatedImage
+
+Unity closed
+9,1,4,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,2,2,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,3,3,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,4,1,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,5,5,virtualCamera,0,interpolatedImage,0,virtualCamera
+
+Unity closed
+9,1,3,interpolatedImage,0,virtualCamera,0,interpolatedImage
+9,2,4,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,3,5,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,4,2,virtualCamera,0,interpolatedImage,0,virtualCamera
+9,5,1,virtualCamera,0,interpolatedImage,0,virtualCamera
+
+Unity closed
+9,1,2,interpolatedImage,0,virtualCamera,0,virtualCamera
+9,2,5,interpolatedImage,0,virtualCamera,0,virtualCamera
+9,3,1,interpolatedImage,0,virtualCamera,0,virtualCamera
+9,4,4,virtualCamera,0,interpolatedImage,0,interpolatedImage
+9,5,3,virtualCamera,0,interpolatedImage,0,interpolatedImage
+
+Unity closed
+
+Unity closed
+LightFieldHmd,9,1,3,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,9,2,2,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,9,3,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,9,4,5,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,9,5,4,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,9,1,1,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,9,2,2,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,9,3,4,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,9,4,3,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,9,5,5,interpolatedImage,virtualCamera,virtualCamera
+
+Unity closed
+LightFieldHmd,2,1,3,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,2,2,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,2,3,2,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,2,4,5,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,2,5,4,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,2,1,2,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,2,2,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,2,3,1,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,2,4,3,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,2,5,4,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,4,1,5,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,4,2,4,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,4,3,3,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,4,4,2,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,4,5,1,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,4,1,1,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,4,2,4,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,4,3,5,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,4,4,2,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,4,5,3,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
+LightFieldHmd,5,1,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,5,2,5,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,5,3,4,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,5,4,3,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,5,5,2,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,5,1,3,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,5,2,4,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,5,3,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,5,4,2,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,5,5,1,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
+LightFieldHmd,6,1,3,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,6,2,4,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,6,3,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,6,4,5,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,6,5,2,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,6,1,2,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,6,2,1,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,6,3,4,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,6,4,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,6,5,3,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,7,1,5,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,7,2,2,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,7,3,1,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
+LightFieldHmd,7,1,3,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,7,2,2,interpolatedImage,virtualCamera,virtualCamera
 
 Unity closed
