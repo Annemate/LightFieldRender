@@ -138,3 +138,7 @@ ComputerScreen,8,4,2,virtualCamera,interpolatedImage,interpolatedImage
 ComputerScreen,8,5,4,virtualCamera,interpolatedImage,interpolatedImage
 
 Unity closed
+LightFieldHmd,9,1,4,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,9,2,2,interpolatedImage,virtualCamera,virtualCamera
+
+Unity closed
