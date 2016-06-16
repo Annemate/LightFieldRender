@@ -91,6 +91,7 @@ Shader "Custom/singleCamTestCombined"
 			fixed4 frag (v2f i) : SV_Target
 			{
 
+				return float4(0,0,0,0);
 				//Initializing values
 				subImageWidth = 100;
 				screenIndexX = i.pos.x / subImageWidth;

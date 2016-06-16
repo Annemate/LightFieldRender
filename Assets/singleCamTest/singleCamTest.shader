@@ -137,6 +137,7 @@ Shader "Custom/singleCamTest"
 			fixed4 frag (v2f i) : SV_Target
 			{
 
+				return float4(0,0,0,0);
 				//return tex2D(_Cam0, float2((i.pos.x % 100) / 100, (i.pos.y % 100) / 100));
 
 				if(_Space > 1){
