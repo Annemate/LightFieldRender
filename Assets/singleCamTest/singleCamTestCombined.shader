@@ -91,7 +91,7 @@ Shader "Custom/singleCamTestCombined"
 			fixed4 frag (v2f i) : SV_Target
 			{
 
-				return float4(0,0,0,0);
+				//return float4(0,0,0,0);
 				//Initializing values
 				subImageWidth = 100;
 				screenIndexX = i.pos.x / subImageWidth;
@@ -119,7 +119,7 @@ Shader "Custom/singleCamTestCombined"
 				outputCam0Value = float4(0.0,0.0,0.0,2.0);
 				outputCam1Value = float4(0.0,0.0,0.0,2.0);
 
-				loopDuration = 100;
+				loopDuration = 20;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 

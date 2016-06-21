@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 public class logging : MonoBehaviour {
 
@@ -17,9 +18,9 @@ public class logging : MonoBehaviour {
 
 		File.AppendAllText(fileName, "om filen eksisterer\n");
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }

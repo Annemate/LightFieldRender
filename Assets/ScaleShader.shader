@@ -30,6 +30,7 @@ Shader "Custom/ScaleShader"
 			float2 ScreenResolutionInMm;
 			int _SubImagesOffsetX;
 			int _SubImagesOffsetY;
+			float orientation;
 
 			float _testY;
 			float _testX;
@@ -46,6 +47,9 @@ Shader "Custom/ScaleShader"
 			};
 
 			v2f vert (appdata v) {
+
+
+
 			    v2f o;
 			    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
 			    o.depth = float2(0.0,0.0);
@@ -64,9 +68,16 @@ Shader "Custom/ScaleShader"
 				//_SubImagesOffsetX = 40;
 				//_SubImagesOffsetY = 60;
 
+				#if UNITY_UV_STARTS_AT_TOP
+				if (_MainTex_TexelSize.y > 0) {
+					orientation = 1.0;
+				}else{
+					orientation = 0.0;
+				}
+				#endif
 
 				float test = ((1.0 / _MainTex_TexelSize) - i.pos.y);
-				fixed4 col = tex2D(_SubImages, float2((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x), ((( i.pos.y - _SubImagesOffsetY) * (ScreenResolutionInMm.y / ScreenResolutionInPixels.y)) / SubImageSizeInMm.y)));
+				fixed4 col = tex2D(_SubImages, float2((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x), orientation-((( i.pos.y - _SubImagesOffsetY) * (ScreenResolutionInMm.y / ScreenResolutionInPixels.y)) / SubImageSizeInMm.y)));
 				col = lerp(col, float4(0.0,0.0,0.0,1.0),step(1,(((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x)));
 
 				col = lerp(col, float4(0.0,0.0,0.0,1.0),step((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x),0.0));
