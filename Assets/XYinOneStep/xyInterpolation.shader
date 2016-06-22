@@ -155,7 +155,7 @@
 				float2 cam0tempPos;
 
 
-				loopDuration = 80;
+				loopDuration = 10;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 					//calculates the sub-image position from the current position of the fragment in screen space
