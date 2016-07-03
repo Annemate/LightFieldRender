@@ -114,25 +114,32 @@
 				}
 
 				//Initializing values
+
+
 				subImageWidth = 1.0/_Cam0_TexelSize.x;
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
+
+				float tmpX = screenIndexX;
+				float tmpY = screenIndexY;
 				// slope.x =  (cam1pos.y - cam0pos.y) / (cam1pos.x - cam0pos.x);
 				// slope.y =  - (cam1pos.y - cam0pos.y) / ((cam2pos.x - cam0pos.x) - (cam1pos.x - cam0pos.x));
 				// slope.z =  ((cam2pos.y - cam0pos.y) - (cam1pos.y - cam0pos.y)) / ((cam2pos.x - cam0pos.x) - (cam1pos.x - cam0pos.x));
 				// slope.w =  - ((cam2pos.y - cam0pos.y) - ((cam1pos.y - cam0pos.y)) / (cam1pos.x - cam0pos.x));
 
-				slope.x =  screenIndexY / screenIndexX;
+				slope.x =  tmpY / tmpX;
 				//slope.x = 1;
-				slope.y =  - screenIndexY / (cam2pos.x - screenIndexX);
-				slope.z =  (cam2pos.y - screenIndexY) / (cam2pos.x - screenIndexX);
-				slope.w =  - (cam2pos.y - screenIndexY) / screenIndexX;
+				slope.y =  - tmpY / (cam2pos.x - tmpX);
+				slope.z =  (cam2pos.y - tmpY) / (cam2pos.x - tmpX);
+				slope.w =  - (cam2pos.y - tmpY) / tmpX;
+
+				//return float4(abs(slope.y), abs(slope.y), abs(slope.y), 1.0);
 
 				//Initializing values with extreme depth (these variables will be overwritten by the first calculations in the for-loop)
 				outputCam0Value = float4(1.0,0.0,0.0,2.0);
 				outputCam1Value = float4(0.0,0.0,0.0,2.0);
-				outputCam2Value = float4(0.0,0.0,0.0,2.0);
-				outputCam3Value = float4(0.0,0.0,0.0,2.0);
+				outputCam2Value = float4(0.0,1.0,0.0,2.0);
+				outputCam3Value = float4(1.0,1.0,0.0,2.0);
 
 				// //this section is used for finding the fov of the lens setup
 				// if(screenIndexX == 7 && screenIndexY == 3){
@@ -153,50 +160,165 @@
 				// }
 				// return float4(1,1,1,1);
 				float2 cam0tempPos;
+				float2 cam1tempPos;
+				float2 cam2tempPos;
+				float2 cam3tempPos;
 
 
-				loopDuration = 10;
+				loopDuration = 50;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 					//calculates the sub-image position from the current position of the fragment in screen space
 					//look-up in the real camera +-half of the for-loop duration
 
-
-
-					if(slope.x < 1.0){
+					 //cam0
+					 if(slope.x > 1.0){
 						if(j%2 == 0 ){
-							cam0tempPos.x = ceil(j/2.0);
-							cam0tempPos.y = ceil(ceil(j/2.0) * slope.x);
+							cam0tempPos.y = floor(j/2.0);
+							cam0tempPos.x = ceil(floor(j/2.0) / slope.x);
+
+
 						}
 						else{
-							cam0tempPos.x = ceil(j/2.0);
-							cam0tempPos.y = floor(ceil(j/2.0) * slope.x);
+							cam0tempPos.y = floor(j/2.0);
+							cam0tempPos.x = floor(floor(j/2.0) / slope.x);
+
+
 						}
 					}
-					else{
+					else{ //good for slopes under 1
 						if(j%2 == 0.0 ){
 							cam0tempPos.x = floor(j/2.0);
 							cam0tempPos.y = ceil(floor(j/2.0) * slope.x);
+
+
 						}
 						else{
 							cam0tempPos.x = floor(j/2.0);
 							cam0tempPos.y = floor(floor(j/2.0) * slope.x);
+
+
 						}
 					}
 
+					//cam1
+					if(slope.y > -1.0){
+						if(j%2 == 0 ){
+							cam1tempPos.x = -floor(j/2.0);
+							cam1tempPos.y = ceil(-floor(j/2.0) * slope.y);
+
+
+						}
+						else{
+							cam1tempPos.x = -floor(j/2.0);
+							cam1tempPos.y = floor(-floor(j/2.0) * slope.y);
+
+
+						}
+					}
+					else{ //goo2 for slopes under 1
+						if(j%2 == 0.0 ){
+							cam1tempPos.y = floor(j/2.0);
+							cam1tempPos.x = ceil(floor(j/2.0) / slope.y);
+
+
+						}
+						else{
+							cam1tempPos.y = floor(j/2.0);
+							cam1tempPos.x = floor(floor(j/2.0) / slope.y);
+
+
+						}
+					}
+
+					//cam2
+					if(slope.z < 1.0){
+						if(j%2 == 0 ){
+							cam2tempPos.x = -floor(j/2.0);
+							cam2tempPos.y = ceil(-floor(j/2.0) * slope.z);
+
+
+						}
+						else{
+							cam2tempPos.x = -floor(j/2.0);
+							cam2tempPos.y = floor(-floor(j/2.0) * slope.z);
+
+
+						}
+					}
+					else{ //goo2 for slopes under 1
+						if(j%2 == 0.0 ){
+							cam2tempPos.y = -floor(j/2.0);
+							cam2tempPos.x = ceil(-floor(j/2.0) / slope.z);
+
+
+						}
+						else{
+							cam2tempPos.y = -floor(j/2.0);
+							cam2tempPos.x = floor(-floor(j/2.0) / slope.z);
+
+
+						}
+					}
+
+					//cam3
+					if(slope.w > -1.0){
+						if(j%2 == 0 ){
+							cam3tempPos.x = floor(j/2.0);
+							cam3tempPos.y = ceil(floor(j/2.0) * slope.w);
+
+
+						}
+						else{
+							cam3tempPos.x = floor(j/2.0);
+							cam3tempPos.y = floor(floor(j/2.0) * slope.w);
+
+
+						}
+					}
+					else{ //good for slopes under 1
+						if(j%2 == 0.0 ){
+							cam3tempPos.y = -floor(j/2.0);
+							cam3tempPos.x = ceil(-floor(j/2.0) / slope.w);
+
+
+						}
+						else{
+							cam3tempPos.y = -floor(j/2.0);
+							cam3tempPos.x = floor(-floor(j/2.0) / slope.w);
+
+
+						}
+					}
+
+
+
+
+
+
+
+
 					realCamera0Colors = tex2D(_Cam0, float2( ((i.pos.x % subImageWidth) + cam0tempPos.x) / subImageWidth, ((i.pos.y % subImageWidth) + cam0tempPos.y) / subImageWidth ));
+
+					realCamera1Colors = tex2D(_Cam1, float2( ((i.pos.x % subImageWidth) + cam1tempPos.x) / subImageWidth, ((i.pos.y % subImageWidth) + cam1tempPos.y) / subImageWidth ));
+
+					realCamera2Colors = tex2D(_Cam2, float2( ((i.pos.x % subImageWidth) + cam2tempPos.x) / subImageWidth, ((i.pos.y % subImageWidth) + cam2tempPos.y) / subImageWidth ));
+
+					//realCamera1Colors = tex2D(_Cam1, float2( ((i.pos.x % subImageWidth) + cam1tempPos.x) / subImageWidth, ((i.pos.y % subImageWidth) + cam1tempPos.y) / subImageWidth ));
+
+					realCamera3Colors = tex2D(_Cam3, float2( ((i.pos.x % subImageWidth) + cam3tempPos.x) / subImageWidth, ((i.pos.y % subImageWidth) + cam3tempPos.y) / subImageWidth ));
+
 
 
 					//realCamera0Colors = tex2D(_Cam0, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) / subImageWidth, ((((i.pos.y % subImageWidth )) / subImageWidth))));
 
-					realCamera1Colors = tex2D(_Cam1, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
+					//realCamera1Colors = tex2D(_Cam1, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))/ subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
 
-					realCamera2Colors = tex2D(_Cam2, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
+					// realCamera2Colors = tex2D(_Cam2, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
+					// / subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
 
-					realCamera3Colors = tex2D(_Cam3, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
+					// realCamera3Colors = tex2D(_Cam3, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
+					// / subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
 
 
 					//get z position in eye/view space
@@ -212,23 +334,41 @@
 					eCam0.y = ( ((((i.pos.y % subImageWidth) + (cam0tempPos.y))) - (subImageWidth / 2.0)) * eCam0.z)/_ImagePlaneLength;
 					eCam0.y = eCam0.y - screenIndexY;
 
-
-
-					eCam1.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
-					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
+					eCam1.x = ( ((((i.pos.x % subImageWidth) + (cam1tempPos.x))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
 					eCam1.x = eCam1.x - screenIndexX + 14.0;
 
+					eCam1.y = ( ((((i.pos.y % subImageWidth) + (cam1tempPos.y))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
+					eCam1.y = eCam1.y - screenIndexY;
 
-
-					eCam2.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam2.z)/_ImagePlaneLength;
-					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
+					eCam2.x = ( ((((i.pos.x % subImageWidth) + (cam2tempPos.x))) - (subImageWidth / 2.0)) * eCam2.z)/_ImagePlaneLength;
 					eCam2.x = eCam2.x - screenIndexX + 14.0;
 
+					eCam2.y = ( ((((i.pos.y % subImageWidth) + (cam2tempPos.y))) - (subImageWidth / 2.0)) * eCam2.z)/_ImagePlaneLength;
+					eCam2.y = eCam2.y - screenIndexY + 7.0;
 
-
-					eCam3.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam3.z)/_ImagePlaneLength;
-					//The camera offset is the position of the camera realtive to the first camera cam0 minus one
+					eCam3.x = ( ((((i.pos.x % subImageWidth) + (cam3tempPos.x))) - (subImageWidth / 2.0)) * eCam3.z)/_ImagePlaneLength;
 					eCam3.x = eCam3.x - screenIndexX;
+
+					eCam3.y = ( ((((i.pos.y % subImageWidth) + (cam3tempPos.y))) - (subImageWidth / 2.0)) * eCam3.z)/_ImagePlaneLength;
+					eCam3.y = eCam3.y - screenIndexY + 7.0;
+
+
+
+					// eCam1.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam1.z)/_ImagePlaneLength;
+					// //The camera offset is the position of the camera realtive to the first camera cam0 minus one
+					// eCam1.x = eCam1.x - screenIndexX + 14.0;
+
+
+
+					// eCam2.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam2.z)/_ImagePlaneLength;
+					// //The camera offset is the position of the camera realtive to the first camera cam0 minus one
+					// eCam2.x = eCam2.x - screenIndexX + 14.0;
+
+
+
+					// eCam3.x = ( (((i.pos.x % subImageWidth + (j - (loopDuration / 2.0)))) - (subImageWidth / 2.0)) * eCam3.z)/_ImagePlaneLength;
+					// //The camera offset is the position of the camera realtive to the first camera cam0 minus one
+					// eCam3.x = eCam3.x - screenIndexX;
 
 
 					//Convert back from eye/view space to the projection plane
@@ -238,20 +378,23 @@
 					pCam0.y = -(_ImagePlaneLength * eCam0.y) / -eCam0.z;
 					pCam0.y = pCam0.y + (subImageWidth/2.0);
 
-
-
 					pCam1.x = -(_ImagePlaneLength * eCam1.x) / -eCam1.z;
 					pCam1.x = pCam1.x + (subImageWidth/2.0);
 
-
+					pCam1.y = -(_ImagePlaneLength * eCam1.y) / -eCam1.z;
+					pCam1.y = pCam1.y + (subImageWidth/2.0);
 
 					pCam2.x = -(_ImagePlaneLength * eCam2.x) / -eCam2.z;
 					pCam2.x = pCam2.x + (subImageWidth/2.0);
 
+					pCam2.y = -(_ImagePlaneLength * eCam2.y) / -eCam2.z;
+					pCam2.y = pCam2.y + (subImageWidth/2.0);
 
 					pCam3.x = -(_ImagePlaneLength * eCam3.x) / -eCam3.z;
 					pCam3.x = pCam3.x + (subImageWidth/2.0);
 
+					pCam3.y = -(_ImagePlaneLength * eCam3.y) / -eCam3.z;
+					pCam3.y = pCam3.y + (subImageWidth/2.0);
 
 
 					//position of our subimage on the screen
@@ -261,7 +404,7 @@
 
 					//CAMERA 0
 					//check if this distance between calculated value and the fragment position is less than half a pixel
-					if(abs(pCam0.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam0tempPos.x) <= subImageWidth &&abs(pCam0.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam0tempPos.y) <= subImageWidth) {
+					if(abs(pCam0.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam0tempPos.x) <= subImageWidth && abs(pCam0.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam0tempPos.y) <= subImageWidth) {
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam0Value.w > realCamera0Colors.w){
 
@@ -275,57 +418,65 @@
 
 								outputCam0Value.w = tex2D(_Cam0, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam0.x) ) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam0.y) ) / subImageWidth )).w;
 
-							//	outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y  ) / subImageWidth))));
-								//outputCam0Value = float4(outputCam0Value.w, outputCam0Value.w, outputCam0Value.w,1);
 
-
-								//texture look-up in the depth without linear interpolation
-
-								//outputCam0Value.w = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
-
-								// if((currentSubImgPos.x - pCam0.x) < 0.0){
-								// 	outputCam0Value = float4(abs(currentSubImgPos.x - pCam0.x),0,0,1);
-								// }else{
-								// 	outputCam0Value = float4(0,abs(currentSubImgPos.x - pCam0.x),0,1);
-								// }
 						}
 					}
 
 					//CAMERA 1
-					//check previous comments
-					if(abs(pCam1.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
+					//check if this distance between calculated value and the fragment position is less than half a pixel
+					if(abs(pCam1.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam1tempPos.x) <= subImageWidth && abs(pCam1.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam1tempPos.y) <= subImageWidth) {
+						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam1Value.w > realCamera1Colors.w){
 
-								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam1.x))) / subImageWidth, (((i.pos.y ) / subImageWidth))));
-								//outputCam1Value = float4(outputCam1Value.w, outputCam1Value.w, outputCam1Value.w,1);
+								//read value from real camera texture
+								//calculate difference between current subimage position and real camera position
+								//this value is used in a subpixel look-up (linear interpolation)
 
-								outputCam1Value.w = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
+								outputCam1Value = tex2D(_Cam1, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam1.x) + cam1tempPos.x) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam1.y) + cam1tempPos.y) / subImageWidth ));
+
+								//outputCam0Value.w = realCamera0Colors.w;
+
+								outputCam1Value.w = tex2D(_Cam1, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam1.x) ) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam1.y) ) / subImageWidth )).w;
+
+
 						}
 					}
 
 					//CAMERA 2
-					//check previous comments
-					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
+					//check if this distance between calculated value and the fragment position is less than half a pixel
+					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam2tempPos.x) <= subImageWidth && abs(pCam2.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam2tempPos.y) <= subImageWidth) {
+						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam2Value.w > realCamera2Colors.w){
 
-								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y - 700) / subImageWidth))));
-								//outputCam2Value = float4(outputCam2Value.w, outputCam2Value.w, outputCam2Value.w,1);
+								//read value from real camera texture
+								//calculate difference between current subimage position and real camera position
+								//this value is used in a subpixel look-up (linear interpolation)
+
+								outputCam2Value = tex2D(_Cam2, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam2.x) + cam2tempPos.x) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam2.y) + cam2tempPos.y) / subImageWidth ));
+
+								//outputCam0Value.w = realCamera0Colors.w;
+
+								outputCam2Value.w = tex2D(_Cam2, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam2.x) ) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam2.y) ) / subImageWidth )).w;
 
 
-								outputCam2Value.w = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth)))).w;
 						}
 					}
 
-					//CAMERA 3
-					//check previous comments
-					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
+					//Camera3
+					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam3tempPos.x) <= subImageWidth && abs(pCam3.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam3tempPos.y) <= subImageWidth) {
+						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam3Value.w > realCamera3Colors.w){
 
-								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y - 700 ) / subImageWidth))));
-								//outputCam3Value = float4(outputCam3Value.w, outputCam3Value.w, outputCam3Value.w,1);
+								//read value from real camera texture
+								//calculate difference between current subimage position and real camera position
+								//this value is used in a subpixel look-up (linear interpolation)
 
+								outputCam3Value = tex2D(_Cam3, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam3.x) + cam3tempPos.x) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam3.y) + cam3tempPos.y) / subImageWidth ));
 
-								outputCam3Value.w = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth)))).w;
+								//outputCam0Value.w = realCamera0Colors.w;
+
+								outputCam3Value.w = tex2D(_Cam3, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam3.x) ) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam3.y) ) / subImageWidth )).w;
+
 						}
 					}
 				}
@@ -340,7 +491,7 @@
 					//return float4(0,0,1,1);
 				}
 
-				return(outputCam0Value);
+				return(outputCam1Value);
 
 				if(i.pos.y < subImageWidth + 15 && screenIndexX < 8){
 					//return(outputCam0Value);

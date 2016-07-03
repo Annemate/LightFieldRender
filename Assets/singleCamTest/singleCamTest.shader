@@ -242,7 +242,7 @@ Shader "Custom/singleCamTest"
 				// }
 				// return float4(1,1,1,1);
 
-				loopDuration = 20;
+				loopDuration = 24;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 
