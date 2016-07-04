@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-//[InitializeOnLoad]
+[InitializeOnLoad]
 public class FullscreenPlayMode : MonoBehaviour {
 
 //The size of the toolbar above the game view, excluding the OS border.

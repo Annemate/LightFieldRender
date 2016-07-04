@@ -426,3 +426,17 @@ ComputerScreen,41,4,4,interpolatedImage,virtualCamera,virtualCamera
 ComputerScreen,41,5,5,interpolatedImage,virtualCamera,virtualCamera
 
 Unity closed
+
+Unity closed
+
+Unity closed
+LightFieldHmd,42,1,2,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,42,2,5,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
+
+Unity closed
+
+Unity closed
+
+Unity closed
