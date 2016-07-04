@@ -104,14 +104,13 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 
+
 				cam0pos = float2(0,0);
 				cam1pos = float2(14,0);
 				cam2pos = float2(14,7);
 				cam3pos = float2(0,7);
 
-				if(_Space > 1){
-					return float4(1,1,1,1);
-				}
+
 
 				//Initializing values
 
@@ -119,6 +118,8 @@
 				subImageWidth = 1.0/_Cam0_TexelSize.x;
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
+
+
 
 				float tmpX = screenIndexX;
 				float tmpY = screenIndexY;
@@ -136,10 +137,10 @@
 				//return float4(abs(slope.y), abs(slope.y), abs(slope.y), 1.0);
 
 				//Initializing values with extreme depth (these variables will be overwritten by the first calculations in the for-loop)
-				outputCam0Value = float4(1.0,0.0,0.0,2.0);
+				outputCam0Value = float4(0.0,0.0,0.0,2.0);
 				outputCam1Value = float4(0.0,0.0,0.0,2.0);
-				outputCam2Value = float4(0.0,1.0,0.0,2.0);
-				outputCam3Value = float4(1.0,1.0,0.0,2.0);
+				outputCam2Value = float4(0.0,0.0,0.0,2.0);
+				outputCam3Value = float4(0.0,0.0,0.0,2.0);
 
 				// //this section is used for finding the fov of the lens setup
 				// if(screenIndexX == 7 && screenIndexY == 3){
@@ -163,6 +164,16 @@
 				float2 cam1tempPos;
 				float2 cam2tempPos;
 				float2 cam3tempPos;
+
+
+				// if(_Space > 1){
+				// 	float tmpW = tex2D(_Cam0, float2( ((i.pos.x % subImageWidth) ) / subImageWidth, ((i.pos.y % subImageWidth) ) / subImageWidth )).w;
+				// 	return float4(tmpW, tmpW, tmpW, 1.0);
+				// }else{
+
+				// 	return tex2D(_Cam0, float2( ((i.pos.x % subImageWidth) ) / subImageWidth, ((i.pos.y % subImageWidth) ) / subImageWidth ));
+				// 	//return  tex2D(_Cam1, float2( ((i.pos.x % subImageWidth) ) / subImageWidth, ((i.pos.y % subImageWidth) ) / subImageWidth ));
+				// }
 
 
 				loopDuration = 50;
@@ -404,7 +415,8 @@
 
 					//CAMERA 0
 					//check if this distance between calculated value and the fragment position is less than half a pixel
-					if(abs(pCam0.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam0tempPos.x) <= subImageWidth && abs(pCam0.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam0tempPos.y) <= subImageWidth) {
+					if(abs(pCam0.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam0tempPos.x) <= subImageWidth
+					&& abs(pCam0.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam0tempPos.y) <= subImageWidth) {
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam0Value.w > realCamera0Colors.w){
 
@@ -416,7 +428,7 @@
 
 								//outputCam0Value.w = realCamera0Colors.w;
 
-								outputCam0Value.w = tex2D(_Cam0, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam0.x) ) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam0.y) ) / subImageWidth )).w;
+								outputCam0Value.w = realCamera0Colors.w;
 
 
 						}
@@ -424,7 +436,8 @@
 
 					//CAMERA 1
 					//check if this distance between calculated value and the fragment position is less than half a pixel
-					if(abs(pCam1.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam1tempPos.x) <= subImageWidth && abs(pCam1.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam1tempPos.y) <= subImageWidth) {
+					if(abs(pCam1.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam1tempPos.x) >= 0.0
+					&& abs(pCam1.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam1tempPos.y) >= 0.0) {
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam1Value.w > realCamera1Colors.w){
 
@@ -436,7 +449,7 @@
 
 								//outputCam0Value.w = realCamera0Colors.w;
 
-								outputCam1Value.w = tex2D(_Cam1, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam1.x) ) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam1.y) ) / subImageWidth )).w;
+								outputCam1Value.w = realCamera1Colors.w;
 
 
 						}
@@ -444,7 +457,8 @@
 
 					//CAMERA 2
 					//check if this distance between calculated value and the fragment position is less than half a pixel
-					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam2tempPos.x) <= subImageWidth && abs(pCam2.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam2tempPos.y) <= subImageWidth) {
+					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam2tempPos.x) >= 0.0
+					&& abs(pCam2.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam2tempPos.y) >= 0.0) {
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam2Value.w > realCamera2Colors.w){
 
@@ -452,18 +466,19 @@
 								//calculate difference between current subimage position and real camera position
 								//this value is used in a subpixel look-up (linear interpolation)
 
-								outputCam2Value = tex2D(_Cam2, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam2.x) + cam2tempPos.x) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam2.y) + cam2tempPos.y) / subImageWidth ));
+								outputCam2Value = tex2D(_Cam2, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam2.x) - cam2tempPos.x) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam2.y) - cam2tempPos.y) / subImageWidth ));
 
 								//outputCam0Value.w = realCamera0Colors.w;
 
-								outputCam2Value.w = tex2D(_Cam2, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam2.x) ) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam2.y) ) / subImageWidth )).w;
+								outputCam2Value.w = realCamera2Colors.w;
 
 
 						}
 					}
 
 					//Camera3
-					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam3tempPos.x) <= subImageWidth && abs(pCam3.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam3tempPos.y) <= subImageWidth) {
+					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && ((i.pos.x % subImageWidth) + cam3tempPos.x) <= subImageWidth
+					&& abs(pCam3.y - currentSubImgPos.y) < 0.5  && ((i.pos.y % subImageWidth) + cam3tempPos.y) <= subImageWidth) {
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam3Value.w > realCamera3Colors.w){
 
@@ -475,67 +490,83 @@
 
 								//outputCam0Value.w = realCamera0Colors.w;
 
-								outputCam3Value.w = tex2D(_Cam3, float2( (i.pos.x % subImageWidth + (currentSubImgPos.x - pCam3.x) ) / subImageWidth, (i.pos.y % subImageWidth + (currentSubImgPos.y - pCam3.y) ) / subImageWidth )).w;
+								outputCam3Value.w = realCamera3Colors.w;
 
 						}
 					}
 				}
 
-				if(i.pos.y < subImageWidth * 7 && i.pos.y > (subImageWidth * 7) - 15){
-					//return float4(1,0,0,1);
+
+				// if(_Space > 1){
+				// 	float tmpW = outputCam3Value.w;
+				// 	return float4(tmpW, tmpW, tmpW, 1.0);
+				// }else{
+
+				// 	return(outputCam3Value);
+				// 	//return  tex2D(_Cam1, float2( ((i.pos.x % subImageWidth) ) / subImageWidth, ((i.pos.y % subImageWidth) ) / subImageWidth ));
+				// }
+
+
+
+				if(outputCam0Value.w <= outputCam1Value.w && outputCam0Value.w <= outputCam2Value.w && outputCam0Value.w <= outputCam3Value.w){
+					return(outputCam0Value) + float4(0.2,0,0,1);
 				}
 
-				//If none of the cameras can see the point (the point is occluded by the elements in the scene)
-				if(outputCam0Value.w > 1.0 && outputCam1Value.w > 1.0 && outputCam2Value.w > 1.0 && outputCam3Value.w > 1.0){
-
-					//return float4(0,0,1,1);
+				else if(outputCam1Value.w <= outputCam2Value.w && outputCam1Value.w <= outputCam3Value.w){
+					return(outputCam1Value) + float4(0,0.2,0,1);
 				}
 
-				return(outputCam1Value);
-
-				if(i.pos.y < subImageWidth + 15 && screenIndexX < 8){
-					//return(outputCam0Value);
-					if(outputCam0Value.w <= outputCam1Value.w ){
-					return(outputCam0Value);
-					}
-					if(outputCam1Value.w <= outputCam0Value.w){
-					return(outputCam1Value);
-					}
-
+				else if(outputCam2Value.w <= outputCam3Value.w){
+				//	return(outputCam2Value);
+				}
+				else{
+					//return(outputCam3Value);
 				}
 
-				if(i.pos.y < subImageWidth + 15 && screenIndexX > 7){
-					//return(outputCam0Value);
-					if(outputCam1Value.w <= outputCam0Value.w ){
-					return(outputCam1Value);
-					}
-					if(outputCam0Value.w <= outputCam1Value.w){
-					return(outputCam0Value);
-					}
 
-				}
+				// if(i.pos.y < subImageWidth + 15 && screenIndexX < 8){
+				// 	//return(outputCam0Value);
+				// 	if(outputCam0Value.w <= outputCam1Value.w ){
+				// 	return(outputCam0Value);
+				// 	}
+				// 	if(outputCam1Value.w <= outputCam0Value.w){
+				// 	return(outputCam1Value);
+				// 	}
 
-				if(i.pos.y < (subImageWidth * 8.0)  && i.pos.y > (subImageWidth * 7.0) - 15 && screenIndexX < 8){
+				// }
 
-					//return(outputCam2Value);
-					if(outputCam3Value.w <= outputCam2Value.w ){
-						return(outputCam3Value);
-					}
-					 if(outputCam2Value.w <= outputCam3Value.w ){
-						return(outputCam2Value);
-					}
-				}
+				// if(i.pos.y < subImageWidth + 15 && screenIndexX > 7){
+				// 	//return(outputCam0Value);
+				// 	if(outputCam1Value.w <= outputCam0Value.w ){
+				// 	return(outputCam1Value);
+				// 	}
+				// 	if(outputCam0Value.w <= outputCam1Value.w){
+				// 	return(outputCam0Value);
+				// 	}
 
-				if(i.pos.y < (subImageWidth * 8.0)  && i.pos.y > (subImageWidth * 7.0) - 15 && screenIndexX > 7){
+				// }
 
-					//return(outputCam2Value);
-					if(outputCam2Value.w <= outputCam3Value.w ){
-						return(outputCam2Value);
-					}
-					 if(outputCam3Value.w <= outputCam2Value.w ){
-						return(outputCam3Value);
-					}
-				}
+				// if(i.pos.y < (subImageWidth * 8.0)  && i.pos.y > (subImageWidth * 7.0) - 15 && screenIndexX < 8){
+
+				// 	//return(outputCam2Value);
+				// 	if(outputCam3Value.w <= outputCam2Value.w ){
+				// 		return(outputCam3Value);
+				// 	}
+				// 	 if(outputCam2Value.w <= outputCam3Value.w ){
+				// 		return(outputCam2Value);
+				// 	}
+				// }
+
+				// if(i.pos.y < (subImageWidth * 8.0)  && i.pos.y > (subImageWidth * 7.0) - 15 && screenIndexX > 7){
+
+				// 	//return(outputCam2Value);
+				// 	if(outputCam2Value.w <= outputCam3Value.w ){
+				// 		return(outputCam2Value);
+				// 	}
+				// 	 if(outputCam3Value.w <= outputCam2Value.w ){
+				// 		return(outputCam3Value);
+				// 	}
+				// }
 
 
 				return float4(1,1,0,2);

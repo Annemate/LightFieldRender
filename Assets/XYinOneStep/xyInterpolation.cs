@@ -23,14 +23,14 @@ public class xyInterpolation : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-        /*if (Input.GetKeyUp("space")){
+        if (Input.GetKeyUp("space")){
         	if(space < 1){
         		space = 2;
         	}else{
         		space = 0;
         	}
             print("space key was released");
-        }*/
+        }
 
     }
 
