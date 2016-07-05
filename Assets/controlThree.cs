@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using XInputDotNetPure;
 
 public class controlThree : MonoBehaviour {
 
@@ -19,6 +20,11 @@ public class controlThree : MonoBehaviour {
 	float firstImageDuration;
 	float secondImageDuration;
 	String	currentDevice;
+	bool leftTriggerDown = false;
+	bool rightTriggerDown = false;
+	bool canAccepttrigger = true;
+	shake myShakeScript;
+	char previousButton;
 
 	private bool canAcceptButton = true;
 	private float lastButtonTime;
@@ -38,6 +44,8 @@ public class controlThree : MonoBehaviour {
 	BumperActions myBumperActions;
 
 	void Start(){
+
+		myShakeScript = gameObject.GetComponent<shake>();
 		if(UnityEngine.Random.Range(0,2) == 0){
 			virtualOnTheLeft = true;
 		}else{
@@ -328,14 +336,14 @@ public class controlThree : MonoBehaviour {
 		}
 	}
 
-	void XBoxButtonInput(){
-
-		if(myStates == States.begin){
-			//testNo++;
-			myStates = States.RefImageLf;
-		}
-
+	void ChooseBetweenLeftOrRight(){
+		leftTriggerDown = false;
+		rightTriggerDown = false;
+		canAccepttrigger = true;
 		if(myBumperActions.left == true && myBumperActions.right == true && (myStates == States.LookLf || myStates == States.LookSc)){
+			canAccepttrigger = false;
+			StartCoroutine(ResumeRumblerAfterNewImage(2f));
+			print("changing states to choose");
 			myBumperActions.left = false;
 			myBumperActions.right = false;
 			imagePairCounter ++;
@@ -348,12 +356,45 @@ public class controlThree : MonoBehaviour {
 					Choose(false, imagePairCounter);
 				}
 			updateList();
+			previousButton = 'x';
+		}else if(myStates == States.RefImageLf || myStates == States.RefImageSc){
+			myShakeScript.ActivateRumbler(0.8f, 0f, 0.5f);
+
+		}else if((myBumperActions.left == false || myBumperActions.right == false) && (myStates == States.LookLf || myStates == States.LookSc)){
+			myShakeScript.ActivateRumbler(0f, 0.8f, 0.5f);
+
+		}else{
+			print("somethis disnt work");
+		}
+
+
+	}
+
+	void XBoxButtonInput(){
+
+
+		previousButton = 'x';
+
+		if(myStates == States.begin){
+			//testNo++;
+			myStates = States.RefImageLf;
+		}else if(myStates == States.LookLf){
+			StartCoroutine(BlackDelay(delayToImages));
+			myStates = States.RefImageLf;
+		}else if(myStates == States.LookSc){
+			StartCoroutine(BlackDelay(delayToImages));
+			myStates = States.RefImageSc;
 		}
 
 	}
 
+
+
+
+
 	void Choose(bool lightField, int iteration){
 		print("log stuff");
+
 
 		if(lightField	){
 			currentDevice = "LightFieldHmd,";
@@ -409,10 +450,20 @@ public class controlThree : MonoBehaviour {
 
 	}
 
+	IEnumerator ResumeRumblerAfterNewImage(float delay){
+		yield return new WaitForSeconds(delay);
+			canAccepttrigger = true;
+
+	}
+
 
 
 	void XBoxBumperInput(char button){
-		StartCoroutine(BlackDelay(delayToImages));
+
+		if(button != previousButton)
+			StartCoroutine(BlackDelay(delayToImages));
+
+		previousButton = button;
 
 		if(myStates == States.RefImageLf){
 			myStates = States.LookLf;
@@ -449,51 +500,53 @@ public class controlThree : MonoBehaviour {
 	void Update() {
 
 
-		if ((Time.time - 0.5f) > lastButtonTime && !canAcceptButton && !shutButtonsOff) {
+		if ((Time.time - 0.25f) > lastButtonTime && !canAcceptButton && !shutButtonsOff) {
 			canAcceptButton = true;
 		}
 
 		if (Input.GetButton ("A") && canAcceptButton) {
 			lastButtonTime = Time.time;
 			canAcceptButton = false;
-			//print ("A");
+			print ("A");
 			XBoxButtonInput();
 		}
 
 		if (Input.GetButton ("B") && canAcceptButton) {
 			lastButtonTime = Time.time;
 			canAcceptButton = false;
-			//print ("B");
+			print ("B");
 			XBoxButtonInput();
 		}
 
 		if (Input.GetButton ("X") && canAcceptButton) {
 			lastButtonTime = Time.time;
 			canAcceptButton = false;
-			//print ("X");
+			print ("X");
 			XBoxButtonInput();
 		}
 
 		if (Input.GetButton ("Y") && canAcceptButton) {
 			lastButtonTime = Time.time;
 			canAcceptButton = false;
-			//print ("Y");
+			print ("Y");
 			XBoxButtonInput();
 		}
 
 
-		if (Input.GetAxis ("LeftTrigger") > 0.5f && canAcceptButton) {
-			lastButtonTime = Time.time;
-			canAcceptButton = false;
+		if (Input.GetAxis ("LeftTrigger") > 0.5f && canAccepttrigger) {
+			leftTriggerDown = true;
 			print ("LeftTrigger");
-			XBoxBumperInput('l');
+			//XBoxBumperInput('l');
+		}else if(Input.GetAxis ("LeftTrigger") < 0.5f){
+			leftTriggerDown = false;
 		}
 
-		if (Input.GetAxis ("RightTrigger") > 0.5f && canAcceptButton) {
-			lastButtonTime = Time.time;
-			canAcceptButton = false;
+		if (Input.GetAxis ("RightTrigger") > 0.5f && canAccepttrigger) {
+			rightTriggerDown = true;
 			print ("RightTrigger");
-			XBoxBumperInput('r');
+			//XBoxBumperInput('r');
+		}else if(Input.GetAxis ("RightTrigger") < 0.5f){
+			rightTriggerDown = false;
 		}
 
 		if (Input.GetButton ("LeftBumper") && canAcceptButton) {
@@ -515,6 +568,13 @@ public class controlThree : MonoBehaviour {
 				myStates = States.RefImageSc;
 			}
 		}
+
+		if(leftTriggerDown && rightTriggerDown){
+			print("both triggers have been pressed down proceeding to make the choise");
+			canAccepttrigger = false;
+			ChooseBetweenLeftOrRight();
+		}
+
 
 		if(!isBlack)
 			UpdateImage();
