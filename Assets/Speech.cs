@@ -3,43 +3,82 @@ using System.Collections;
 
 public class Speech : MonoBehaviour {
 
-	public AudioSource alreadyLookingAtTheSameImageDanish;
-	public AudioSource alreadyLookingAtTheSameImageEnglish;
-	public AudioSource pressBothBumpersToChooseDanish;
-	public AudioSource pressBothBumpersToChooseEnglish;
-	public AudioSource cantChooseTheReferenceImageDanish;
-	public AudioSource cantChooseTheReferenceImageEnglish;
+	public AudioClip alreadyLookingAtTheSameImageDanish;
+	public AudioClip alreadyLookingAtTheSameImageEnglish;
+	public AudioClip pressBothBumpersToChooseDanish;
+	public AudioClip pressBothBumpersToChooseEnglish;
+	public AudioClip cantChooseTheReferenceImageDanish;
+	public AudioClip cantChooseTheReferenceImageEnglish;
+	public AudioClip pressLeftOrRightDanish;
+	public AudioClip pressLeftOrRightEnglish;
+	public AudioClip youHaveNotSeenBothImagesDanish;
+	public AudioClip youHaveNotSeenBothImagesEnglish;
 
+	AudioSource audio;
+
+	private bool canPlay = true;
 	public enum Languages{English, Danish};
 	public Languages myLanguage;
 	// Use this for initialization
 	void Start () {
+		audio = gameObject.GetComponent<AudioSource>();
 		myLanguage = Languages.Danish;
 	}
 
+	public void YouHaveNotSeenBothImages(){
+		if(myLanguage == Languages.Danish && !audio.isPlaying ){
+			audio.clip = youHaveNotSeenBothImagesDanish;
+			audio.Play();
+		}else if(myLanguage == Languages.English && !audio.isPlaying){
+			audio.clip = youHaveNotSeenBothImagesEnglish;
+			audio.Play();
+		}
+	}
+
 	public void AlreadyLookingAtTheSameImage(){
-		if(myLanguage == Languages.Danish && !alreadyLookingAtTheSameImageDanish.isPlaying){
-			alreadyLookingAtTheSameImageDanish.Play();
-		}else if(myLanguage == Languages.English && !alreadyLookingAtTheSameImageEnglish.isPlaying){
-			alreadyLookingAtTheSameImageEnglish.Play();
+		if(myLanguage == Languages.Danish && !audio.isPlaying ){
+			audio.clip = alreadyLookingAtTheSameImageDanish;
+			audio.Play();
+		}else if(myLanguage == Languages.English && !audio.isPlaying){
+			audio.clip = alreadyLookingAtTheSameImageEnglish;
+			audio.Play();
 		}
 	}
 
 	public void PressBothBumpersToChoose(){
-		if(myLanguage == Languages.Danish && !pressBothBumpersToChooseDanish.isPlaying){
-			pressBothBumpersToChooseDanish.Play();
-		}else if(myLanguage == Languages.English && !pressBothBumpersToChooseEnglish.isPlaying){
-			pressBothBumpersToChooseEnglish.Play();
+		if(myLanguage == Languages.Danish && !audio.isPlaying){
+			audio.clip = pressBothBumpersToChooseDanish;
+			audio.Play();
+		}else if(myLanguage == Languages.English && !audio.isPlaying){
+			audio.clip = pressBothBumpersToChooseEnglish;
+			audio.Play();
 		}
 	}
 
 	public void cantChooseTheReferenceImage(){
-		if(myLanguage == Languages.Danish && !cantChooseTheReferenceImageDanish.isPlaying){
-			cantChooseTheReferenceImageDanish.Play();
-		}else if(myLanguage == Languages.English && !cantChooseTheReferenceImageEnglish.isPlaying){
-			cantChooseTheReferenceImageEnglish.Play();
-		}
+		StartCoroutine(PlayRefImgSound());
 	}
+
+    IEnumerator PlayRefImgSound()
+    {
+        if(myLanguage == Languages.Danish && !audio.isPlaying){
+			audio.clip = cantChooseTheReferenceImageDanish;
+			audio.Play();
+		}else if(myLanguage == Languages.English && !audio.isPlaying){
+			audio.clip = cantChooseTheReferenceImageEnglish;
+			audio.Play();
+		}
+
+        yield return new WaitForSeconds(audio.clip.length);
+
+        if(myLanguage == Languages.Danish && !audio.isPlaying){
+			audio.clip = pressLeftOrRightDanish;
+			audio.Play();
+		}else if(myLanguage == Languages.English && !audio.isPlaying){
+			audio.clip = pressLeftOrRightEnglish;
+			audio.Play();
+		}
+    }
 
 	// Update is called once per frame
 	void Update () {

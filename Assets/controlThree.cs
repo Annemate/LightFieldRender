@@ -370,6 +370,7 @@ public class controlThree : MonoBehaviour {
 
 		}else if((myBumperActions.left == false || myBumperActions.right == false) && (myStates == States.LookLf || myStates == States.LookSc)){
 			myShakeScript.ActivateRumbler(0f, 0.8f, 0.5f);
+			mySpeech.YouHaveNotSeenBothImages();
 
 		}else{
 			print("somethis disnt work");
@@ -380,7 +381,7 @@ public class controlThree : MonoBehaviour {
 
 	void XBoxButtonInput(){
 
-
+		mySoundLastSide = Sides.start;
 		previousButton = 'x';
 
 		if(myStates == States.begin){

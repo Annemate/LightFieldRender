@@ -1,0 +1,12 @@
+ sampler2D original : register(s0);
+  sampler1D curve : register(s1);
+  float4 main(float2 uv : TEXCOORD) : COLOR {
+  float4 color = tex2D(original, uv);
+  float luminosity = (color.r + color.g + color.b) / 3.0;
+  float mappedluminosity = tex1D(curve, luminosity).x;
+  // Absolutely black color
+  if(luminosity == 0.0)
+  	return float4(mappedluminosity, mappedluminosity, mappedluminosity, color.a);
+  return float4(color.rgb * (mappedluminosity / luminosity), color.a);
+  // WARNING points here
+}
