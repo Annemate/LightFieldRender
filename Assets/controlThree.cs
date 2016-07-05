@@ -29,9 +29,12 @@ public class controlThree : MonoBehaviour {
 	private bool canAcceptButton = true;
 	private float lastButtonTime;
 	bool lastBumpWasLeft;
+	bool canCheckforChoiseSound = true;
 
 	public List<int> test = new List<int>();
 
+	public enum Sides{start, left, right};
+	public Sides mySoundLastSide;
 
 	public enum States{black, begin, RefImageLf, LookLf, ChooseLf, SwitchScreen, RefImageSc, LookSc, ChooseSc, Done};
 	public States myStates;
@@ -41,12 +44,15 @@ public class controlThree : MonoBehaviour {
 		public bool right;
 	}
 
+	Speech mySpeech;
 	BumperActions myBumperActions;
 
 	void Start(){
+		mySoundLastSide = Sides.start;
+		myShakeScript   = gameObject.GetComponent<shake>();
+		mySpeech        = gameObject.GetComponent<Speech>();
 
-		myShakeScript = gameObject.GetComponent<shake>();
-		if(UnityEngine.Random.Range(0,2) == 0){
+ 		if(UnityEngine.Random.Range(0,2) == 0){
 			virtualOnTheLeft = true;
 		}else{
 			virtualOnTheLeft = false;
@@ -356,9 +362,11 @@ public class controlThree : MonoBehaviour {
 					Choose(false, imagePairCounter);
 				}
 			updateList();
+			mySoundLastSide = Sides.start;
 			previousButton = 'x';
 		}else if(myStates == States.RefImageLf || myStates == States.RefImageSc){
 			myShakeScript.ActivateRumbler(0.8f, 0f, 0.5f);
+			mySpeech.cantChooseTheReferenceImage();
 
 		}else if((myBumperActions.left == false || myBumperActions.right == false) && (myStates == States.LookLf || myStates == States.LookSc)){
 			myShakeScript.ActivateRumbler(0f, 0.8f, 0.5f);
@@ -384,6 +392,9 @@ public class controlThree : MonoBehaviour {
 		}else if(myStates == States.LookSc){
 			StartCoroutine(BlackDelay(delayToImages));
 			myStates = States.RefImageSc;
+		}else if(myStates == States.RefImageLf || myStates == States.RefImageSc){
+			mySpeech.AlreadyLookingAtTheSameImage();
+
 		}
 
 	}
@@ -473,6 +484,16 @@ public class controlThree : MonoBehaviour {
 			myStates = States.LookSc;
 		}
 
+		if(button == 'l' && mySoundLastSide == Sides.left && (myStates == States.LookLf || myStates == States.LookSc)){
+			mySpeech.AlreadyLookingAtTheSameImage();
+			print("not left");
+		}
+
+		if(button == 'r' && mySoundLastSide == Sides.right && (myStates == States.LookLf || myStates == States.LookSc)){
+			mySpeech.AlreadyLookingAtTheSameImage();
+			print("not right");
+		}
+
 		if(button == 'l' && (myStates == States.LookLf || myStates == States.LookSc)){
 				myBumperActions.left = true;
 				lastBumpWasLeft = true;
@@ -484,6 +505,13 @@ public class controlThree : MonoBehaviour {
 				lastBumpWasLeft = false;
 				print("right");
 			}
+
+		//Last thing in this function
+		if(button == 'l'){
+			mySoundLastSide = Sides.left;
+		}else if(button == 'r'){
+			mySoundLastSide = Sides.right;
+		}
 	}
 
 
@@ -570,14 +598,27 @@ public class controlThree : MonoBehaviour {
 		}
 
 		if(leftTriggerDown && rightTriggerDown){
-			print("both triggers have been pressed down proceeding to make the choise");
 			canAccepttrigger = false;
 			ChooseBetweenLeftOrRight();
+		}
+
+		if((leftTriggerDown != rightTriggerDown) && canCheckforChoiseSound){
+			canCheckforChoiseSound = false;
+			StartCoroutine(ChoiseCheckdelay(1f));
 		}
 
 
 		if(!isBlack)
 			UpdateImage();
+	}
+
+	IEnumerator ChoiseCheckdelay(float delay){
+		yield return new WaitForSeconds(delay);
+		canCheckforChoiseSound = true;
+		if((leftTriggerDown != rightTriggerDown)){
+				mySpeech.PressBothBumpersToChoose();
+		}
+
 	}
 
 	void OnApplicationQuit(){
