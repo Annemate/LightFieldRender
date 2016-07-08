@@ -1,19 +1,19 @@
 Shader "Earth"
 {
-	Properties 
+	Properties
 	{
 		_AtmosphereColor ("Atmosphere Color", Color) = (0.1, 0.35, 1.0, 1.0)
 		_AtmospherePow ("Atmosphere Power", Range(1.5, 8)) = 2
 		_AtmosphereMultiply ("Atmosphere Multiply", Range(1, 3)) = 1.5
 
 		_DiffuseTex("Diffuse", 2D) = "white" {}
-		
+
 		_CloudAndNightTex("Cloud And Night", 2D) = "black" {}
 
-		_LightDir("Light Dir", Vector) = (-1,0,0,1)
+		_LightDir("Light Dir", Vector) = (1,0,0,1)
 	}
 
-	SubShader 
+	SubShader
 	{
 		ZWrite On
 		ZTest LEqual
@@ -22,9 +22,9 @@ Shader "Earth"
 		{
 		CGPROGRAM
 			#include "UnityCG.cginc"
-			#pragma vertex vert 
+			#pragma vertex vert
 			#pragma fragment frag
-			
+
 			sampler2D _DiffuseTex;
 			sampler2D _CloudAndNightTex;
 
@@ -34,14 +34,14 @@ Shader "Earth"
 
 			float4 _LightDir;
 
-			struct vertexInput 
+			struct vertexInput
 			{
 				float4 pos				: POSITION;
 				float3 normal			: NORMAL;
 				float2 uv				: TEXCOORD0;
 			};
 
-			struct vertexOutput 
+			struct vertexOutput
 			{
 				float4 pos			: POSITION;
 				float2 uv			: TEXCOORD0;
@@ -49,14 +49,14 @@ Shader "Earth"
 				half night			: TEXCOORD2;
 				half3 atmosphere	: TEXCOORD3;
 			};
-			
-			vertexOutput vert(vertexInput input) 
+
+			vertexOutput vert(vertexInput input)
 			{
 				vertexOutput output;
 				output.pos = mul(UNITY_MATRIX_MVP, input.pos);
 				output.uv = input.uv;
 
-				output.diffuse = saturate(dot(_LightDir.xyz, input.normal) * 1.2);
+				output.diffuse = saturate(dot(float3(_LightDir.x,_LightDir.y,-_LightDir.z), input.normal) * 1.2);
 				output.night = 1 - saturate(output.diffuse * 2);
 
 				half3 viewDir = normalize(ObjSpaceViewDir(input.pos));
@@ -83,6 +83,6 @@ Shader "Earth"
 		ENDCG
 		}
 	}
-	
+
 	Fallback "Diffuse"
 }
