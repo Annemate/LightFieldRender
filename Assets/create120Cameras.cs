@@ -11,6 +11,8 @@ public class create120Cameras : MonoBehaviour {
 	public int numOfCamYaxis;
 	public Vector2 screenSize;
 	public Vector2 imageSize;
+	public float errorX;
+	public float errorY;
 	public Vector2 ICD;
 	public Vector2 screenPositionOffset;
 	private int cameraIndexName = 1;
@@ -26,8 +28,8 @@ public class create120Cameras : MonoBehaviour {
 	IEnumerator MyStart () {
 		 yield return new WaitForSeconds(0);
 		cameraList = new List<GameObject>();
-		subImageWidthX = (imageSize.x/screenSize.x)/numOfCamXaxis;
-		subImageWidthY = (imageSize.y/screenSize.y)/numOfCamYaxis;
+		subImageWidthX = ((imageSize.x/screenSize.x)/numOfCamXaxis) * (errorX/100f);
+		subImageWidthY = ((imageSize.y/screenSize.y)/numOfCamYaxis) * (errorY/100f);
 		print(subImageWidthY);
 		for(int i = 0; i < numOfCamYaxis; i ++){
 			for(int j = 0; j < numOfCamXaxis; j ++){
@@ -58,6 +60,8 @@ public class create120Cameras : MonoBehaviour {
 		if(updateCameras){
 			updateCameras = false;
 			cameraIndexName = 0;
+			subImageWidthX = ((imageSize.x/screenSize.x)/numOfCamXaxis) * (errorX/100f);
+			subImageWidthY = ((imageSize.y/screenSize.y)/numOfCamYaxis) * (errorY/100f);
 			for(int i = 0; i < numOfCamYaxis; i ++){
 				for(int j = 0; j < numOfCamXaxis; j ++){
 
