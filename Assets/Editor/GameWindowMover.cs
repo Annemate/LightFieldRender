@@ -41,10 +41,10 @@ static void FullScreenGameWindow(){
     EditorWindow gameView = GetMainGameView();
 
     gameView.title = "Game (Stereo)";
-    Rect newPos = new Rect(0, 0 - tabHeight, Screen.currentResolution.width, Screen.currentResolution.height + tabHeight);
+    Rect newPos = new Rect(0, 0 - tabHeight, 1280, 720 + tabHeight);
 
     gameView.position = newPos;
-    gameView.minSize = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height + tabHeight);
+    gameView.minSize = new Vector2(1280, 720 + tabHeight);
     gameView.maxSize = gameView.minSize;
     gameView.position = newPos;
 

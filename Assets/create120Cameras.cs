@@ -18,8 +18,13 @@ public class create120Cameras : MonoBehaviour {
 	private float subImageWidthY;
 	private List<GameObject> cameraList;
 	public bool updateCameras;
+	int counter;
 	// Use this for initialization
-	void Start () {
+	void Start(){
+		StartCoroutine(MyStart());
+	}
+	IEnumerator MyStart () {
+		 yield return new WaitForSeconds(0);
 		cameraList = new List<GameObject>();
 		subImageWidthX = (imageSize.x/screenSize.x)/numOfCamXaxis;
 		subImageWidthY = (imageSize.y/screenSize.y)/numOfCamYaxis;
@@ -32,6 +37,13 @@ public class create120Cameras : MonoBehaviour {
 				cameraList.Add(tmp);
 
 				tmp.GetComponent<Camera>().rect = new Rect(subImageWidthX * j + screenPositionOffset.x ,subImageWidthY * i + screenPositionOffset.y, subImageWidthX,subImageWidthY);
+				if(counter % 2 == 0){
+					tmp.GetComponent<Camera>().backgroundColor = Color.red;
+				}else{
+					tmp.GetComponent<Camera>().backgroundColor = Color.green;
+				}
+
+				counter ++;
 			}
 		}
 

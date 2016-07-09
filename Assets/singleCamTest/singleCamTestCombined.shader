@@ -58,6 +58,8 @@ Shader "Custom/singleCamTestCombined"
 			float4	slope;
 			int testSlope;
 
+			float2 bestGuess;
+
 
 			//Subimage index
 			int screenIndexX;
@@ -91,11 +93,26 @@ Shader "Custom/singleCamTestCombined"
 			fixed4 frag (v2f i) : SV_Target
 			{
 
+				bestGuess = float2(100.0,100.0);
 				//return float4(0,0,0,0);
 				//Initializing values
 				subImageWidth = 100;
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
+
+				if(screenIndexX % 2 == 0){
+					if(screenIndexY % 2 == 0){
+							return float4(0,1,0,1);
+						}else{
+							return float4(1,0,0,1);
+						}
+				}else{
+					if(screenIndexY % 2 == 0){
+							return float4(1,0,0,1);
+						}else{
+							return float4(0,1,0,1);
+						}
+				}
 
 				// if(screenIndexX == 7 && screenIndexY == 4){
 				// 	return float4(0,1,0,1);
@@ -116,10 +133,10 @@ Shader "Custom/singleCamTestCombined"
 
 
 				//Initializing values with extreme depth (these variables will be overwritten by the first calculations in the for-loop)
-				outputCam0Value = float4(0.0,0.0,0.0,2.0);
-				outputCam1Value = float4(0.0,0.0,0.0,2.0);
+				outputCam0Value = float4(1.0,0.0,0.0,2.0);
+				outputCam1Value = float4(1.0,0.0,0.0,2.0);
 
-				loopDuration = 20;
+				loopDuration = 80;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 
@@ -177,7 +194,7 @@ Shader "Custom/singleCamTestCombined"
 
 						//check if this depth value is less than the previous depth value (original depth = 2)
 						if(outputCam0Value.w > realCamera0Colors.w){
-
+								bestGuess.x = abs(pCam0.y - currentSubImgPos.y);
 								//read value from real camera texture
 								//calculate difference between current subimage position and real camera position
 								//this value is used in a subpixel look-up (linear interpolation)
@@ -205,7 +222,7 @@ Shader "Custom/singleCamTestCombined"
 					if(abs(pCam1.y - currentSubImgPos.y) < 0.5 && (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 
 						if(outputCam1Value.w > realCamera1Colors.w){
-
+								bestGuess.y = abs(pCam1.y - currentSubImgPos.y);
 
 								outputCam1Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 700.0 + (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
@@ -233,30 +250,34 @@ Shader "Custom/singleCamTestCombined"
 				float grayOutputCam0Value = (outputCam0Value.x + outputCam0Value.y + outputCam0Value.z) / 3.0;
 				float grayOutputCam1Value = (outputCam1Value.x + outputCam1Value.y + outputCam1Value.z) / 3.0;
 
+				if(outputCam1Value.w < outputCam0Value.w){
+					//return outputCam1Value;
+				}
 
-				if(outputCam1Value.w < outputCam0Value.w && screenIndexY < 4){
+				//return outputCam0Value;
+				if(outputCam1Value.w < outputCam0Value.w && screenIndexY < 4 && outputCam1Value.w < 2.0){
 					//return float4(outputCam0Value.w,outputCam0Value.w,outputCam0Value.w,1);
 					return outputCam1Value;
 					//return (outputCam0Value); return (grayOutputCam1Value +
 					//float4(0.3,0,0,0));
-				}else if(screenIndexY < 4){
+				}else if(screenIndexY < 4 && outputCam0Value.w < 2.0){
 					//return float4(outputCam1Value.w,outputCam1Value.w,outputCam1Value.w,1);
 					return outputCam0Value;
 					//return (grayOutputCam0Value + float4(0,0.3,0,0));
 				}
 
-				if(outputCam1Value.w < outputCam0Value.w && screenIndexY > 3){
+				if(outputCam1Value.w < outputCam0Value.w && screenIndexY > 3 && outputCam1Value.w < 2.0){
 					//return float4(outputCam0Value.w,outputCam0Value.w,outputCam0Value.w,1);
 					return outputCam1Value;
 					//return (outputCam0Value); return (grayOutputCam1Value +
 					//float4(0.3,0,0,0));
-				}else if(screenIndexY > 3){
+				}else if(screenIndexY > 3 && outputCam0Value.w < 2.0){
 					//return float4(outputCam1Value.w,outputCam1Value.w,outputCam1Value.w,1);
 					return outputCam0Value;
 					//return (grayOutputCam0Value + float4(0,0.3,0,0));
 				}
-
-				return float4(0,0,0,1);
+				return ( tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 ) ) / (1.0 / _xAxisTexture_TexelSize.y))) + tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (i.pos.y % subImageWidth  ) / (1.0 / _xAxisTexture_TexelSize.y)))) / 2.0;
+				return float4(0,1,0,1);
 
 			}
 			ENDCG
