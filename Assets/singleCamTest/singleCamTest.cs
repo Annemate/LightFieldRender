@@ -13,6 +13,9 @@ public class singleCamTest : MonoBehaviour {
 //	public RenderTexture cleanCamZeroRenderTexture;
 //	public RenderTexture cleanCamOneRenderTexture;
 
+	public float offsetX;
+	public float offsetY;
+
 	public RenderTexture realCam0RenderTexture;
 	public RenderTexture realCam1RenderTexture;
 	public RenderTexture realCam2RenderTexture;
@@ -86,6 +89,9 @@ public class singleCamTest : MonoBehaviour {
 		material.SetTexture ("_RealCam13", realCam13RenderTexture);
 		material.SetTexture ("_RealCam14", realCam14RenderTexture);
 		material.SetTexture ("_RealCam15", realCam15RenderTexture);
+
+		material.SetFloat ("OffsetX", offsetX);
+		material.SetFloat ("OffsetY", offsetY);
 
 		Graphics.Blit (source, destination, material);
 	}

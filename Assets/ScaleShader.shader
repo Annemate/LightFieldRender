@@ -77,7 +77,7 @@ Shader "Custom/ScaleShader"
 				#endif
 
 				float test = ((1.0 / _MainTex_TexelSize) - i.pos.y);
-				fixed4 col = tex2D(_SubImages, float2((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x), abs(orientation-((( i.pos.y - _SubImagesOffsetY) * (ScreenResolutionInMm.y / ScreenResolutionInPixels.y)) )/ SubImageSizeInMm.y)));
+				fixed4 col = tex2D(_SubImages, float2((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x), 1.0-abs(orientation-((( i.pos.y - _SubImagesOffsetY) * (ScreenResolutionInMm.y / ScreenResolutionInPixels.y)) )/ SubImageSizeInMm.y)));
 				col = lerp(col, float4(0.0,0.0,0.0,1.0),step(1,(((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x)));
 
 				col = lerp(col, float4(0.0,0.0,0.0,1.0),step((((i.pos.x - _SubImagesOffsetX)*(ScreenResolutionInMm.x / ScreenResolutionInPixels.x)) / SubImageSizeInMm.x),0.0));

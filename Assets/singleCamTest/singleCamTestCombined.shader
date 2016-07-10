@@ -100,19 +100,22 @@ Shader "Custom/singleCamTestCombined"
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
 
-				if(screenIndexX % 2 == 0){
-					if(screenIndexY % 2 == 0){
-							return float4(0,1,0,1);
-						}else{
-							return float4(1,0,0,1);
-						}
-				}else{
-					if(screenIndexY % 2 == 0){
-							return float4(1,0,0,1);
-						}else{
-							return float4(0,1,0,1);
-						}
-				}
+				// if( screenIndexX == 1 && screenIndexY == 1){
+				// 	return float4(1,1,0,1);
+				// }
+				// if(screenIndexX % 2 == 0){
+				// 	if(screenIndexY % 2 == 0){
+				// 			return float4(0,1,0,1);
+				// 		}else{
+				// 			return float4(1,0,0,1);
+				// 		}
+				// }else{
+				// 	if(screenIndexY % 2 == 0){
+				// 			return float4(1,0,0,1);
+				// 		}else{
+				// 			return float4(0,1,0,1);
+				// 		}
+				// }
 
 				// if(screenIndexX == 7 && screenIndexY == 4){
 				// 	return float4(0,1,0,1);

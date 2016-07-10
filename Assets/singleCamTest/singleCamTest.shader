@@ -7,6 +7,8 @@ Shader "Custom/singleCamTest"
 		_Cam2 ("Cam2", 2D) = "white" {}
 		_Cam3 ("Cam3", 2D) = "white" {}
 		_Space ("Space", float) = 0
+		_OffsetX ("OffsetX", float) = 0
+		_OffsetY ("OffsetY", float) = 0
 
 		_RealCam0 ("RealCam0", 2D) = "white" {}
 		_RealCam1 ("RealCam1", 2D) = "white" {}
@@ -70,6 +72,9 @@ Shader "Custom/singleCamTest"
 			float _ImagePlaneLength;
 			float _nearPlane;
 			float _farPlane;
+
+			float _OffsetX;
+			float _OffsetY;
 
 			//colors being read from the render textures from the real cameras
 			float4 realCamera0Colors;
@@ -147,7 +152,7 @@ Shader "Custom/singleCamTest"
 				//return tex2D(_Cam0, float2((i.pos.x % 100) / 100, (i.pos.y % 100) / 100));
 
 				if(_Space > 1){
-					return float4(1,1,1,1);
+					//return float4(1,1,1,1);
 				}
 
 				bestDistance = float4(100.0,100.0,100.0,100.0);
@@ -156,79 +161,23 @@ Shader "Custom/singleCamTest"
 				cam2pos = float2(14.0,7.0);
 				cam3pos = float2(0.0,7.0);
 
-
-
-
 				//Initializing values
 				subImageWidth = 1.0/_Cam0_TexelSize.x;
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
-
-				//return tex2D(_Cam3, float2((i.pos.x % subImageWidth) / subImageWidth, (i.pos.y % subImageWidth) / subImageWidth));
-
-
-				//return float4(screenIndexY/4.0,screenIndexY/4.0,screenIndexY/4.0,1.0);
-
-				 // if(i.pos.y > subImageWidth && i.pos.x < subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam0, float2(((i.pos.x))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 1 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam1, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 2 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	//return tex2D(_RealCam2, float2(((i.pos.x%subImageWidth))
-				 // 	/// subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 3 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	//return tex2D(_RealCam3, float2(((i.pos.x%subImageWidth))
-				 // 	/// subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 4 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	//return tex2D(_RealCam4, float2(((i.pos.x%subImageWidth))
-				 // 	/// subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 5 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	//return tex2D(_RealCam5, float2(((i.pos.x%subImageWidth))
-				 // 	/// subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 6 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	//return tex2D(_RealCam6, float2(((i.pos.x%subImageWidth))
-				 // 	/// subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 7 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	//return tex2D(_RealCam7, float2(((i.pos.x%subImageWidth))
-				 // 	/// subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 8 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam8, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 9 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam9, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }
-
-				 // else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 10 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam10, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 11 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam11, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 12 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam12, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 13 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam13, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 14 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam14, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }else if(i.pos.y > subImageWidth && i.pos.x < subImageWidth * 15 + subImageWidth && i.pos.y < subImageWidth * 7){
-				 // 	return tex2D(_RealCam15, float2(((i.pos.x%subImageWidth))
-				 // 	/ subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth))));
-				 // }
-
-
-
 
 				//Initializing values with extreme depth (these variables will be overwritten by the first calculations in the for-loop)
 				outputCam0Value = float4(0.0,0.0,0.0,2.0);
 				outputCam1Value = float4(0.0,0.0,0.0,2.0);
 				outputCam2Value = float4(0.0,0.0,0.0,2.0);
 				outputCam3Value = float4(0.0,0.0,0.0,2.0);
+
+
+				if(screenIndexX == 1 && screenIndexY == 1 ){
+					//return float4(0,1,1,1);
+					return tex2D(_Cam0, float2(((i.pos.x % subImageWidth)) / subImageWidth, ((((i.pos.y % subImageWidth)) / subImageWidth))));
+				}
+				return float4(0,0,0,1);
 
 				// //this section is used for finding the fov of the lens setup
 				// if(screenIndexX == 7 && screenIndexY == 3){
@@ -248,8 +197,7 @@ Shader "Custom/singleCamTest"
 				// 	return float4(0,0,0,1);
 				// }
 				// return float4(1,1,1,1);
-				// bestGuessDistance = 100000.0;
-				// bestGuessColor = float4(0.0,0.0,0.0,1.0);
+
 				loopDuration = 24;
 				for (int j = 0; j <= loopDuration; j++)
 				{
@@ -258,17 +206,17 @@ Shader "Custom/singleCamTest"
 
 					//calculates the sub-image position from the current position of the fragment in screen space
 					//look-up in the real camera +-half of the for-loop duration
-					realCamera0Colors = tex2D(_Cam0, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, ((((i.pos.y % subImageWidth )) / subImageWidth))));
+					realCamera0Colors = tex2D(_Cam0, float2(((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))))
+					/ subImageWidth, ((((i.pos.y % subImageWidth + _OffsetY)) / subImageWidth))));
 
-					realCamera1Colors = tex2D(_Cam1, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
+					realCamera1Colors = tex2D(_Cam1, float2(((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))))
+					/ subImageWidth, ((((i.pos.y % subImageWidth  + _OffsetY)) / subImageWidth))));
 
-					realCamera2Colors = tex2D(_Cam2, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
+					realCamera2Colors = tex2D(_Cam2, float2(((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))))
+					/ subImageWidth, ((((i.pos.y % subImageWidth  + _OffsetY)) / subImageWidth))));
 
-					realCamera3Colors = tex2D(_Cam3, float2(((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))))
-					/ subImageWidth, ((((i.pos.y % subImageWidth  )) / subImageWidth))));
+					realCamera3Colors = tex2D(_Cam3, float2(((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))))
+					/ subImageWidth, ((((i.pos.y % subImageWidth  + _OffsetY)) / subImageWidth))));
 
 
 					//get z position in eye/view space
@@ -334,12 +282,12 @@ Shader "Custom/singleCamTest"
 								//read value from real camera texture
 								//calculate difference between current subimage position and real camera position
 								//this value is used in a subpixel look-up (linear interpolation)
-								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y  ) / subImageWidth))));
+								outputCam0Value = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam0.x))) / subImageWidth, (((i.pos.y  + _OffsetY) / subImageWidth))));
 								//outputCam0Value = float4(outputCam0Value.w, outputCam0Value.w, outputCam0Value.w,1);
 
 
 								//texture look-up in the depth without linear interpolation
-								outputCam0Value.w = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
+								outputCam0Value.w = tex2D(_Cam0, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  + _OffsetY) / subImageWidth)))).w;
 								// if((currentSubImgPos.x - pCam0.x) < 0.0){
 								// 	outputCam0Value = float4(abs(currentSubImgPos.x - pCam0.x),0,0,1);
 								// }else{
@@ -353,23 +301,23 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam1.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam1Value.w > realCamera1Colors.w){
 								bestDistance.y = abs(pCam1.x - currentSubImgPos.x);
-								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam1.x))) / subImageWidth, (((i.pos.y ) / subImageWidth))));
+								outputCam1Value = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam1.x))) / subImageWidth, (((i.pos.y + _OffsetY) / subImageWidth))));
 								//outputCam1Value = float4(outputCam1Value.w, outputCam1Value.w, outputCam1Value.w,1);
 
-								outputCam1Value.w = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  ) / subImageWidth)))).w;
+								outputCam1Value.w = tex2D(_Cam1, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y  + _OffsetY) / subImageWidth)))).w;
 						}
 					}
 
 					//CAMERA 2
 					//check previous comments
-					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
+					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam2Value.w > realCamera2Colors.w){
 								bestDistance.z = abs(pCam2.x - currentSubImgPos.x);
-								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y - 700) / subImageWidth))));
+								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y - 700 + _OffsetY)  / subImageWidth))));
 								//outputCam2Value = float4(outputCam2Value.w, outputCam2Value.w, outputCam2Value.w,1);
 
 
-								outputCam2Value.w = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth ) / subImageWidth)))).w;
+								outputCam2Value.w = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth + _OffsetY) / subImageWidth)))).w;
 						}
 					}
 
@@ -378,59 +326,18 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam3Value.w > realCamera3Colors.w){
 								bestDistance.w = abs(pCam3.x - currentSubImgPos.x);
-								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y - 700 ) / subImageWidth))));
+								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y - 700 + _OffsetY) / subImageWidth))));
 								//outputCam3Value = float4(outputCam3Value.w, outputCam3Value.w, outputCam3Value.w,1);
 
 
-								outputCam3Value.w = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth) / subImageWidth)))).w;
+								outputCam3Value.w = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) )) / subImageWidth, (((i.pos.y % subImageWidth + _OffsetY) / subImageWidth)))).w;
 						}
 					}
 
-					// if((i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 
-					// 	if(screenIndexY <  2){
-					// 		if(bestGuessColor.w > realCamera0Colors.w){
-					// 			bestGuessColor = realCamera0Colors; // + float4(0.8,0,0,0);
-					// 		}
-					// 		if(bestGuessColor.w > realCamera1Colors.w){
-					// 			bestGuessColor = realCamera1Colors; // + float4(0,0.8,0,0);
-					// 		}
-					// 	}else if(screenIndexY > 5){
-					// 		if(bestGuessColor.w > realCamera2Colors.w){
-					// 			bestGuessColor = realCamera2Colors; // + float4(0,0,0.8,0);
-					// 		}
-					// 		if(bestGuessColor.w > realCamera3Colors.w){
-					// 			bestGuessColor = realCamera3Colors; // + float4(0,0.8,0.8,0);
-					// 		}
-					// 	}
-					// }
 
 
 				}
-
-				// float grayOutputCam2Value = (outputCam2Value.x + outputCam2Value.y + outputCam2Value.z) / 3.0;
-				// float grayOutputCam3Value = (outputCam3Value.x + outputCam3Value.y + outputCam3Value.z) / 3.0;
-				// if(outputCam2Value.w < outputCam3Value.w){
-				// 	return outputCam2Value;
-				// 	//return (grayOutputCam2Value + float4(0.3,0,0,0));
-				// }
-				// //return (grayOutputCam3Value + float4(0.0,0.3,0,0));
-				// return outputCam3Value;
-
-				//return outputCam0Value;
-
-				if(i.pos.y < subImageWidth * 7 && i.pos.y > (subImageWidth * 7) - 15){
-					//return float4(1,0,0,1);
-				}
-
-				//If none of the cameras can see the posnt (the point is occluded by the elements in the scene)
-				if(outputCam0Value.w > 1.0 && outputCam1Value.w > 1.0 && outputCam2Value.w > 1.0 && outputCam3Value.w > 1.0){
-
-					//return float4(0,0,1,1);
-				}
-
-
-
 
 				if(i.pos.y < subImageWidth + 15 && screenIndexX < 8){
 					//return(outputCam0Value);
@@ -479,12 +386,9 @@ Shader "Custom/singleCamTest"
 				myPos = float2(((i.pos.x % subImageWidth)) / subImageWidth, ((((i.pos.y % subImageWidth )) / subImageWidth)));
 
 				return ( tex2D(_Cam0, myPos) + tex2D(_Cam1, myPos) + tex2D(_Cam2, myPos) + tex2D(_Cam3, myPos) )/4.0;
-				//return	bestGuessColor;
-
-				//return tex2D(_Cam3, float2(((i.pos.x % subImageWidth)) / subImageWidth, (((i.pos.y ) / subImageWidth))));
 
 
-				return float4(1,1,0,2);
+				//return float4(1,1,0,2);
 			}
 			ENDCG
 		}
