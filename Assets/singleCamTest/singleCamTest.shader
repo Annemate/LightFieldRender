@@ -173,11 +173,11 @@ Shader "Custom/singleCamTest"
 				outputCam3Value = float4(0.0,0.0,0.0,2.0);
 
 
-				if(screenIndexX == 1 && screenIndexY == 1 ){
-					//return float4(0,1,1,1);
-					return tex2D(_Cam0, float2(((i.pos.x % subImageWidth)) / subImageWidth, ((((i.pos.y % subImageWidth)) / subImageWidth))));
-				}
-				return float4(0,0,0,1);
+				// if(screenIndexX == 1 && screenIndexY == 1 ){
+				// 	//return float4(0,1,1,1);
+				// 	return tex2D(_Cam0, float2(((i.pos.x % subImageWidth)) / subImageWidth, ((((i.pos.y % subImageWidth)) / subImageWidth))));
+				// }
+				// 	return float4(0,0,0,1);
 
 				// //this section is used for finding the fov of the lens setup
 				// if(screenIndexX == 7 && screenIndexY == 3){
