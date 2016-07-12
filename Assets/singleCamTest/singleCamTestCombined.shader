@@ -96,7 +96,7 @@ Shader "Custom/singleCamTestCombined"
 				bestGuess = float2(100.0,100.0);
 				//return float4(0,0,0,0);
 				//Initializing values
-				subImageWidth = 100;
+				subImageWidth = 160;
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
 
@@ -149,7 +149,7 @@ Shader "Custom/singleCamTestCombined"
 					realCamera0Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 
-					realCamera1Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+					realCamera1Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 1120.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 					//realCamera0Colors = tex2D(_xAxisTexture, float2(i.pos.x, (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) / subImageWidth));
 
 
@@ -227,7 +227,7 @@ Shader "Custom/singleCamTestCombined"
 						if(outputCam1Value.w > realCamera1Colors.w){
 								bestGuess.y = abs(pCam1.y - currentSubImgPos.y);
 
-								outputCam1Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 700.0 + (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+								outputCam1Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 1120.0 + (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 
 								// if((currentSubImgPos.y - pCam1.y) < 0){
@@ -236,7 +236,7 @@ Shader "Custom/singleCamTestCombined"
 								// 	outputCam1Value = float4(0,abs(currentSubImgPos.y - pCam1.y),0,1);
 								// }
 
-								outputCam1Value.w = tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))).w;
+								outputCam1Value.w = tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 1120.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))).w;
 
 						}
 					}
@@ -279,7 +279,7 @@ Shader "Custom/singleCamTestCombined"
 					return outputCam0Value;
 					//return (grayOutputCam0Value + float4(0,0.3,0,0));
 				}
-				return ( tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 ) ) / (1.0 / _xAxisTexture_TexelSize.y))) + tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (i.pos.y % subImageWidth  ) / (1.0 / _xAxisTexture_TexelSize.y)))) / 2.0;
+				return ( tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 1120.0 ) ) / (1.0 / _xAxisTexture_TexelSize.y))) + tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (i.pos.y % subImageWidth  ) / (1.0 / _xAxisTexture_TexelSize.y)))) / 2.0;
 				return float4(0,1,0,1);
 
 			}
