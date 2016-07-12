@@ -15,11 +15,13 @@ public class screenShotWithFactorOnStart : MonoBehaviour {
 	IEnumerator DelayedScreenShot() {
 
         yield return new WaitForSeconds(3);
-        Application.CaptureScreenshot("Screenshot.png",1);
+     //   Application.CaptureScreenshot("Screenshot.png",1);
     }
 
 	// Update is called once per frame
 	void Update () {
-
+		if (Input.GetKeyDown("space")){
+			Application.CaptureScreenshot("Screenshot.png",1);
+		}
 	}
 }
