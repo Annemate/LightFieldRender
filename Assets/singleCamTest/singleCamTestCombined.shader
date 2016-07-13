@@ -96,7 +96,7 @@ Shader "Custom/singleCamTestCombined"
 				bestGuess = float2(100.0,100.0);
 				//return float4(0,0,0,0);
 				//Initializing values
-				subImageWidth = 100;
+				subImageWidth = 162;
 				screenIndexX = i.pos.x / subImageWidth;
 				screenIndexY = i.pos.y / subImageWidth;
 
@@ -121,7 +121,7 @@ Shader "Custom/singleCamTestCombined"
 				// 	return float4(0,1,0,1);
 				// }
 				// return float4(1,0,0,1);
-				// float4 test = float4(tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+				// float4 test = float4(tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 1134) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 				//return float4(test.w, test.w, test.w, 1.0);
 
@@ -139,7 +139,7 @@ Shader "Custom/singleCamTestCombined"
 				outputCam0Value = float4(1.0,0.0,0.0,2.0);
 				outputCam1Value = float4(1.0,0.0,0.0,2.0);
 
-				loopDuration = 80;
+				loopDuration = 100;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 
@@ -149,11 +149,11 @@ Shader "Custom/singleCamTestCombined"
 					realCamera0Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 
-					realCamera1Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+					realCamera1Colors = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 1134.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 					//realCamera0Colors = tex2D(_xAxisTexture, float2(i.pos.x, (i.pos.y % subImageWidth + (j - (loopDuration / 2.0))) / subImageWidth));
 
 
-					//realCamera1Colors = tex2D(_xAxisTexture, float2(i.pos.x, (i.pos.y % subImageWidth + 700.0 + (j - (loopDuration / 2.0))) / subImageWidth));
+					//realCamera1Colors = tex2D(_xAxisTexture, float2(i.pos.x, (i.pos.y % subImageWidth + 1134.0 + (j - (loopDuration / 2.0))) / subImageWidth));
 
 					//get z position in eye/view space
 					eCam0.z = (realCamera0Colors.w) * (_farPlane );
@@ -227,7 +227,7 @@ Shader "Custom/singleCamTestCombined"
 						if(outputCam1Value.w > realCamera1Colors.w){
 								bestGuess.y = abs(pCam1.y - currentSubImgPos.y);
 
-								outputCam1Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 700.0 + (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
+								outputCam1Value = (tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (((i.pos.y % subImageWidth) + 1134.0 + (currentSubImgPos.y - pCam1.y) + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))));
 
 
 								// if((currentSubImgPos.y - pCam1.y) < 0){
@@ -236,7 +236,7 @@ Shader "Custom/singleCamTestCombined"
 								// 	outputCam1Value = float4(0,abs(currentSubImgPos.y - pCam1.y),0,1);
 								// }
 
-								outputCam1Value.w = tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))).w;
+								outputCam1Value.w = tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 1134.0 + (j - (loopDuration / 2.0))) ) / (1.0 / _xAxisTexture_TexelSize.y))).w;
 
 						}
 					}
@@ -279,7 +279,7 @@ Shader "Custom/singleCamTestCombined"
 					return outputCam0Value;
 					//return (grayOutputCam0Value + float4(0,0.3,0,0));
 				}
-				return ( tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 700.0 ) ) / (1.0 / _xAxisTexture_TexelSize.y))) + tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (i.pos.y % subImageWidth  ) / (1.0 / _xAxisTexture_TexelSize.y)))) / 2.0;
+				return ( tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), ((i.pos.y % subImageWidth + 1134.0 ) ) / (1.0 / _xAxisTexture_TexelSize.y))) + tex2D(_xAxisTexture, float2(i.pos.x / (1.0 / _xAxisTexture_TexelSize.x), (i.pos.y % subImageWidth  ) / (1.0 / _xAxisTexture_TexelSize.y)))) / 2.0;
 				return float4(0,1,0,1);
 
 			}

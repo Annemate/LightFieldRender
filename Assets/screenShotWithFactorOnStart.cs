@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 using System.IO;
@@ -9,13 +9,13 @@ public class screenShotWithFactorOnStart : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Application.CaptureScreenshot("Screenshot.png",1);
-		StartCoroutine(DelayedScreenShot());
+		//StartCoroutine(DelayedScreenShot());
 	}
 
 	IEnumerator DelayedScreenShot() {
 
         yield return new WaitForSeconds(3);
-     //   Application.CaptureScreenshot("Screenshot.png",1);
+        Application.CaptureScreenshot("Screenshot.png",1);
     }
 
 	// Update is called once per frame

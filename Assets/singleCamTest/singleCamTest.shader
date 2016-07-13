@@ -198,7 +198,7 @@ Shader "Custom/singleCamTest"
 				// }
 				// return float4(1,1,1,1);
 
-				loopDuration = 100;
+				loopDuration = 162;
 				for (int j = 0; j <= loopDuration; j++)
 				{
 
@@ -313,7 +313,7 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam2.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam2Value.w > realCamera2Colors.w){
 								bestDistance.z = abs(pCam2.x - currentSubImgPos.x);
-								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y - 700 + _OffsetY)  / subImageWidth))));
+								outputCam2Value = tex2D(_Cam2, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam2.x))) / subImageWidth, (((i.pos.y - 1134 + _OffsetY)  / subImageWidth))));
 								//outputCam2Value = float4(outputCam2Value.w, outputCam2Value.w, outputCam2Value.w,1);
 
 
@@ -326,7 +326,7 @@ Shader "Custom/singleCamTest"
 					if(abs(pCam3.x - currentSubImgPos.x) < 0.5  && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) <= subImageWidth && (i.pos.x % subImageWidth + (j - (loopDuration / 2.0))) >= 0.0) {
 						if(outputCam3Value.w > realCamera3Colors.w){
 								bestDistance.w = abs(pCam3.x - currentSubImgPos.x);
-								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y - 700 + _OffsetY) / subImageWidth))));
+								outputCam3Value = tex2D(_Cam3, float2((((i.pos.x % subImageWidth + _OffsetX + (j - (loopDuration / 2.0))) + (currentSubImgPos.x - pCam3.x))) / subImageWidth, (((i.pos.y - 1134 + _OffsetY) / subImageWidth))));
 								//outputCam3Value = float4(outputCam3Value.w, outputCam3Value.w, outputCam3Value.w,1);
 
 
@@ -386,7 +386,7 @@ Shader "Custom/singleCamTest"
 				myPos = float2(((i.pos.x % subImageWidth)) / subImageWidth, ((((i.pos.y % subImageWidth )) / subImageWidth)));
 
 				return ( tex2D(_Cam0, myPos) + tex2D(_Cam1, myPos) + tex2D(_Cam2, myPos) + tex2D(_Cam3, myPos) )/4.0;
-
+				return float4(0,0,0,0);
 
 				//return float4(1,1,0,2);
 			}
