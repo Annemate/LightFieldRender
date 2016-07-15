@@ -242,3 +242,44 @@ ComputerScreen,9,4,5,interpolatedImage,virtualCamera,virtualCamera
 ComputerScreen,9,5,4,virtualCamera,interpolatedImage,interpolatedImage
 
 Unity closed
+LightFieldHmd,10,1,2,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,10,2,5,virtualCamera,interpolatedImage,interpolatedImage
+
+Unity closed
+
+Unity closed
+
+Unity closed
+LightFieldHmd,10,1,4,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,10,2,5,interpolatedImage,virtualCamera,virtualCamera
+
+Unity closed
+LightFieldHmd,10,1,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,10,2,2,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,10,3,4,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,10,4,5,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,10,5,3,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,10,1,2,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,10,2,4,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,10,3,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,10,4,3,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,10,5,1,interpolatedImage,virtualCamera,virtualCamera
+
+Unity closed
+LightFieldHmd,11,1,5,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,11,2,3,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,11,3,4,interpolatedImage,virtualCamera,virtualCamera
+
+Unity closed
+LightFieldHmd,11,1,4,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,11,2,5,interpolatedImage,virtualCamera,virtualCamera
+LightFieldHmd,11,3,3,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,11,4,1,virtualCamera,interpolatedImage,interpolatedImage
+LightFieldHmd,11,5,2,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,11,1,5,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,11,2,1,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,11,3,2,virtualCamera,interpolatedImage,interpolatedImage
+ComputerScreen,11,4,4,interpolatedImage,virtualCamera,virtualCamera
+ComputerScreen,11,5,3,interpolatedImage,virtualCamera,virtualCamera
+
+Unity closed

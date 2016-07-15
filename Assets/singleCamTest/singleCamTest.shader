@@ -172,6 +172,9 @@ Shader "Custom/singleCamTest"
 				outputCam2Value = float4(0.0,0.0,0.0,2.0);
 				outputCam3Value = float4(0.0,0.0,0.0,2.0);
 
+				// return tex2D(_Cam0, float2(((i.pos.x % subImageWidth))
+				// 	/ subImageWidth, ((((i.pos.y % subImageWidth)) / subImageWidth))));
+
 
 				// if(screenIndexX == 1 && screenIndexY == 1 ){
 				// 	//return float4(0,1,1,1);
@@ -338,6 +341,8 @@ Shader "Custom/singleCamTest"
 
 
 				}
+
+				//return outputCam1Value;
 
 				if(i.pos.y < subImageWidth + 15 && screenIndexX < 8){
 					//return(outputCam0Value);
