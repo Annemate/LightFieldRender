@@ -1,4 +1,0 @@
-Test no. 3, Second image
-Test no. 4, First image
-Test no. 5, First image
-Test no. 6, Second image
