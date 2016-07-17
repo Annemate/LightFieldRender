@@ -529,7 +529,7 @@ public class controlThree : MonoBehaviour {
 	void Update() {
 
 
-		if ((Time.time - 0.25f) > lastButtonTime && !canAcceptButton && !shutButtonsOff) {
+		if ((Time.time - 0.5f) > lastButtonTime && !canAcceptButton && !shutButtonsOff) {
 			canAcceptButton = true;
 		}
 
