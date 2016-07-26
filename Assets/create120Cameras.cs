@@ -48,7 +48,7 @@ public class create120Cameras : MonoBehaviour {
 				counter ++;
 			}
 		}
-
+		cameraObject.SetActive(false);
 		print(cameraList.Count);
 		//myIndex = cameraCount;
 		//cameraCount ++;

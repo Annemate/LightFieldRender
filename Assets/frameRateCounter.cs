@@ -16,8 +16,8 @@ public class frameRateCounter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		print(DateTime.UtcNow.Ticks);
-		fileName = DateTime.UtcNow.Ticks.ToString();
-		frameArray = new float[500];
+		fileName = DateTime.UtcNow.Ticks.ToString() + ".txt";
+		frameArray = new float[1000];
 
 	}
 
@@ -27,12 +27,14 @@ public class frameRateCounter : MonoBehaviour {
 			//print(frameCounter);
 			frameArray[frameCounter] = Time.deltaTime;
 			frameCounter ++;
+			//print(frameCounter);
 
 		}else if(printOnce && frameCounter > delayInFrames){
 			printOnce = false;
+			print("has started");
 			for(int i = 0; i < frameArray.Length; i ++){
-				print(frameArray[i]);
-				File.AppendAllText (fileName, frameArray[1] + "\n");
+			//	print(frameArray[i]);
+				File.AppendAllText (fileName, frameArray[i] + "\n");
 				arraySum += frameArray[i];
 
 			}
