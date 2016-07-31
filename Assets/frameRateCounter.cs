@@ -17,7 +17,7 @@ public class frameRateCounter : MonoBehaviour {
 	void Start () {
 		print(DateTime.UtcNow.Ticks);
 		fileName = DateTime.UtcNow.Ticks.ToString() + ".txt";
-		frameArray = new float[1000];
+		frameArray = new float[100];
 
 	}
 
